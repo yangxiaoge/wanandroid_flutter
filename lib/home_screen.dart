@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'constant/constants.dart' show AppColors, MyEventBus;
 import 'util/ToastUtil.dart' show ToastUtil;
-import 'eventbus/tab_page_refresh.dart';
+import 'eventbus/tab_page_refresh_event.dart';
 
 import 'pages/HomePage.dart';
 import 'pages/DiscoverPage.dart';

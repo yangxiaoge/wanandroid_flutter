@@ -6,6 +6,7 @@ import '../util/ToastUtil.dart' show ToastUtil;
 import '../constant/constants.dart';
 import '../eventbus/tab_page_refresh_event.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import './item_detail_page.dart';
 
 //首页
 class HomePage extends StatefulWidget {
@@ -116,7 +117,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     print('listData.length = ' + listData.length.toString());
-    return listData.length == null
+    return listData.length <=0
         ? Center(
             //数据加载progress
             child: CircularProgressIndicator(),
@@ -130,6 +131,12 @@ class _HomePageState extends State<HomePage> {
             ),
             onRefresh: _refresh,
           );
+  }
+
+  _go2ItemDetail(String url, String title) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return ItemDetailPage(url: url, title: title);
+    }));
   }
 
   Widget buildListItem(int index) {
@@ -162,6 +169,7 @@ class _HomePageState extends State<HomePage> {
           }),
           onTap: (i) {
             print("banners[$i]['url'] = ${banners[i]['url']}");
+            _go2ItemDetail(banners[i]['url'], banners[i]['title']);
           },
         ),
         height: 180,
@@ -203,7 +211,9 @@ class _HomePageState extends State<HomePage> {
               isCollected ? Icons.favorite : Icons.favorite_border,
               color: isCollected ? Colors.red : null,
             ),
-            onTap: () {},
+            onTap: () {
+              ToastUtil.showToast('别摸我~');
+            },
           )
           // InkWell(
           //   child: Icon(
@@ -233,7 +243,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          onTap: () {},
+          onTap: () {
+            _go2ItemDetail(itemData['link'], itemData['title']);
+          },
         ),
         color: Colors.white,
         elevation: 3,
