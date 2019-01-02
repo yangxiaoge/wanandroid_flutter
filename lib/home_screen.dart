@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'constant/constants.dart' show AppColors;
+import 'constant/constants.dart' show AppColors, MyEventBus;
 import 'util/ToastUtil.dart' show ToastUtil;
+import 'eventbus/tab_page_refresh.dart';
 
 import 'pages/HomePage.dart';
 import 'pages/DiscoverPage.dart';
@@ -20,6 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
   var tabTitles = ["首页", "发现", "福利", "我的"];
   // 底部导航 item 集合
   List<BottomNavigationBarItem> _navigationItemViews;
+  //上次点击时间
+  int lastClickTime = 0;
+  Map<int, int> tabClickTime = new Map<int, int>();
 
   @override
   void initState() {
@@ -50,11 +54,13 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     ];
 
+    tabTitles.forEach((title) {
+      tabClickTime[tabTitles.indexOf(title)] = 0;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
     final _body = IndexedStack(
       index: _currentIndex,
       children: <Widget>[
@@ -69,9 +75,27 @@ class _HomeScreenState extends State<HomeScreen> {
       currentIndex: _currentIndex,
       items: _navigationItemViews,
       onTap: (index) {
-        setState(() {
-          _currentIndex = index;
-        });
+        print("_currentIndex = $_currentIndex, index = $index");
+        int currentTime = DateTime.now().microsecondsSinceEpoch;
+        if (index == _currentIndex) {
+          int indexTabLastClickTime = tabClickTime[index];
+          print("currentTime - indexTabLastClickTime = " +
+              (currentTime - indexTabLastClickTime).toString());
+          if (currentTime - indexTabLastClickTime < 1000000) {
+            //1秒内
+            print("通知页面$index刷新");
+
+            NotifyPageRefresh notify = new NotifyPageRefresh(index);
+            MyEventBus.eventBus.fire(notify);
+          }
+          print("tabClickTime[index]1 = ${tabClickTime[index]}");
+          tabClickTime[index] = currentTime;
+          print("tabClickTime[index]2 = ${tabClickTime[index]}");
+        } else {
+          setState(() {
+            _currentIndex = index;
+          });
+        }
       },
     );
 
@@ -93,17 +117,22 @@ class _HomeScreenState extends State<HomeScreen> {
               });
             },
           ),
-          // 首页显示更多按钮
-          _currentIndex == 0
-              ? IconButton(
-                  icon: Icon(Icons.more_vert),
-                  onPressed: () {
-                    ToastUtil.showToast('更多');
-                  },
-                )
-              : SizedBox(
-                  width: 5,
-                )
+          // 首页显示更多按钮（Offstage可见性控件，offstage默认为 true，也就是不显示，当为 flase 的时候，会显示该控件）
+          Offstage(
+            offstage: _currentIndex != 0,
+            child: IconButton(
+              icon: Icon(Icons.more_vert),
+              onPressed: () {
+                ToastUtil.showToast('更多');
+              },
+            ),
+          ),
+          Offstage(
+            offstage: _currentIndex == 0,
+            child: SizedBox(
+              width: 5,
+            ),
+          )
         ],
       ),
       body: _body,
