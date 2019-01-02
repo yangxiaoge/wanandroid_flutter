@@ -34,7 +34,7 @@ class HttpUtil {
   }
 
   //http 网络请求
-  static getHttp(String url, Function callback,
+  static Future getHttp(String url, Function callback,
       {Map<String, String> params,
       Map<String, String> headers,
       Function errorCallback}) async {
@@ -56,6 +56,18 @@ class HttpUtil {
     print("params.toString() = " + params.toString());
     var response = await http.get(url);
     //print(response.body);
-    callback(response.body);
+
+    Map<String, dynamic> resMap = json.decode(response.body);
+    int errorCode = resMap['errorCode'];
+    String errorMsg = resMap['errorMsg'];
+    var data = resMap['data'];
+    if (errorCode >= 0) {
+      print(resMap.toString());
+      //print(data);
+      callback(data);
+    } else {
+      print("出错啦，errorMsg : $errorMsg");
+      errorCallback(errorMsg);
+    }
   }
 }

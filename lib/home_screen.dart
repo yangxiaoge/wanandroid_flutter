@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'constant/constants.dart' show AppColors;
 import 'util/ToastUtil.dart' show ToastUtil;
-import 'net/api_service.dart' show WanApi;
-import 'net/http_util.dart' show HttpUtil;
 
 import 'pages/HomePage.dart';
 import 'pages/DiscoverPage.dart';
@@ -22,9 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
   var tabTitles = ["首页", "发现", "福利", "我的"];
   // 底部导航 item 集合
   List<BottomNavigationBarItem> _navigationItemViews;
-
-  // 当前页
-  int _pageIndex = 0;
 
   @override
   void initState() {
@@ -55,20 +50,10 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     ];
 
-    //_getHomeArticleList();
-  }
-
-  _getHomeArticleList() async {
-    var url = WanApi.Home_Article_List + "$_pageIndex/json";
-    HttpUtil.getHttp(url, (data) {
-      print("首页列表: "+data);
-    });
-    //print(res.toString());
   }
 
   @override
   Widget build(BuildContext context) {
-     _getHomeArticleList();
 
     final _body = IndexedStack(
       index: _currentIndex,
