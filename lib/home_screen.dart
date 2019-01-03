@@ -8,7 +8,7 @@ import 'pages/DiscoverPage.dart';
 import 'pages/MeiZiPage.dart';
 import 'pages/MinePage.dart';
 import 'pages/SearchPage.dart';
-
+import './widget/popup_menu.dart';
 // 主页面（4个tab的父页面）
 class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
@@ -35,22 +35,22 @@ class _HomeScreenState extends State<HomeScreen> {
       new BottomNavigationBarItem(
         icon: const Icon(Icons.home),
         title: new Text(tabTitles[0]),
-        backgroundColor: Color(AppColors.AppBarColor),
+        backgroundColor: AppColors.AppBarColor,
       ),
       new BottomNavigationBarItem(
         icon: const Icon(Icons.widgets),
         title: new Text(tabTitles[1]),
-        backgroundColor: Color(AppColors.AppBarColor),
+        backgroundColor: AppColors.AppBarColor,
       ),
       new BottomNavigationBarItem(
         icon: const Icon(Icons.face),
         title: new Text(tabTitles[2]),
-        backgroundColor: Color(AppColors.AppBarColor),
+        backgroundColor: AppColors.AppBarColor,
       ),
       new BottomNavigationBarItem(
         icon: const Icon(Icons.person),
         title: new Text(tabTitles[3]),
-        backgroundColor: Color(AppColors.AppBarColor),
+        backgroundColor: AppColors.AppBarColor,
       ),
     ];
 
@@ -122,19 +122,20 @@ class _HomeScreenState extends State<HomeScreen> {
           // 首页显示更多按钮（Offstage可见性控件，offstage默认为 true，也就是不显示，当为 flase 的时候，会显示该控件）
           Offstage(
             offstage: _currentIndex != 0,
-            child: IconButton(
-              icon: Icon(Icons.more_vert),
-              onPressed: () {
-                ToastUtil.showToast('更多');
-              },
-            ),
+            // child: IconButton(
+            //   icon: Icon(Icons.more_vert),
+            //   onPressed: () {
+            //     ToastUtil.showToast('更多');
+            //   },
+            // ),
+            child: PopUpMenu(),
           ),
           Offstage(
             offstage: _currentIndex == 0,
             child: SizedBox(
               width: 5,
             ),
-          )
+          ),
         ],
       ),
       body: _body,

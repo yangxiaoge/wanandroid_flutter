@@ -84,3 +84,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages
+  
+# https://www.iconfont.cn/manage/index?manage_type=myprojects&projectId=979981
+  fonts:
+    - family: aliIconFont
+      fonts:
+        - asset: assets/fonts/iconfont.ttf

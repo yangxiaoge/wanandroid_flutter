@@ -11,8 +11,8 @@ class MyApp extends StatelessWidget {
       title: 'WanAndroid',
       debugShowCheckedModeBanner: false, // 去除右上角 Debug 标签
       theme: ThemeData.light().copyWith(
-        primaryColor: Color(AppColors.AppBarColor),
-        cardColor: Color(AppColors.AppBarColor),
+        primaryColor: AppColors.AppBarColor,
+        cardColor: Colors.black38, //影响popupmenu,等其他控件颜色
       ),
       home: HomeScreen(),
     );
