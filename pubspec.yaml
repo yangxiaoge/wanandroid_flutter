@@ -31,6 +31,12 @@ dependencies:
   flutter_swiper: ^1.1.4
   # webview
   flutter_webview_plugin: ^0.3.0+2
+  # 缓存image
+  cached_network_image: ^0.5.1
+  # 查看图片 
+  photo_view: ^0.1.2
+  # 分享（调用系统分享的 Flutter 组件，支持分享文本，图片和文件）
+  share_extend: "^1.0.3"
 
 dev_dependencies:
   flutter_test:

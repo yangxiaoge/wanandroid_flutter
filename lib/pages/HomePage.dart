@@ -4,9 +4,10 @@ import '../net/api_service.dart' show WanApi;
 import '../net/http_util.dart' show HttpUtil;
 import '../util/ToastUtil.dart' show ToastUtil;
 import '../constant/constants.dart';
+import './item_detail_page.dart';
 import '../eventbus/tab_page_refresh_event.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import './item_detail_page.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 //首页
 class HomePage extends StatefulWidget {
@@ -116,8 +117,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print('listData.length = ' + listData.length.toString());
-    return listData.length <=0
+    //print('listData.length = ' + listData.length.toString());
+    return listData.length <= 0
         ? Center(
             //数据加载progress
             child: CircularProgressIndicator(),
@@ -146,15 +147,16 @@ class _HomePageState extends State<HomePage> {
         child: Swiper(
           itemBuilder: (context, i) {
             //print("banners[$i] = ${banners[i]}, imagePath = ${banners[i]['imagePath']}");
-            return Image.network(
-              banners[i]['imagePath'],
+            return CachedNetworkImage(
+              imageUrl: banners[i]['imagePath'],
               fit: BoxFit.fill,
             );
           },
           itemCount: banners.length,
           loop: true,
           autoplay: true,
-          duration: 1500,
+          autoplayDelay: 3000,
+          duration: 600,
           // control: new SwiperControl(),
           pagination: new SwiperCustomPagination(
               builder: (BuildContext context, SwiperPluginConfig config) {
@@ -162,7 +164,10 @@ class _HomePageState extends State<HomePage> {
             return Container(
               child: Text(
                 banners[index]['title'],
-                style: new TextStyle(fontSize: 16.0, color: Colors.white),
+                style: new TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.white,
+                    fontStyle: FontStyle.italic),
               ),
               margin: EdgeInsets.fromLTRB(10, 155, 0, 0),
             );

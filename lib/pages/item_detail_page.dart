@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 class ItemDetailPage extends StatefulWidget {
-  String url;
-  String title;
+  final String url;
+  final String title;
   ItemDetailPage(
       {Key key, @required String this.url, @required String this.title})
       : super(key: key);
@@ -13,6 +13,13 @@ class ItemDetailPage extends StatefulWidget {
 
 class _ItemDetailPageState extends State<ItemDetailPage> {
   final flutterWebviewPlugin = new FlutterWebviewPlugin();
+
+  @override
+  void dispose() {
+    flutterWebviewPlugin.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -40,9 +47,9 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
       withLocalStorage: true,
       hidden: true,
       initialChild: Container(
-        color: Colors.redAccent,
+        color: Colors.grey[200],
         child: Center(
-          child: Text('Waiting.....'),
+          child: CircularProgressIndicator(),
         ),
       ),
     );

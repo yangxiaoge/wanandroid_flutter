@@ -1,8 +1,10 @@
-import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http; // 网络
-
 import 'dart:convert';
-import 'api_service.dart' show WanApi;
+
+import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
+
+import 'api_service.dart' show WanApi, GankIO;
+// 网络
 
 class HttpUtil {
   static final Dio dio = new Dio();
@@ -68,6 +70,34 @@ class HttpUtil {
     } else {
       print("出错啦，errorMsg : $errorMsg");
       errorCallback(errorMsg);
+    }
+  }
+
+  //获取福利图
+  static Future getMeiZi(String url, List<String> params, Function callback,
+      {Function errorCallback}) async {
+    url = GankIO.BaseUrl + url;
+    print("url1 = $url");
+    if (params == null || params.isEmpty) {
+      print("参数不能为空！");
+      return null;
+    }
+
+    StringBuffer sb = new StringBuffer();
+    params.forEach((param) {
+      sb.write("/$param");
+    });
+    url += sb.toString();
+    print("url2 = $url");
+    var response = await http.get(url);
+    Map<String, dynamic> resMap = json.decode(response.body);
+    bool error = resMap['error'];
+    var data = resMap['results'];
+    if (!error) {
+      //print("data = $data");
+      callback(data);
+    } else {
+      errorCallback("出错啦");
     }
   }
 }

@@ -74,6 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final bottomNavigationBar = BottomNavigationBar(
       currentIndex: _currentIndex,
       items: _navigationItemViews,
+      // fixedColor: Theme.of(context).primaryColor,
+      // type: BottomNavigationBarType.fixed,
       onTap: (index) {
         print("_currentIndex = $_currentIndex, index = $index");
         int currentTime = DateTime.now().microsecondsSinceEpoch;

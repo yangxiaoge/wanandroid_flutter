@@ -36,3 +36,11 @@ class WanApi {
   static const String ARTICLE_QUERY = "article/query/";
 
 }
+
+//干货集中营 https://gank.io/api
+class GankIO{
+  //baseurl
+  static const String BaseUrl = "http://gank.io/api/";
+  //妹子， http://gank.io/api/data/福利/10/1
+  static const String MEIZI = "data";
+}
