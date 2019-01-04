@@ -2,15 +2,35 @@
 
 玩Android - Flutter版
 
-## Getting Started
+## 应用截图
 
-This project is a starting point for a Flutter application.
+| ![home](screen_shot/home.jpg)
+| ![meizi1](screen_shot/meizi1.jpg)
+| ![meizi2](screen_shot/meizi2.jpg)
+| ![meizi3](screen_shot/meizi3.jpg)
+| ![meizi4](screen_shot/meizi4.jpg)
+|
+| :--: | :--: | :--: | :--: | :--: |
+| 首页 | 妹子 | 妹子 | 妹子 | 妹子|
 
-A few resources to get you started if this is your first Flutter project:
+### 第三方框架
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
+库 | 功能
+-------- | ---
+**http**|**网络框架**
+**shared_preferences**|**本地数据缓存**
+**fluttertoast**|**toast**
+**iconfont**|**字库图标**
+**share_extend**|**系统分享**
+**cached_network_image**|**缓存Image**
+**flutter_webview_plugin**|**全屏的webview**
+**photo_view**|**图片预览**
+**flutter_swiper**|**广告**
+**event_bus**|**EventBus事件**
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+## todo 
+- [x] 首页
+- [ ] 发现
+- [x] 妹子
+- [ ] 我的
+- [ ] 登录
