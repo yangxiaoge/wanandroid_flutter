@@ -4,12 +4,7 @@
 
 ## 应用截图
 
-| ![home](screen_shot/home.jpg)
-| ![meizi1](screen_shot/meizi1.jpg)
-| ![meizi2](screen_shot/meizi2.jpg)
-| ![meizi3](screen_shot/meizi3.jpg)
-| ![meizi4](screen_shot/meizi4.jpg)
-|
+| ![home](screen_shot/home.jpg) | ![meizi1](screen_shot/meizi1.jpg) | ![meizi2](screen_shot/meizi2.jpg) | ![meizi3](screen_shot/meizi3.jpg) | ![meizi4](screen_shot/meizi4.jpg) |
 | :--: | :--: | :--: | :--: | :--: |
 | 首页 | 妹子 | 妹子 | 妹子 | 妹子|
 
