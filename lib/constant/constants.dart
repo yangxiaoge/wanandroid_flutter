@@ -3,7 +3,7 @@ import 'package:event_bus/event_bus.dart';
 
 class AppColors {
   static const BackgroundColor = 0xffebebeb;
-  static const Color AppBarColor = Colors.red[400]; //0xffef5350
+  static const Color AppBarColor = Color(0xFFE5463B); //0xFFE5463B,网易云音乐红
   static const TabIconNormal = 0xff999999;
   static const TabIconActive = 0xff46c11b;
   static const AppBarPopupMenuColor = 0xffffffff;

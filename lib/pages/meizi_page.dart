@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../net/api_service.dart' show GankIO;
 import '../net/http_util.dart' show HttpUtil;
-import '../util/ToastUtil.dart' show ToastUtil;
+import '../util/toast_util.dart' show ToastUtil;
 import './zoom_image.dart';
 import '../constant/constants.dart' show MyEventBus;
 import '../eventbus/tab_page_refresh_event.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../net/api_service.dart' show WanApi;
 import '../net/http_util.dart' show HttpUtil;
-import '../util/ToastUtil.dart' show ToastUtil;
+import '../util/toast_util.dart' show ToastUtil;
 import '../constant/constants.dart';
 import './item_detail_page.dart';
 import '../eventbus/tab_page_refresh_event.dart';

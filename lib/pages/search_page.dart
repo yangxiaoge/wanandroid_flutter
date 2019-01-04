@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../util/ToastUtil.dart';
+import '../util/toast_util.dart';
 
 class SearchPage extends StatefulWidget {
   final String searchWord;

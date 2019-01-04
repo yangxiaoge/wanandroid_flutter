@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constant/constants.dart' show Constants, AppColors;
-import '../util/ToastUtil.dart';
+import '../util/toast_util.dart';
 
 enum PopMenuItems { GROUP_CHAT, ADD_FRIEND, QR_SCAN, PAYMENT, HELP }
 

@@ -4,8 +4,8 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 class ItemDetailPage extends StatefulWidget {
   final String url;
   final String title;
-  ItemDetailPage(
-      {Key key, @required String this.url, @required String this.title})
+
+  ItemDetailPage({Key key, @required this.url, @required this.title})
       : super(key: key);
 
   _ItemDetailPageState createState() => _ItemDetailPageState();

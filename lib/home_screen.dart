@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'constant/constants.dart' show AppColors, MyEventBus;
-import 'util/ToastUtil.dart' show ToastUtil;
+import 'util/toast_util.dart' show ToastUtil;
 import 'eventbus/tab_page_refresh_event.dart';
 
-import 'pages/HomePage.dart';
-import 'pages/DiscoverPage.dart';
-import 'pages/MeiZiPage.dart';
-import 'pages/MinePage.dart';
-import 'pages/SearchPage.dart';
+import 'pages/home_page.dart';
+import 'pages/discover_page.dart';
+import 'pages/meizi_page.dart';
+import 'pages/mine_page.dart';
+import 'pages/search_page.dart';
 import './widget/popup_menu.dart';
 // 主页面（4个tab的父页面）
 class HomeScreen extends StatefulWidget {
