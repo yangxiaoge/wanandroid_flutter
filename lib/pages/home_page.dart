@@ -49,20 +49,30 @@ class _HomePageState extends State<HomePage> {
           _pageIndex++;
         });
       }
+    }, errorCallback: (errorMsg) {
+      ToastUtil.showToast("获取文章列表出错，$errorMsg");
     });
   }
 
   //获取广告
   _getBanners() async {
     var url = WanApi.Banner;
-    HttpUtil.getHttp(url, (data) {
-      if (data != null) {
-        setState(() {
-          banners.clear();
-          banners.addAll(data);
-          print("广告----->: " + banners.toString());
-        });
-      }
+
+    // var response = await HttpUtil.dioGet(url);
+    // var data = response['data'];
+    // setState(() {
+    //   banners.clear();
+    //   banners.addAll(data);
+    //   print("广告----->: " + banners.toString());
+    // });
+
+    HttpUtil.dioGet2(url, (response) {
+      var data = response['data'];
+      setState(() {
+        banners.clear();
+        banners.addAll(data);
+        print("广告----->: " + banners.toString());
+      });
     });
   }
 

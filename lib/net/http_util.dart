@@ -4,37 +4,53 @@ import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 import 'api_service.dart' show WanApi, GankIO;
+import 'package:shared_preferences/shared_preferences.dart';
 // 网络
 
 class HttpUtil {
+  //-----------------------------dio---------------------------------//
   static final Dio dio = new Dio();
-  // dio 网络请求，有点问题，后面解决
-  static get(String url, Function callback,
+  // dio get网络请求,方式一（Future作为返回值）
+  static Future dioGet1(String url, {Map<String, dynamic> params}) async {
+    var response = await dio.get(WanApi.BaseUrl + url, data: params);
+    return response.data;
+  }
+
+  // dio 网络请求,方式二（callback，errorCallback回调）
+  static dioGet2(String url, Function callback,
       {Map<String, String> params,
       Map<String, String> headers,
       Function errorCallback}) async {
     // url组合
     url = WanApi.BaseUrl + url;
-    print("url1=" + url);
-    // 参数拼接
-    if (params != null && params.isNotEmpty) {
-      StringBuffer sb = new StringBuffer();
-      sb.write("?");
-      params.forEach((key, value) {
-        sb.write("$key=$value&");
-      });
-      // url + params
-      url += sb.toString().substring(0, sb.toString().length - 1);
-    }
-    print("url2=" + url);
-    //请求网络
-    print("params.toString() = " + params.toString());
-    Response response = await dio.get(url);
-    print(response.data);
+
+    var response = await dio.get(url, data: params);
+    //todo 可以进一步判断错误码等等（此处默认返回数据）
     callback(response.data);
-    //return response.data;
   }
 
+  static dioPost(String url, {Map<String, String> params}) async {
+    url = WanApi.BaseUrl + url;
+    //玩android的参数怎么是url拼接的呢，为啥不放在body中？
+    StringBuffer sb = new StringBuffer();
+    sb.write("?");
+    params.forEach((key, value) {
+      sb.write("$key=$value&");
+    });
+    // url + params
+    url += sb.toString().substring(0, sb.toString().length - 1);
+    var response = await dio.post(url);
+    //print("POST:URL=" + url);
+    //print("POST:headers = " + response.headers.toString());
+
+    //print('cookie = ${response.headers['set-cookie']}');
+    //缓存cookie
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    sp.setString("cookie",response.headers['set-cookie'].toString());
+    return response.data;
+  }
+
+  //-----------------------------http---------------------------------//
   //http 网络请求
   static Future getHttp(String url, Function callback,
       {Map<String, String> params,
