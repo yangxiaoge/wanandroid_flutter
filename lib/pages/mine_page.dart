@@ -59,14 +59,14 @@ class _MinePageState extends State<MinePage> {
           padding: EdgeInsets.all(20),
           children: <Widget>[
             TextField(
-              decoration: InputDecoration(labelText: "UserName"),
+              decoration: InputDecoration(labelText: "用户名"),
               controller: _userNameControl,
               // onChanged: (text) {
               //   print("UserName = $text");
               // },
             ),
             TextField(
-              decoration: InputDecoration(labelText: "PassWord"),
+              decoration: InputDecoration(labelText: "密码"),
               controller: _passwordControl,
               obscureText: true, //加密
               // onChanged: (text) {
