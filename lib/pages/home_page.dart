@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter/cupertino.dart';
 import '../net/api_service.dart' show WanApi;
 import '../net/http_util.dart' show HttpUtil;
 import '../util/toast_util.dart' show ToastUtil;
 import '../constant/constants.dart';
 import './item_detail_page.dart';
 import '../eventbus/tab_page_refresh_event.dart';
+import '../eventbus/login_register_success_event.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -35,7 +36,7 @@ class _HomePageState extends State<HomePage> {
         var _getDatas = datas['datas'];
         totalLength = datas['total'];
 
-        print("首页列表----->: " + _getDatas.toString());
+        //print("首页列表----->: " + _getDatas.toString());
         //ToastUtil.showToast("获取数据成功");
 
         setState(() {
@@ -71,7 +72,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         banners.clear();
         banners.addAll(data);
-        print("广告----->: " + banners.toString());
+        //print("广告----->: " + banners.toString());
       });
     });
   }
@@ -104,7 +105,7 @@ class _HomePageState extends State<HomePage> {
     _getBanners();
     _getHomeArticleList();
 
-    //注册eventbus事件监听
+    //注册eventbus 双击tab事件监听
     MyEventBus.eventBus.on<NotifyPageRefresh>().listen((event) {
       print("收到eventBus当前tabIndex = ${event.tabIndex}");
       if (event.tabIndex == 0) {
@@ -112,10 +113,21 @@ class _HomePageState extends State<HomePage> {
         _controller
             .animateTo(0,
                 duration: Duration(milliseconds: 300), curve: Curves.ease)
-            .then((Null) {
+            .then((_) {
           _refresh();
         });
       }
+    });
+    //登录注册成功事件监听
+    MyEventBus.eventBus.on<LoginRegisterSuccess>().listen((event) {
+      print("收到eventBus登录注册成功事件");
+      //先滚动到顶部，then下拉刷新
+      _controller
+          .animateTo(0,
+              duration: Duration(milliseconds: 300), curve: Curves.ease)
+          .then((_) {
+        _refresh();
+      });
     });
   }
 
@@ -131,7 +143,7 @@ class _HomePageState extends State<HomePage> {
     return listData.length <= 0
         ? Center(
             //数据加载progress
-            child: CircularProgressIndicator(),
+            child: CupertinoActivityIndicator(),
           )
         : RefreshIndicator(
             //下拉刷新控件
@@ -148,6 +160,38 @@ class _HomePageState extends State<HomePage> {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
       return ItemDetailPage(url: url, title: title);
     }));
+  }
+
+  _likeClick(var itemData) async {
+    AppStatus.isLogin().then((login) async {
+      if (login) {
+        //已登录
+        var url;
+        if (itemData['collect']) {
+          url = WanApi.UNCOLLECT_ORIGINID;
+        } else {
+          url = WanApi.COLLECT;
+        }
+        url += '${itemData['id']}/json';
+        //print("url = $url");
+        var response = await HttpUtil.dioPost(url);
+        print("response = ${response.toString()}");
+        var data = response['data'];
+        int errorCode = response['errorCode'];
+        String errorMsg = response['errorMsg'];
+        print("data = $data,errorCode = $errorCode,errorMsg = $errorMsg");
+        if (errorCode >= 0) {
+          ToastUtil.showToast(!itemData['collect'] ? "收藏成功" : "取消收藏");
+          setState(() {
+            itemData['collect'] = !itemData['collect'];
+          });
+        } else {
+          ToastUtil.showToast("$errorMsg");
+        }
+      } else {
+        ToastUtil.showToast("未登录");
+      }
+    });
   }
 
   Widget buildListItem(int index) {
@@ -193,6 +237,7 @@ class _HomePageState extends State<HomePage> {
       index -= 1; //下标需要减去广告位
       var itemData = listData[index];
       bool isCollected = itemData['collect'];
+      //print("喜欢isCollected = $isCollected");
       Row line1 = new Row(
         children: <Widget>[
           Text('作者：'),
@@ -227,7 +272,8 @@ class _HomePageState extends State<HomePage> {
               color: isCollected ? Colors.red : null,
             ),
             onTap: () {
-              ToastUtil.showToast('别摸我~');
+              //ToastUtil.showToast('别摸我~');
+              _likeClick(itemData);
             },
           )
           // InkWell(

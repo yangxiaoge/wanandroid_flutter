@@ -1,15 +1,30 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
-
-import 'api_service.dart' show WanApi, GankIO;
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../constant/constants.dart';
+import 'api_service.dart' show WanApi, GankIO;
 // 网络
 
 class HttpUtil {
   //-----------------------------dio---------------------------------//
   static final Dio dio = new Dio();
+
+  // static Dio dio = new Dio(new Options(
+  //     baseUrl: WanApi.BaseUrl,
+  //     connectTimeout: 5000,
+  //     receiveTimeout: 100000,
+  //     // 5sl
+  //     // headers: {Constants.Cookie:  AppStatus.get(Constants.Cookie)},
+  //     headers: {Constants.Cookie: Constants.cookieSTR},
+  //     contentType: ContentType.json,
+  //     // Transform the response data to a String encoded with UTF8.
+  //     // The default value is [ResponseType.JSON].
+  //     responseType: ResponseType.JSON));
+
   // dio get网络请求,方式一（Future作为返回值）
   static Future dioGet1(String url, {Map<String, dynamic> params}) async {
     var response = await dio.get(WanApi.BaseUrl + url, data: params);
@@ -32,21 +47,44 @@ class HttpUtil {
   static dioPost(String url, {Map<String, String> params}) async {
     url = WanApi.BaseUrl + url;
     //玩android的参数怎么是url拼接的呢，为啥不放在body中？
-    StringBuffer sb = new StringBuffer();
-    sb.write("?");
-    params.forEach((key, value) {
-      sb.write("$key=$value&");
-    });
-    // url + params
-    url += sb.toString().substring(0, sb.toString().length - 1);
-    var response = await dio.post(url);
-    //print("POST:URL=" + url);
-    //print("POST:headers = " + response.headers.toString());
+    if (params != null && params.length > 0) {
+      StringBuffer sb = new StringBuffer();
+      sb.write("?");
+      params.forEach((key, value) {
+        sb.write("$key=$value&");
+      });
+      // url + params
+      url += sb.toString().substring(0, sb.toString().length - 1);
+    }
+    SharedPreferences spf = await SharedPreferences.getInstance();
+    String cookie = spf.getString(Constants.Cookie);
 
+    var response = await dio.post(
+      url,
+      options: Options(
+          //baseUrl: WanApi.BaseUrl,
+          connectTimeout: 5000,
+          receiveTimeout: 100000,
+          // 5s
+          headers: {Constants.Cookie: cookie},
+          contentType: ContentType.json,
+          // Transform the response data to a String encoded with UTF8.
+          // The default value is [ResponseType.JSON].
+          responseType: ResponseType.JSON)
+    );
+
+    print("POST:request.headers = " + response.request.headers.toString());
+    //print("POST:URL=" + url);
+    //print("POST:response.headers = " + response.headers.toString());
     //print('cookie = ${response.headers['set-cookie']}');
+
     //缓存cookie
-    SharedPreferences sp = await SharedPreferences.getInstance();
-    sp.setString("cookie",response.headers['set-cookie'].toString());
+    //登录后会在 cookie 中返回账号密码，只要在客户端做 cookie 持久化存储即可自动登录验证。
+    if (url.contains(WanApi.LOGIN)) {
+      AppStatus.saveSP(
+          Constants.Cookie, response.headers['set-cookie'].toString());
+    }
+
     return response.data;
   }
 
@@ -72,7 +110,15 @@ class HttpUtil {
     print("url2=" + url);
     //请求网络
     print("params.toString() = " + params.toString());
-    var response = await http.get(url);
+
+    //获取cookie
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String cookieSTR = prefs.getString(Constants.Cookie);
+    Map<String, String> headerMap = Map();
+    headerMap[Constants.Cookie] = cookieSTR;
+    print("--------cookieSTR = $cookieSTR");
+
+    var response = await http.get(url, headers: headerMap);
     //print(response.body);
 
     Map<String, dynamic> resMap = json.decode(response.body);

@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ItemDetailPage extends StatefulWidget {
   final String url;
@@ -36,20 +38,35 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
     });
   }
 
+  //打开手机浏览器打开网页
+  void _launchURL(String url, BuildContext context) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return WebviewScaffold(
-      url: widget.url,
+    return Scaffold(
       appBar: new AppBar(
         title: Text(widget.title),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.language),
+              onPressed: () {
+               _launchURL(widget.url, context);
+              }),
+        ],
       ),
-      withZoom: true,
-      withLocalStorage: true,
-      hidden: true,
-      initialChild: Container(
-        color: Colors.grey[200],
-        child: Center(
-          child: CircularProgressIndicator(),
+      body: WebviewScaffold(
+        url: widget.url,
+        withZoom: true,
+        withLocalStorage: true,
+        hidden: true,
+        initialChild: Center(
+          child: CupertinoActivityIndicator(),
         ),
       ),
     );

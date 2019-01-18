@@ -31,7 +31,8 @@ class _GirlViewState extends State<GirlView> {
           child: GestureDetector(
         onTap: () {
           print("点击了妹子");
-          Navigator.pop(context);
+          //todo 不关闭页面
+          //Navigator.pop(context);
         },
         child: PhotoView(
           imageProvider: CachedNetworkImageProvider(widget.url),

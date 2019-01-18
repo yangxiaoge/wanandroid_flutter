@@ -3,7 +3,8 @@ import '../util/toast_util.dart';
 import 'dart:async';
 import '../net/http_util.dart' show HttpUtil;
 import '../net/api_service.dart' show WanApi;
-import 'package:shared_preferences/shared_preferences.dart';
+import '../constant/constants.dart';
+import '../eventbus/login_register_success_event.dart' show LoginRegisterSuccess;
 
 class MinePage extends StatefulWidget {
   _MinePageState createState() => _MinePageState();
@@ -30,17 +31,16 @@ class _MinePageState extends State<MinePage> {
     int errorCode = response['errorCode'];
     String errorMsg = response['errorMsg'];
 
-    if (errorCode != 0) {
-      ToastUtil.showToast("$errorMsg");
-    } else {
-      ToastUtil.showToast("登录成功");
+    if (errorCode >= 0) {
       print('data = $data');
-    }
-
-    SharedPreferences sp = await SharedPreferences.getInstance();
-    var cookie = sp.get("cookie");
-    if (cookie != null) {
-      print("cookie = $cookie");
+      ToastUtil.showToast("登录成功");
+      //SP配置文件更新登录状态
+      AppStatus.setLogin().then((_){
+          //通知页面登录成功
+          MyEventBus.eventBus.fire(new LoginRegisterSuccess());
+      });
+    } else {
+      ToastUtil.showToast("$errorMsg");      
     }
   }
 

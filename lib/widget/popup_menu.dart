@@ -55,10 +55,10 @@ _buildPopupMunuItem(int iconName, String title) {
             fontFamily: Constants.IconFontFamily,
           ),
           size: 22.0,
-          color: Color(AppColors.AppBarPopupMenuColor)),
+          color: Colors.black),
       Container(width: 12.0),
       Text(title,
-          style: TextStyle(color: Color(AppColors.AppBarPopupMenuColor))),
+          style: TextStyle(color: Colors.black)),
     ],
   );
 }
