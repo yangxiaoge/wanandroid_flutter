@@ -1,14 +1,17 @@
-import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
+import "package:pull_to_refresh/pull_to_refresh.dart";
+
+import './item_detail_page.dart';
+import '../constant/constants.dart';
+import '../eventbus/login_register_success_event.dart';
+import '../eventbus/tab_page_refresh_event.dart';
 import '../net/api_service.dart' show WanApi;
 import '../net/http_util.dart' show HttpUtil;
 import '../util/toast_util.dart' show ToastUtil;
-import '../constant/constants.dart';
-import './item_detail_page.dart';
-import '../eventbus/tab_page_refresh_event.dart';
-import '../eventbus/login_register_success_event.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import '../widget/indicator_factory.dart';
 
 //首页
 class HomePage extends StatefulWidget {
@@ -22,13 +25,15 @@ class _HomePageState extends State<HomePage> {
   List listData = new List();
   //数据总长度
   int totalLength = 0;
-  //上拉监听
-  ScrollController _controller = new ScrollController();
+  //刷新
+  RefreshController _refreshController;
+  //加载中
+  bool _isLoading = true;
   //广告集合
   List banners = new List();
 
   //获取文章列表
-  _getHomeArticleList() async {
+  Future _getHomeArticleList() async {
     var url = WanApi.Home_Article_List + "$_pageIndex/json";
     HttpUtil.getHttp(url, (data) {
       if (data != null) {
@@ -48,9 +53,11 @@ class _HomePageState extends State<HomePage> {
             ToastUtil.showToast("到底啦~");
           }
           _pageIndex++;
+          _isLoading = false;
         });
       }
     }, errorCallback: (errorMsg) {
+      _isLoading = false;
       ToastUtil.showToast("获取文章列表出错，$errorMsg");
     });
   }
@@ -58,14 +65,6 @@ class _HomePageState extends State<HomePage> {
   //获取广告
   _getBanners() async {
     var url = WanApi.Banner;
-
-    // var response = await HttpUtil.dioGet(url);
-    // var data = response['data'];
-    // setState(() {
-    //   banners.clear();
-    //   banners.addAll(data);
-    //   print("广告----->: " + banners.toString());
-    // });
 
     HttpUtil.dioGet2(url, (response) {
       var data = response['data'];
@@ -78,30 +77,35 @@ class _HomePageState extends State<HomePage> {
   }
 
   //下拉刷新
-  Future _refresh() async {
-    _pageIndex = 0;
-    _getHomeArticleList();
-    _getBanners();
-  }
-
-  //上拉加载更多
-  //https://juejin.im/post/5b6ac41651882519861c3b79
-  _HomePageState() {
-    _controller.addListener(() {
-      var maxScroll = _controller.position.maxScrollExtent;
-      var pixels = _controller.position.pixels;
-      if (maxScroll == pixels && listData.length < totalLength) {
-        //上拉刷新做处理
-        print('load more ...');
-        ToastUtil.showToast("加载更多...");
-        _getHomeArticleList();
-      }
-    });
+  void _refresh(bool up) {
+    print("---------------------上啊啊啊up = $up");
+    _isLoading = false;
+    if (up) {
+      _pageIndex = 0;
+      _getHomeArticleList().then((_) {
+        Future.delayed(Duration(seconds: 3)).then((_) {
+          _refreshController.scrollTo(0); // 50为下拉刷新控件的高度
+          _refreshController.sendBack(true, RefreshStatus.completed);
+          setState(() {});
+        });
+      });
+    } else {
+      _getHomeArticleList().then((_) {
+        Future.delayed(Duration(seconds: 3)).then((_) {
+          print("_refreshController.scrollController.offset = "+_refreshController.scrollController.offset.toString());
+          //_refreshController.scrollTo(_refreshController.scrollController.offset+100); 
+          _refreshController.sendBack(false, RefreshStatus.idle);
+          setState(() {});
+        });
+      });
+    }
   }
 
   @override
   void initState() {
     super.initState();
+    _refreshController = new RefreshController();
+
     _getBanners();
     _getHomeArticleList();
 
@@ -109,25 +113,13 @@ class _HomePageState extends State<HomePage> {
     MyEventBus.eventBus.on<NotifyPageRefresh>().listen((event) {
       print("收到eventBus当前tabIndex = ${event.tabIndex}");
       if (event.tabIndex == 0) {
-        //先滚动到顶部，then下拉刷新
-        _controller
-            .animateTo(0,
-                duration: Duration(milliseconds: 300), curve: Curves.ease)
-            .then((_) {
-          _refresh();
-        });
+        _refresh(true);
       }
     });
     //登录注册成功事件监听
     MyEventBus.eventBus.on<LoginRegisterSuccess>().listen((event) {
       print("收到eventBus登录注册成功事件");
-      //先滚动到顶部，then下拉刷新
-      _controller
-          .animateTo(0,
-              duration: Duration(milliseconds: 300), curve: Curves.ease)
-          .then((_) {
-        _refresh();
-      });
+      _refresh(true);
     });
   }
 
@@ -139,21 +131,34 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //print('listData.length = ' + listData.length.toString());
-    return listData.length <= 0
-        ? Center(
-            //数据加载progress
-            child: CupertinoActivityIndicator(),
-          )
-        : RefreshIndicator(
-            //下拉刷新控件
+    return Stack(
+      children: <Widget>[
+        //内容区
+        Offstage(
+          offstage: _isLoading ? true : false,
+          child: SmartRefresher(
+            enablePullDown: true, //下拉
+            enablePullUp: true, //上拉
+            onRefresh: _refresh,
+            onOffsetChange: null,
+            headerBuilder: buildDefaultHeader,
+            footerBuilder: buildDefaultFooter,
+            controller: _refreshController,
             child: ListView.builder(
               itemCount: listData.length + 1, //+1是广告位
               itemBuilder: (context, index) => buildListItem(index),
-              controller: _controller,
+              //controller: _controller,
             ),
-            onRefresh: _refresh,
-          );
+          ),
+        ),
+
+        //loading动画
+        Offstage(
+          offstage: _isLoading ? false : true,
+          child: Center(child: CupertinoActivityIndicator()),
+        )
+      ],
+    );
   }
 
   _go2ItemDetail(String url, String title) {
