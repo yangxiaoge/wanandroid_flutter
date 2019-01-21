@@ -12,6 +12,7 @@ import '../net/api_service.dart' show WanApi;
 import '../net/http_util.dart' show HttpUtil;
 import '../util/toast_util.dart' show ToastUtil;
 import '../widget/indicator_factory.dart';
+import '../util/navigator_util.dart';
 
 //首页
 class HomePage extends StatefulWidget {
@@ -34,6 +35,13 @@ class _HomePageState extends State<HomePage> {
 
   //获取文章列表
   Future _getHomeArticleList() async {
+    if (_pageIndex == 0 && listData.length != 0) {
+      // 先滚动到顶部
+      Future.delayed(Duration(milliseconds: 600)).then((_) {
+        _refreshController.scrollTo(0);
+      });
+    }
+
     var url = WanApi.Home_Article_List + "$_pageIndex/json";
     HttpUtil.getHttp(url, (data) {
       if (data != null) {
@@ -84,18 +92,15 @@ class _HomePageState extends State<HomePage> {
       _pageIndex = 0;
       _getHomeArticleList().then((_) {
         Future.delayed(Duration(seconds: 3)).then((_) {
-          _refreshController.scrollTo(0); // 50为下拉刷新控件的高度
           _refreshController.sendBack(true, RefreshStatus.completed);
-          setState(() {});
         });
       });
     } else {
       _getHomeArticleList().then((_) {
         Future.delayed(Duration(seconds: 3)).then((_) {
-          print("_refreshController.scrollController.offset = "+_refreshController.scrollController.offset.toString());
-          //_refreshController.scrollTo(_refreshController.scrollController.offset+100); 
+          print("_refreshController.scrollController.offset = " +
+              _refreshController.scrollController.offset.toString());
           _refreshController.sendBack(false, RefreshStatus.idle);
-          setState(() {});
         });
       });
     }
@@ -125,8 +130,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
+    print("---------------------销毁");
     super.dispose();
-    _controller.dispose();
   }
 
   @override
@@ -139,15 +144,16 @@ class _HomePageState extends State<HomePage> {
           child: SmartRefresher(
             enablePullDown: true, //下拉
             enablePullUp: true, //上拉
+            controller: _refreshController,
             onRefresh: _refresh,
             onOffsetChange: null,
             headerBuilder: buildDefaultHeader,
             footerBuilder: buildDefaultFooter,
-            controller: _refreshController,
+            footerConfig: RefreshConfig(),
             child: ListView.builder(
               itemCount: listData.length + 1, //+1是广告位
               itemBuilder: (context, index) => buildListItem(index),
-              //controller: _controller,
+              // controller: _controller,
             ),
           ),
         ),
@@ -162,9 +168,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   _go2ItemDetail(String url, String title) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return ItemDetailPage(url: url, title: title);
-    }));
+    NavigatorUtil.pushPage(context, ItemDetailPage(url: url, title: title),
+        pageName: "ItemDetailPage");
   }
 
   _likeClick(var itemData) async {
@@ -202,6 +207,13 @@ class _HomePageState extends State<HomePage> {
   Widget buildListItem(int index) {
     // print("index = $index");
     if (index == 0) {
+      //广告无数据时，显示loading
+      if (banners.length == 0) {
+        return Container(
+          height: 180,
+          child: CupertinoActivityIndicator(),
+        );
+      }
       return Container(
         child: Swiper(
           itemBuilder: (context, i) {

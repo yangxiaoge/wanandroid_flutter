@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'splash_page.dart';
 import 'home_screen.dart';
 import 'constant/constants.dart';
 
@@ -13,8 +14,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light().copyWith(
         primaryColor: AppColors.AppBarColor,
         cardColor: Color(AppColors.AppBarPopupMenuColor), //影响popupmenu,等其他控件颜色
+
+        accentColor: AppColors.AppBarColor,
+        indicatorColor: Colors.white,
       ),
-      home: HomeScreen(),
+      home: SplashPage(), // 闪屏页
+      routes: { // 路由
+        HomeScreen.ROUTER_NAME:(context)=>HomeScreen()
+      },
     );
   }
 }

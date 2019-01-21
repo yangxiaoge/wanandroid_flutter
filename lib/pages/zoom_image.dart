@@ -1,7 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_view/photo_view.dart';
-import 'package:share_extend/share_extend.dart';
+import '../constant/component_index.dart';
 
 class GirlView extends StatefulWidget {
   final String url;
@@ -22,7 +20,7 @@ class _GirlViewState extends State<GirlView> {
             onPressed: () {
               print("分享妹子");
               //分享文本
-              ShareExtend.share(widget.url, "text");
+              Share.share(widget.url);
             },
           )
         ],

@@ -109,7 +109,7 @@ class _MeiZiPageState extends State<MeiZiPage> {
                   onTap: () {
                     print("meizi url = ${meizi[index]['url']}");
                     Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
+                        .push(CupertinoPageRoute(builder: (context) {
                       return GirlView(
                           meizi[index]['url'], meizi[index]['desc']);
                     }));

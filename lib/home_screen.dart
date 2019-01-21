@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'constant/constants.dart' show AppColors, MyEventBus;
 import 'util/toast_util.dart' show ToastUtil;
 import 'eventbus/tab_page_refresh_event.dart';
@@ -9,8 +10,12 @@ import 'pages/meizi_page.dart';
 import 'pages/mine_page.dart';
 import 'pages/search_page.dart';
 import './widget/popup_menu.dart';
+import './constant/component_index.dart';
+
 // 主页面（4个tab的父页面）
 class HomeScreen extends StatefulWidget {
+  static const String ROUTER_NAME = '/HomeScreen';
+
   _HomeScreenState createState() => _HomeScreenState();
 }
 
@@ -110,24 +115,21 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.search),
             onPressed: () {
               ToastUtil.showToast('搜索');
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SearchPage("你好啊搜索页"),
-                  )).then((result) {
-                print('返回数据$result');
-              });
+              // Navigator.push(
+              //     context,
+              //     CupertinoPageRoute(
+              //       builder: (context) => SearchPage("你好啊搜索页"),
+              //     )).then((result) {
+              //   print('返回数据$result');
+              // });
+
+              NavigatorUtil.pushPage(context, SearchPage("你好啊搜索页"),
+                  pageName: "SearchPage");
             },
           ),
           // 首页显示更多按钮（Offstage可见性控件，offstage默认为 true，也就是不显示，当为 flase 的时候，会显示该控件）
           Offstage(
             offstage: _currentIndex != 0,
-            // child: IconButton(
-            //   icon: Icon(Icons.more_vert),
-            //   onPressed: () {
-            //     ToastUtil.showToast('更多');
-            //   },
-            // ),
             child: PopUpMenu(),
           ),
           Offstage(

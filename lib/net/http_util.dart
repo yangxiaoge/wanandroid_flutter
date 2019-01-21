@@ -38,7 +38,7 @@ class HttpUtil {
       Function errorCallback}) async {
     // url组合
     url = WanApi.BaseUrl + url;
-
+    print("dio:URL=" + url);
     var response = await dio.get(url, data: params);
     //todo 可以进一步判断错误码等等（此处默认返回数据）
     callback(response.data);

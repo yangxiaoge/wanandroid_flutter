@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:url_launcher/url_launcher.dart';
-
+import '../util/navigator_util.dart';
+import '../constant/component_index.dart';
+//webview页面（item详情页）
 class ItemDetailPage extends StatefulWidget {
   final String url;
   final String title;
@@ -14,38 +14,8 @@ class ItemDetailPage extends StatefulWidget {
 }
 
 class _ItemDetailPageState extends State<ItemDetailPage> {
-  final flutterWebviewPlugin = new FlutterWebviewPlugin();
-
-  @override
-  void dispose() {
-    flutterWebviewPlugin.dispose();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    flutterWebviewPlugin.onScrollYChanged.listen((double offsetY) {
-      // latest offset value in vertical scroll
-      // compare vertical scroll changes here with old value
-      print("offsetY = $offsetY");
-    });
-
-    flutterWebviewPlugin.onScrollXChanged.listen((double offsetX) {
-      // latest offset value in horizontal scroll
-      // compare horizontal scroll changes here with old value
-      print("offsetX = $offsetX");
-    });
-  }
-
-  //打开手机浏览器打开网页
-  void _launchURL(String url, BuildContext context) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+  WebViewController _webViewController;
+  bool _isShowFloatBtn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -56,19 +26,52 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
           IconButton(
               icon: Icon(Icons.language),
               onPressed: () {
-               _launchURL(widget.url, context);
+                //打开浏览器
+                NavigatorUtil.launchInBrowser(widget.url);
               }),
+               IconButton(
+            icon: Icon(Icons.share),
+            onPressed: () {
+              print("分享网页");
+              //分享文本
+              Share.share(widget.url);
+            },
+          )
         ],
       ),
-      body: WebviewScaffold(
-        url: widget.url,
-        withZoom: true,
-        withLocalStorage: true,
-        hidden: true,
-        initialChild: Center(
-          child: CupertinoActivityIndicator(),
-        ),
+      body: WebView(
+        onWebViewCreated: (WebViewController webViewController) {
+          _webViewController = webViewController;
+          _webViewController.addListener(() {
+            int _scrollY = _webViewController.scrollY.toInt();
+            if (_scrollY < 480 && _isShowFloatBtn) {
+              _isShowFloatBtn = false;
+              setState(() {});
+            } else if (_scrollY > 480 && !_isShowFloatBtn) {
+              _isShowFloatBtn = true;
+              setState(() {});
+            }
+          });
+        },
+        initialUrl: widget.url,
+        javascriptMode: JavascriptMode.unrestricted,
       ),
+      floatingActionButton: _buildFloatingActionButton(),
     );
+  }
+
+  Widget _buildFloatingActionButton() {
+    if (_webViewController == null || _webViewController.scrollY < 480) {
+      return null;
+    }
+    return new FloatingActionButton(
+        heroTag: widget.title,
+        backgroundColor: Theme.of(context).primaryColor,
+        child: Icon(
+          Icons.keyboard_arrow_up,
+        ),
+        onPressed: () {
+          _webViewController.scrollTop();
+        });
   }
 }

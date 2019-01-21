@@ -13,6 +13,10 @@ class AppColors {
 class Constants {
   //阿里巴巴字体图标库
   static const IconFontFamily = "aliIconFont";
+  //WorkSansMedium字体
+  static const WorkSansMedium = "WorkSansMedium";
+
+  //SharedPreferences对应Key
   static const String Login = "login";
   static const String Cookie = "cookie";
 }
