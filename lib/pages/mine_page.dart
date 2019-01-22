@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import '../util/toast_util.dart';
 import 'dart:async';
-import '../net/http_util.dart' show HttpUtil;
-import '../net/api_service.dart' show WanApi;
-import '../constant/constants.dart';
-import '../eventbus/login_register_success_event.dart' show LoginRegisterSuccess;
+
+import '../eventbus/login_register_success_event.dart'
+    show LoginRegisterSuccess;
+import '../constant/component_index.dart';
 
 class MinePage extends StatefulWidget {
   _MinePageState createState() => _MinePageState();
@@ -35,17 +34,50 @@ class _MinePageState extends State<MinePage> {
       print('data = $data');
       ToastUtil.showToast("登录成功");
       //SP配置文件更新登录状态
-      AppStatus.setLogin().then((_){
-          //通知页面登录成功
-          MyEventBus.eventBus.fire(new LoginRegisterSuccess());
+      AppStatus.setLogin().then((_) {
+        //通知页面登录成功
+        MyEventBus.eventBus.fire(new LoginRegisterSuccess());
+        setState(() {});
       });
     } else {
-      ToastUtil.showToast("$errorMsg");      
+      ToastUtil.showToast("$errorMsg");
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    bool isLogin = AppStatus.getBool(Constants.Login);
+    print("isLoginaaaa = $isLogin");
+    if (isLogin) {
+      return Center(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(20),
+              child:RichText(
+              text: new TextSpan(
+                text: '已经登录成功了',
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 20,
+                    ),
+                children: <TextSpan>[
+                  new TextSpan(
+                      text: '😎😜😬',
+                      style: new TextStyle(color: Colors.blueAccent),
+                      ),
+                ],
+              ),
+            ),
+            ),
+            CachedNetworkImage(
+              imageUrl:
+                  "http://im6.leaderhero.com/emotion/6572/388108213/c379e0e318.gif",
+            )
+          ],
+        ),
+      );
+    }
     return Container(
       child: GestureDetector(
         //GestureDetector 默认只监听不透明的 widget。当你点击空白的地方的时候，会监听不到。所以要将它的 behavior 属性改为 HitTestBehavior.opaque。这样就可以了。

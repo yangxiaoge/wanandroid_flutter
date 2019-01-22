@@ -13,18 +13,6 @@ class HttpUtil {
   //-----------------------------dio---------------------------------//
   static final Dio dio = new Dio();
 
-  // static Dio dio = new Dio(new Options(
-  //     baseUrl: WanApi.BaseUrl,
-  //     connectTimeout: 5000,
-  //     receiveTimeout: 100000,
-  //     // 5sl
-  //     // headers: {Constants.Cookie:  AppStatus.get(Constants.Cookie)},
-  //     headers: {Constants.Cookie: Constants.cookieSTR},
-  //     contentType: ContentType.json,
-  //     // Transform the response data to a String encoded with UTF8.
-  //     // The default value is [ResponseType.JSON].
-  //     responseType: ResponseType.JSON));
-
   // dio get网络请求,方式一（Future作为返回值）
   static Future dioGet1(String url, {Map<String, dynamic> params}) async {
     var response = await dio.get(WanApi.BaseUrl + url, data: params);
@@ -56,22 +44,18 @@ class HttpUtil {
       // url + params
       url += sb.toString().substring(0, sb.toString().length - 1);
     }
-    SharedPreferences spf = await SharedPreferences.getInstance();
-    String cookie = spf.getString(Constants.Cookie);
 
-    var response = await dio.post(
-      url,
-      options: Options(
-          //baseUrl: WanApi.BaseUrl,
-          connectTimeout: 5000,
-          receiveTimeout: 100000,
-          // 5s
-          headers: {Constants.Cookie: cookie},
-          contentType: ContentType.json,
-          // Transform the response data to a String encoded with UTF8.
-          // The default value is [ResponseType.JSON].
-          responseType: ResponseType.JSON)
-    );
+    var response = await dio.post(url,
+        options: Options(
+            //baseUrl: WanApi.BaseUrl,
+            connectTimeout: 5000,
+            receiveTimeout: 100000,
+            // 5s
+            headers: {Constants.Cookie: AppStatus.getString(Constants.Cookie)},
+            contentType: ContentType.json,
+            // Transform the response data to a String encoded with UTF8.
+            // The default value is [ResponseType.JSON].
+            responseType: ResponseType.JSON));
 
     print("POST:request.headers = " + response.request.headers.toString());
     //print("POST:URL=" + url);
@@ -81,7 +65,7 @@ class HttpUtil {
     //缓存cookie
     //登录后会在 cookie 中返回账号密码，只要在客户端做 cookie 持久化存储即可自动登录验证。
     if (url.contains(WanApi.LOGIN)) {
-      AppStatus.saveSP(
+      AppStatus.putObject(
           Constants.Cookie, response.headers['set-cookie'].toString());
     }
 

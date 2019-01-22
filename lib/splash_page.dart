@@ -12,7 +12,7 @@ class _SplashPageState extends State<SplashPage> {
   int _count = 3;
 
   void _go2Main() {
-    Navigator.of(context).pushReplacementNamed(HomeScreen.ROUTER_NAME);
+    NavigatorUtil.pushPageReplacementNamed(context, HomeScreen.ROUTER_NAME);
   }
 
   void _initSplash() {
@@ -73,7 +73,7 @@ class _SplashPageState extends State<SplashPage> {
               offstage: false,
               child: new Container(
                 alignment: Alignment.bottomRight,
-                margin: EdgeInsets.all(20.0),
+                margin: EdgeInsets.symmetric(vertical: 30,horizontal: 20),
                 child: InkWell(
                   onTap: () {
                     _go2Main();

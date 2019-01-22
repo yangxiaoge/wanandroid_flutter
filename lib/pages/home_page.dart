@@ -122,7 +122,7 @@ class _HomePageState extends State<HomePage> {
     //注册eventbus 双击tab事件监听
     MyEventBus.eventBus.on<NotifyPageRefresh>().listen((event) {
       print("收到eventBus当前tabIndex = ${event.tabIndex}");
-      if (event.tabIndex == 0) {
+      if (event.tabIndex == NavTabItems.HOME.index) {
         _refresh(true);
       }
     });
@@ -172,41 +172,41 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _go2ItemDetail(String url, String title) {
-    NavigatorUtil.pushPage(context, ItemDetailPage(url: url, title: title),
-        pageName: "ItemDetailPage");
+  _go2ItemDetail(String url, String title, {int titleId, bool isCollected}) {
+    NavigatorUtil.pushWeb(context,
+        title: title, url: url, titleId: titleId, isCollected: isCollected);
   }
 
   _likeClick(var itemData) async {
-    AppStatus.isLogin().then((login) async {
-      if (login) {
-        //已登录
-        var url;
-        if (itemData['collect']) {
-          url = WanApi.UNCOLLECT_ORIGINID;
-        } else {
-          url = WanApi.COLLECT;
-        }
-        url += '${itemData['id']}/json';
-        //print("url = $url");
-        var response = await HttpUtil.dioPost(url);
-        print("response = ${response.toString()}");
-        var data = response['data'];
-        int errorCode = response['errorCode'];
-        String errorMsg = response['errorMsg'];
-        print("data = $data,errorCode = $errorCode,errorMsg = $errorMsg");
-        if (errorCode >= 0) {
-          ToastUtil.showToast(!itemData['collect'] ? "收藏成功" : "取消收藏");
-          setState(() {
-            itemData['collect'] = !itemData['collect'];
-          });
-        } else {
-          ToastUtil.showToast("$errorMsg");
-        }
+    bool login = AppStatus.getBool(Constants.Login);
+    print("--------------login = $login");
+    if (login) {
+      //已登录
+      var url;
+      if (itemData['collect']) {
+        url = WanApi.UNCOLLECT_ORIGINID;
       } else {
-        ToastUtil.showToast("未登录");
+        url = WanApi.COLLECT;
       }
-    });
+      url += '${itemData['id']}/json';
+      //print("url = $url");
+      var response = await HttpUtil.dioPost(url);
+      print("response = ${response.toString()}");
+      var data = response['data'];
+      int errorCode = response['errorCode'];
+      String errorMsg = response['errorMsg'];
+      print("data = $data,errorCode = $errorCode,errorMsg = $errorMsg");
+      if (errorCode >= 0) {
+        ToastUtil.showToast(!itemData['collect'] ? "收藏成功" : "取消收藏");
+        setState(() {
+          itemData['collect'] = !itemData['collect'];
+        });
+      } else {
+        ToastUtil.showToast("$errorMsg");
+      }
+    } else {
+      ToastUtil.showToast("未登录");
+    }
   }
 
   Widget buildListItem(int index) {
@@ -349,7 +349,8 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           onTap: () {
-            _go2ItemDetail(itemData['link'], itemData['title']);
+            _go2ItemDetail(itemData['link'], itemData['title'],
+                titleId: itemData['id'], isCollected: itemData['collect']);
           },
         ),
         color: Colors.white,

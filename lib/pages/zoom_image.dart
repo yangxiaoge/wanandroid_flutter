@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../constant/component_index.dart';
 
 class GirlView extends StatefulWidget {
+  static const String ROUTER_NAME = '/GirlView';
+
   final String url;
   final String time;
   GirlView(this.url, this.time);

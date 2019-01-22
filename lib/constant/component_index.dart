@@ -25,3 +25,5 @@ export '../net/http_util.dart';
 
 export '../util/toast_util.dart';
 export '../util/navigator_util.dart';
+
+export '../res/strings.dart'; //语言包

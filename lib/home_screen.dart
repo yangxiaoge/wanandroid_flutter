@@ -4,6 +4,7 @@ import 'constant/constants.dart' show AppColors, MyEventBus;
 import 'util/toast_util.dart' show ToastUtil;
 import 'eventbus/tab_page_refresh_event.dart';
 
+import 'widget/drawer.dart';
 import 'pages/home_page.dart';
 import 'pages/discover_page.dart';
 import 'pages/meizi_page.dart';
@@ -20,6 +21,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   // 当前 tab 索引
   int _currentIndex = 0;
   // tab标题
@@ -32,7 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     // 底部导航 item 初始化
@@ -91,7 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
           if (currentTime - indexTabLastClickTime < 1000000) {
             //1秒内
             print("通知页面$index刷新");
-
             NotifyPageRefresh notify = new NotifyPageRefresh(index);
             MyEventBus.eventBus.fire(notify);
           }
@@ -107,25 +108,36 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
+        leading: IconButton(
+          icon: CircleAvatar(
+            radius: 36,
+            backgroundImage: CachedNetworkImageProvider(Constants.AVATAR_URL),
+            // child: CachedNetworkImage(imageUrl: Constants.AVATAR_URL),
+          ),
+          alignment: Alignment.centerLeft,
+          tooltip: '抽屉',
+          onPressed: () {
+            _scaffoldKey.currentState.openDrawer();
+          },
+        ),
+
         title: Text(tabTitles[_currentIndex]),
+        centerTitle: true,
         elevation: 0, // toolbar 去除阴影效果
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              ToastUtil.showToast('搜索');
-              // Navigator.push(
-              //     context,
-              //     CupertinoPageRoute(
-              //       builder: (context) => SearchPage("你好啊搜索页"),
-              //     )).then((result) {
-              //   print('返回数据$result');
-              // });
-
-              NavigatorUtil.pushPage(context, SearchPage("你好啊搜索页"),
-                  pageName: "SearchPage");
-            },
+          Offstage(
+            offstage: _currentIndex == 3, //Mine界面不显示
+            child: IconButton(
+              tooltip: '搜索',
+              icon: Icon(Icons.search),
+              onPressed: () {
+                ToastUtil.showToast('搜索');
+                NavigatorUtil.pushPage(context, SearchPage("你好啊搜索页"),
+                    pageName: "SearchPage");
+              },
+            ),
           ),
           // 首页显示更多按钮（Offstage可见性控件，offstage默认为 true，也就是不显示，当为 flase 的时候，会显示该控件）
           Offstage(
@@ -140,6 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+      drawer: CustDrawer(), //侧滑抽屉
       body: _body,
       bottomNavigationBar: bottomNavigationBar,
     );

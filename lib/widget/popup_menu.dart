@@ -37,6 +37,7 @@ class PopUpMenu extends StatelessWidget {
         ];
       },
       icon: Icon(Icons.more_vert),
+      tooltip: '更多',
       onSelected: (action) {
         print('点击了 $action');
         ToastUtil.showToast("点击了 $action");

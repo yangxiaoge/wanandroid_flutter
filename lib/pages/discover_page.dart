@@ -1,48 +1,134 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
-import 'dart:async';
-import 'dart:convert';
-import '../util/toast_util.dart';
+import 'package:flutter/cupertino.dart';
+import '../constant/component_index.dart';
+import '../widget/discover_item.dart';
 
 class DiscoverPage extends StatefulWidget {
   _DiscoverPageState createState() => _DiscoverPageState();
 }
 
 class _DiscoverPageState extends State<DiscoverPage> {
-  Socket socket;
-  _socketConnectServer() async {
-    await Socket.connect('192.168.131.168', 2010).then((sock) {
-      socket = sock;
-      socket.transform(utf8.decoder).listen((onData) {
-        print("接收到来自Server的数据：" + onData);
-      }, onError: (error, StackTrace trace) {
-        print("onError = $error");
-      }, onDone: () {
-        print("onDone");
-        socket.destroy();
-      }, cancelOnError: false);
+  /// 当前页码
+  int _pageIndex = 0;
+//刷新
+  RefreshController _refreshController;
 
-      print("开始定时给服务端发消息---");
-      Timer.periodic(Duration(milliseconds: 1000),(_){
-        socket.write("你好服务器 ${DateTime.now()} \n");
+  /// project 集合
+  List projects = new List();
+  //数据总长度
+  int totalLength = 0;
+  //加载中
+  bool _isLoading = true;
+
+  Future _disCoverListProject() async {
+    if (_pageIndex == 0 && projects.length != 0) {
+      // 先滚动到顶部
+      Future.delayed(Duration(milliseconds: 600)).then((_) {
+        _refreshController.scrollTo(0);
       });
-    }).catchError((e) {
-      print("Unable to connect: $e");
-      ToastUtil.showToast("socket连接失败");
+    }
+
+    var url = WanApi.DISCOVER_LIST_PROJECT + "$_pageIndex/json";
+    HttpUtil.dioGet2(url, (response) {
+      Map<String, dynamic> datas = response['data'];
+      List _getDatas = datas['datas'];
+      totalLength = datas['total'];
+      print("-------最新项目 tab datas = $_getDatas");
+      if (this.mounted) {
+        setState(() {
+          if (_pageIndex == 0) {
+            projects.clear();
+          }
+          projects.addAll(_getDatas);
+          if (projects.length >= totalLength) {
+            ToastUtil.showToast("到底啦~");
+          }
+          _pageIndex++;
+          _isLoading = false;
+        });
+      }
+    }, errorCallback: (errorMsg) {
+      _isLoading = false;
+      ToastUtil.showToast("获取项目列表出错，$errorMsg");
     });
+  }
+
+  //下拉刷新
+  void _refresh(bool up) {
+    print("---------------------发现页面 = $up");
+    _isLoading = false;
+    if (up) {
+      _pageIndex = 0;
+      _disCoverListProject().then((_) {
+        Future.delayed(Duration(seconds: 3)).then((_) {
+          _refreshController.sendBack(true, RefreshStatus.completed);
+        });
+      });
+    } else {
+      _disCoverListProject().then((_) {
+        Future.delayed(Duration(seconds: 3)).then((_) {
+          print("_refreshController.scrollController.offset = " +
+              _refreshController.scrollController.offset.toString());
+          _refreshController.sendBack(false, RefreshStatus.idle);
+        });
+      });
+    }
   }
 
   @override
   void initState() {
     super.initState();
-    //连接socket服务器
-    _socketConnectServer();
+    _refreshController = new RefreshController();
+    _disCoverListProject();
+
+    
+    //注册eventbus 双击tab事件监听
+    MyEventBus.eventBus.on<NotifyPageRefresh>().listen((event) {
+      print("收到eventBus当前tabIndex = ${event.tabIndex}");
+      if (event.tabIndex == NavTabItems.DISCOVER.index) {
+        _refresh(true);
+      }
+    });
+    //登录注册成功事件监听
+    MyEventBus.eventBus.on<LoginRegisterSuccess>().listen((event) {
+      print("收到eventBus登录注册成功事件");
+      _refresh(true);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("发现"),
+    return Stack(
+      children: <Widget>[
+        //内容区
+        Offstage(
+          offstage: _isLoading ? true : false,
+          child: SmartRefresher(
+            enablePullDown: true, //下拉
+            enablePullUp: true, //上拉
+            controller: _refreshController,
+            onRefresh: _refresh,
+            onOffsetChange: null,
+            headerBuilder: buildDefaultHeader,
+            footerBuilder: buildDefaultFooter,
+            footerConfig: RefreshConfig(),
+            child: ListView.builder(
+              itemCount: projects.length,
+              itemBuilder: (context, index) {
+                var item = projects[index];
+                return DiscoverItem(item);
+              },
+              // controller: _controller,
+            ),
+          ),
+        ),
+
+        //loading动画
+        Offstage(
+          offstage: _isLoading ? false : true,
+          child: Center(child: CupertinoActivityIndicator()),
+        )
+      ],
     );
   }
 }

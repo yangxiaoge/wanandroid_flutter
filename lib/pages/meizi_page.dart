@@ -7,6 +7,7 @@ import './zoom_image.dart';
 import '../constant/constants.dart' show MyEventBus;
 import '../eventbus/tab_page_refresh_event.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import '../constant/component_index.dart';
 
 class MeiZiPage extends StatefulWidget {
   _MeiZiPageState createState() => _MeiZiPageState();
@@ -33,12 +34,12 @@ class _MeiZiPageState extends State<MeiZiPage> {
     //注册eventbus事件监听
     MyEventBus.eventBus.on<NotifyPageRefresh>().listen((event) {
       print("收到eventBus当前tabIndex = ${event.tabIndex}");
-      if (event.tabIndex == 2) {
+      if (event.tabIndex == NavTabItems.WELFARE.index) {
         //先滚动到顶部，then下拉刷新
         _controller
             .animateTo(0,
                 duration: Duration(milliseconds: 300), curve: Curves.ease)
-            .then((Null) {
+            .then((_) {
           _refresh();
         });
       }
@@ -79,6 +80,23 @@ class _MeiZiPageState extends State<MeiZiPage> {
         }
       }
     });
+
+    // HttpUtil.dioGet2(url, (response) {
+    //   Map<String, dynamic> datas = response['data'];
+    //   List _getDatas = datas['results'];
+    //   print("-------妹子 tab datas = $_getDatas");
+    //   if (this.mounted) {
+    //     setState(() {
+    //       if (_pageIndex == 0) {
+    //         meizi.clear();
+    //       }
+    //       meizi.addAll(_getDatas);
+    //       _pageIndex++;
+    //     });
+    //   }
+    // }, errorCallback: (errorMsg) {
+    //   ToastUtil.showToast("获取妹子列表出错，$errorMsg");
+    // });
   }
 
   //下拉刷新
@@ -110,11 +128,8 @@ class _MeiZiPageState extends State<MeiZiPage> {
                 return InkWell(
                   onTap: () {
                     print("meizi url = ${meizi[index]['url']}");
-                    Navigator.of(context)
-                        .push(CupertinoPageRoute(builder: (context) {
-                      return GirlView(
-                          meizi[index]['url'], meizi[index]['desc']);
-                    }));
+                    NavigatorUtil.pushPage(context, GirlView(
+                          meizi[index]['url'], meizi[index]['desc']));
                   },
                   child: SizedBox(
                     height: 300,
