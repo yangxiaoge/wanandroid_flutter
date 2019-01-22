@@ -4,8 +4,6 @@ export 'dart:convert';
 
 //三方
 export 'package:flukit/flukit.dart';
-export 'package:cached_network_image/cached_network_image.dart';
-export 'package:pull_to_refresh/pull_to_refresh.dart';
 export 'package:common_utils/common_utils.dart';
 export 'package:url_launcher/url_launcher.dart';
 export 'package:webview_flutter/webview_flutter.dart';

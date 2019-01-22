@@ -13,6 +13,7 @@ import '../net/http_util.dart' show HttpUtil;
 import '../util/toast_util.dart' show ToastUtil;
 import '../widget/indicator_factory.dart';
 import '../util/navigator_util.dart';
+// import '../constant/component_index.dart';
 
 //首页
 class HomePage extends StatefulWidget {
@@ -52,17 +53,19 @@ class _HomePageState extends State<HomePage> {
         //print("首页列表----->: " + _getDatas.toString());
         //ToastUtil.showToast("获取数据成功");
 
-        setState(() {
-          if (_pageIndex == 0) {
-            listData.clear();
-          }
-          listData.addAll(_getDatas);
-          if (listData.length >= totalLength) {
-            ToastUtil.showToast("到底啦~");
-          }
-          _pageIndex++;
-          _isLoading = false;
-        });
+        if (this.mounted) {
+          setState(() {
+            if (_pageIndex == 0) {
+              listData.clear();
+            }
+            listData.addAll(_getDatas);
+            if (listData.length >= totalLength) {
+              ToastUtil.showToast("到底啦~");
+            }
+            _pageIndex++;
+            _isLoading = false;
+          });
+        }
       }
     }, errorCallback: (errorMsg) {
       _isLoading = false;
@@ -76,11 +79,13 @@ class _HomePageState extends State<HomePage> {
 
     HttpUtil.dioGet2(url, (response) {
       var data = response['data'];
-      setState(() {
-        banners.clear();
-        banners.addAll(data);
-        //print("广告----->: " + banners.toString());
-      });
+      if (this.mounted) {
+        setState(() {
+          banners.clear();
+          banners.addAll(data);
+          //print("广告----->: " + banners.toString());
+        });
+      }
     });
   }
 
@@ -248,6 +253,28 @@ class _HomePageState extends State<HomePage> {
             _go2ItemDetail(banners[i]['url'], banners[i]['title']);
           },
         ),
+
+        //   Swiper(
+        //   indicatorAlignment: AlignmentDirectional.topEnd,
+        //   circular: true,
+        //   interval: const Duration(seconds: 5),
+        //   // indicator: NumberSwiperIndicator(),
+        //   children: banners.map((banner) {
+        //     return new InkWell(
+        //       onTap: () {
+        //         LogUtil.e("Banner: " + banner.toString());
+        //         NavigatorUtil.pushWeb(context,
+        //             title: banner['title'], url: banner['url']);
+        //       },
+        //       child: new CachedNetworkImage(
+        //         fit: BoxFit.fill,
+        //         imageUrl: banner['url'],
+        //         placeholder: CupertinoActivityIndicator(),
+        //         errorWidget: new Icon(Icons.error),
+        //       ),
+        //     );
+        //   }).toList(),
+        // ),
         height: 180,
       );
     } else {

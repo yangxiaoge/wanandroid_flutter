@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false, // 去除右上角 Debug 标签
       theme: ThemeData.light().copyWith(
         primaryColor: AppColors.AppBarColor,
-        cardColor: Color(AppColors.AppBarPopupMenuColor), //影响popupmenu,等其他控件颜色
+        cardColor: AppColors.AppBarPopupMenuColor, //影响popupmenu,等其他控件颜色
 
         accentColor: AppColors.AppBarColor,
         indicatorColor: Colors.white,

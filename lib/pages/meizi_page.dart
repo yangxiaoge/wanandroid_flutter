@@ -68,13 +68,15 @@ class _MeiZiPageState extends State<MeiZiPage> {
     HttpUtil.getMeiZi(url, params, (data) {
       if (data != null) {
         print('妹子---> $data');
-        setState(() {
-          if (_pageIndex == 0) {
-            meizi.clear();
-          }
-          meizi.addAll(data);
-          _pageIndex++;
-        });
+        if (this.mounted) {
+          setState(() {
+            if (_pageIndex == 0) {
+              meizi.clear();
+            }
+            meizi.addAll(data);
+            _pageIndex++;
+          });
+        }
       }
     });
   }

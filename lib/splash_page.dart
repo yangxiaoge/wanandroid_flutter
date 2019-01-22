@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
-import './constant/constants.dart';
+import './constant/component_index.dart';
 
 //闪屏页
 class SplashPage extends StatefulWidget {
@@ -8,12 +8,38 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    Future.delayed(Duration(seconds: 2)).then((_) {
-      Navigator.of(context).pushReplacementNamed(HomeScreen.ROUTER_NAME);
+  TimerUtil _timerUtil;
+  int _count = 3;
+
+  void _go2Main() {
+    Navigator.of(context).pushReplacementNamed(HomeScreen.ROUTER_NAME);
+  }
+
+  void _initSplash() {
+    //定时器
+    _timerUtil = new TimerUtil(mTotalTime: 3 * 1000);
+    _timerUtil.setOnTimerTickCallback((int tick) {
+      double _tick = tick / 1000;
+      setState(() {
+        _count = _tick.toInt();
+      });
+      if (_tick == 0) {
+        _go2Main();
+      }
     });
+    _timerUtil.startCountDown();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initSplash();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_timerUtil != null) _timerUtil.cancel();
   }
 
   @override
@@ -41,6 +67,30 @@ class _SplashPageState extends State<SplashPage> {
                         color: Colors.black,
                         fontSize: 14.0,
                         fontFamily: Constants.WorkSansMedium)),
+              ),
+            ),
+            Offstage(
+              offstage: false,
+              child: new Container(
+                alignment: Alignment.bottomRight,
+                margin: EdgeInsets.all(20.0),
+                child: InkWell(
+                  onTap: () {
+                    _go2Main();
+                  },
+                  child: new Container(
+                      padding: EdgeInsets.all(12.0),
+                      child: new Text(
+                        '跳过 $_count',
+                        style:
+                            new TextStyle(fontSize: 14.0, color: Colors.white),
+                      ),
+                      decoration: new BoxDecoration(
+                          color: Color(0x66000000),
+                          borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                          border: new Border.all(
+                              width: 0.33, color: AppColors.DIVIDER))),
+                ),
               ),
             ),
           ],

@@ -41,17 +41,17 @@ dependencies:
   pull_to_refresh: ^1.1.6
   # Dart 常用工具类库 https://github.com/Sky24n/common_utils
   common_utils: ^1.0.9
-  # webview
-  webview_flutter:
-    git:
-      url: git://github.com/yangxiaoge/plugins.git
-      ref: newDev
-      path: packages/webview_flutter/
   # flutterchina flukit
   flukit:
     git:
       url: git://github.com/flutterchina/flukit.git
       path: package_src/
+  # flutter_plugins
+  webview_flutter: #（https://github.com/yangxiaoge/plugins/  packages/webview_flutter/ ,packages下有很多的库，需要指定才能用）
+    git:
+      url: git://github.com/yangxiaoge/plugins.git
+      ref: newDev
+      path: packages/webview_flutter/
 
 dev_dependencies:
   flutter_test:

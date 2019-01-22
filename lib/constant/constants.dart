@@ -3,11 +3,12 @@ import 'package:event_bus/event_bus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppColors {
-  static const BackgroundColor = 0xffebebeb;
+  static const Color BackgroundColor = Color(0xffebebeb);
   static const Color AppBarColor = Color(0xFFE5463B); //0xFFE5463B,网易云音乐红
-  static const TabIconNormal = 0xff999999;
-  static const TabIconActive = 0xff46c11b;
-  static const AppBarPopupMenuColor = 0xffffffff;
+  static const Color TabIconNormal = Color(0xff999999);
+  static const Color TabIconActive = Color(0xff46c11b);
+  static const Color AppBarPopupMenuColor = Color(0xffffffff);
+  static const Color DIVIDER = Color(0xffe5e5e5);
 }
 
 class Constants {
