@@ -27,8 +27,16 @@ class HttpUtil {
     // url组合
     url = WanApi.BaseUrl + url;
     print("dio:URL=" + url);
-    var response = await dio.get(url, data: params);
+    var response = await dio.get(url,
+        data: params,
+        options: Options(
+            connectTimeout: 5000,
+            receiveTimeout: 100000,
+            headers: {Constants.Cookie: AppStatus.getString(Constants.Cookie)},
+            contentType: ContentType.json,
+            responseType: ResponseType.JSON));
     //todo 可以进一步判断错误码等等（此处默认返回数据）
+    //print("------------->response = $response");
     callback(response.data);
   }
 
@@ -140,10 +148,21 @@ class HttpUtil {
     bool error = resMap['error'];
     var data = resMap['results'];
     if (!error) {
-      //print("data = $data");
+      print("data = $data");
       callback(data);
     } else {
       errorCallback("出错啦");
     }
+  }
+
+  /// dio 网络请求getMeiZi [category:分类, page: 页数, count:每页的个数]
+  static dioGetMeiZi(String category, int page, Function callback,
+      {count = 20, Function errorCallback}) async {
+    // url组合
+    String url = GankIO.BaseUrl + category + "/$count/$page";
+    print("dio:URL=" + url);
+    var response = await dio.get(url);
+    print("------------->response = $response.data");
+    callback(response.data);
   }
 }

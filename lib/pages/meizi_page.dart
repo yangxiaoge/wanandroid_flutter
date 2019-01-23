@@ -7,7 +7,9 @@ import './zoom_image.dart';
 import '../constant/constants.dart' show MyEventBus;
 import '../eventbus/tab_page_refresh_event.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import '../constant/component_index.dart';
+import '../util/navigator_util.dart';
+import '../constant/constants.dart';
+// import '../constant/component_index.dart';
 
 class MeiZiPage extends StatefulWidget {
   _MeiZiPageState createState() => _MeiZiPageState();
@@ -61,42 +63,21 @@ class _MeiZiPageState extends State<MeiZiPage> {
   }
 
   _getMeiZi() {
-    String url = GankIO.MEIZI;
-    List<String> params = new List();
-    params.add("福利"); //数据类型
-    params.add("20"); //单次请求个数
-    params.add("$_pageIndex");
-    HttpUtil.getMeiZi(url, params, (data) {
-      if (data != null) {
-        print('妹子---> $data');
-        if (this.mounted) {
-          setState(() {
-            if (_pageIndex == 0) {
-              meizi.clear();
-            }
-            meizi.addAll(data);
-            _pageIndex++;
-          });
-        }
+    HttpUtil.dioGetMeiZi(GankIO.MEIZI, _pageIndex, (response) {
+      List _getDatas = response['results'];
+      print("-------妹子 tab datas = $_getDatas");
+      if (this.mounted) {
+        setState(() {
+          if (_pageIndex == 0) {
+            meizi.clear();
+          }
+          meizi.addAll(_getDatas);
+          _pageIndex++;
+        });
       }
+    }, errorCallback: (errorMsg) {
+      ToastUtil.showToast("获取妹子列表出错，$errorMsg");
     });
-
-    // HttpUtil.dioGet2(url, (response) {
-    //   Map<String, dynamic> datas = response['data'];
-    //   List _getDatas = datas['results'];
-    //   print("-------妹子 tab datas = $_getDatas");
-    //   if (this.mounted) {
-    //     setState(() {
-    //       if (_pageIndex == 0) {
-    //         meizi.clear();
-    //       }
-    //       meizi.addAll(_getDatas);
-    //       _pageIndex++;
-    //     });
-    //   }
-    // }, errorCallback: (errorMsg) {
-    //   ToastUtil.showToast("获取妹子列表出错，$errorMsg");
-    // });
   }
 
   //下拉刷新
@@ -107,6 +88,7 @@ class _MeiZiPageState extends State<MeiZiPage> {
 
   @override
   Widget build(BuildContext context) {
+    _refresh();
     return meizi.length <= 0
         ? Center(
             //数据加载progress
@@ -128,8 +110,8 @@ class _MeiZiPageState extends State<MeiZiPage> {
                 return InkWell(
                   onTap: () {
                     print("meizi url = ${meizi[index]['url']}");
-                    NavigatorUtil.pushPage(context, GirlView(
-                          meizi[index]['url'], meizi[index]['desc']));
+                    NavigatorUtil.pushPage(context,
+                        GirlView(meizi[index]['url'], meizi[index]['desc']));
                   },
                   child: SizedBox(
                     height: 300,

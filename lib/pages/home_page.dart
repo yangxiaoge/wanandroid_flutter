@@ -44,15 +44,15 @@ class _HomePageState extends State<HomePage> {
     }
 
     var url = WanApi.Home_Article_List + "$_pageIndex/json";
-    HttpUtil.getHttp(url, (data) {
+
+    HttpUtil.dioGet2(url, (data) {
       if (data != null) {
-        Map<String, dynamic> datas = data;
-        var _getDatas = datas['datas'];
+        Map<String, dynamic> datas = data['data'];
+        List _getDatas = datas['datas'];
         totalLength = datas['total'];
 
-        //print("首页列表----->: " + _getDatas.toString());
-        //ToastUtil.showToast("获取数据成功");
-
+        print("首页列表----->: " + _getDatas.toString());
+        
         if (this.mounted) {
           setState(() {
             if (_pageIndex == 0) {
@@ -68,8 +68,7 @@ class _HomePageState extends State<HomePage> {
         }
       }
     }, errorCallback: (errorMsg) {
-      _isLoading = false;
-      ToastUtil.showToast("获取文章列表出错，$errorMsg");
+      ToastUtil.showToast("获取首页列表出错，$errorMsg");
     });
   }
 
