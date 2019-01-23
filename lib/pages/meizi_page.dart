@@ -88,7 +88,6 @@ class _MeiZiPageState extends State<MeiZiPage> {
 
   @override
   Widget build(BuildContext context) {
-    _refresh();
     return meizi.length <= 0
         ? Center(
             //数据加载progress
