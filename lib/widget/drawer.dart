@@ -3,7 +3,7 @@ import '../constant/component_index.dart';
 
 import '../pages/drawer_setting_page.dart';
 import '../pages/drawer_about_page.dart';
-import '../pages/weather_page.dart';
+import '../pages/drawer_weather_page.dart';
 
 //Drawer 抽屉
 class CustDrawer extends StatefulWidget {

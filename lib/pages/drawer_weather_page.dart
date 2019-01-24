@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../constant/weatherdata.dart';
+import '../constant/component_index.dart';
 import 'package:http/http.dart' as http;
-import 'package:cached_network_image/cached_network_image.dart';
 
 class WeatherPage extends StatefulWidget {
   final String cityName;
@@ -54,8 +54,7 @@ class _WeatherState extends State<WeatherPage> {
         fit: StackFit.expand,
         children: <Widget>[
           CachedNetworkImage(
-            imageUrl:
-                "https://img10.360buyimg.com/img/jfs/t1/30793/16/102/324873/5c37dc8bE5fe78327/bcfd76b97bfa19be.jpg",
+            imageUrl: Constants.WEATHER_bg,
             fit: BoxFit.fitHeight,
           ),
           Column(

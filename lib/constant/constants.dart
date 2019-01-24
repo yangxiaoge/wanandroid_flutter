@@ -54,8 +54,9 @@ class Constants {
   static const WorkSansMedium = "WorkSansMedium";
   // static const AVATAR_URL = "https://avatars3.githubusercontent.com/u/12471093?v=4";
   static const AVATAR_URL =
-      "http://im6.leaderhero.com/emotion/6572/388108213/0a893efeeb.gif";
-
+      "http://im6.leaderhero.com/emotion/6572/388108213/d787ee8089.gif";
+  static const WEATHER_bg =
+      "https://github.com/yangxiaoge/PersonResources/blob/master/app_res/pic1.jpg?raw=true";
   //SharedPreferences对应Key
   static const String Login = "login";
   static const String Cookie = "cookie";

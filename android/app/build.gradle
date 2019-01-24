@@ -51,10 +51,10 @@ android {
 
         }
         release {
-            storeFile file("D:/AAA/yangxiaoge.jks")
-            storePassword "bruce123456"
-            keyAlias "bruce"
-            keyPassword "bruce123456"
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
         }
     }
 
@@ -76,4 +76,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    // stetho
+    implementation 'com.facebook.stetho:stetho:1.5.0'
 }
