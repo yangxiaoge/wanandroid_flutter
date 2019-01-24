@@ -51,11 +51,10 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '玩Android',
+      title: Constants.APPNAME,
       debugShowCheckedModeBanner: false, // 去除右上角 Debug 标签
       theme: ThemeData.light().copyWith(
           accentColor: AppColors.AppBarColor,

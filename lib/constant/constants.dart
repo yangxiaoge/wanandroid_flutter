@@ -48,6 +48,8 @@ class TextStyles {
 }
 
 class Constants {
+  // 应用名称
+  static const APPNAME = "Mumuxi";
   //阿里巴巴字体图标库
   static const IconFontFamily = "aliIconFont";
   //WorkSansMedium字体
