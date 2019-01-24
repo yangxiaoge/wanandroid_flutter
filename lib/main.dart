@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '玩Android',
-      // debugShowCheckedModeBanner: false, // 去除右上角 Debug 标签
+      debugShowCheckedModeBanner: false, // 去除右上角 Debug 标签
       theme: ThemeData.light().copyWith(
           accentColor: AppColors.AppBarColor,
           primaryColor: AppColors.AppBarColor,
