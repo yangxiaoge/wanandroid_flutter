@@ -52,9 +52,12 @@ class _SplashPageState extends State<SplashPage> {
               alignment: FractionalOffset.center,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 150.0),
-                child: Image.asset(
-                  'assets/images/zz.png',
-                  width: 100,
+                child: CircleAvatar(
+                  radius: 35.0,
+                  child: Image.asset(
+                    'android/app/src/main/res/mipmap-xhdpi/zz.png',
+                    width: 100,
+                  ),
                 ),
               ),
             ),
@@ -73,7 +76,7 @@ class _SplashPageState extends State<SplashPage> {
               offstage: false,
               child: new Container(
                 alignment: Alignment.bottomRight,
-                margin: EdgeInsets.symmetric(vertical: 30,horizontal: 20),
+                margin: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
                 child: InkWell(
                   onTap: () {
                     _go2Main();

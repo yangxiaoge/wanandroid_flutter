@@ -56,6 +56,14 @@ class _WeatherState extends State<WeatherPage> {
           CachedNetworkImage(
             imageUrl: Constants.WEATHER_bg,
             fit: BoxFit.fitHeight,
+            placeholder: Image.asset(
+              "assets/images/weather_bg.jpg",
+              fit: BoxFit.fitHeight,
+            ),
+            errorWidget: Image.asset(
+              "assets/images/weather_bg.jpg",
+              fit: BoxFit.fitHeight,
+            ),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
