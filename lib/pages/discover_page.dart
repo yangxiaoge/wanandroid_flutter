@@ -90,8 +90,8 @@ class _DiscoverPageState extends State<DiscoverPage> {
       }
     });
     //登录注册成功事件监听
-    MyEventBus.eventBus.on<LoginRegisterSuccess>().listen((event) {
-      print("收到eventBus登录注册成功事件");
+    MyEventBus.eventBus.on<LoginRegisterLogoutSuccess>().listen((event) {
+      print("收到eventBus登录注册注销成功事件");
       _refresh(true);
     });
   }

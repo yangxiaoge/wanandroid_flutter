@@ -14,6 +14,7 @@ class Ids {
   static String titleAbout = '关于';
   static String titleShare = '分享';
   static String titleSignOut = '注销';
+  static String titleWeather = '天气';
   static String titleLanguage = 'title_language';
   static String titleTheme = 'title_theme';
   static String titleAuthor = 'title_author';
@@ -42,7 +43,8 @@ class Ids {
       "ZZ玩Android，是一款Material风格的Flutter应用，包含登录，搜索，收藏，发现，多语言，主题切换等功能。\n\n此外还有妹子等你哦，顺手点个Star，感谢支持！";
   static String sourceCode = "项目源码:";
   static String developer = "开发者";
-  static String officialWebSite = "官网地址:";
+  static String personalWebSite = "个人主页:";
+  static String apiWebSite = "API地址:";
   static String referenceProject = "参考项目";
   static String openSourceLibrary = "开源库";
 }

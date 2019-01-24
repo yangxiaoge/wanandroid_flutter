@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import '../eventbus/login_register_success_event.dart'
-    show LoginRegisterSuccess;
+    show LoginRegisterLogoutSuccess;
 import '../constant/component_index.dart';
 
 class MinePage extends StatefulWidget {
@@ -12,6 +12,16 @@ class MinePage extends StatefulWidget {
 class _MinePageState extends State<MinePage> {
   TextEditingController _userNameControl = TextEditingController();
   TextEditingController _passwordControl = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    //登录注册成功事件监听
+    MyEventBus.eventBus.on<LoginRegisterLogoutSuccess>().listen((event) {
+      print("收到eventBus登录注册注销成功事件");
+      setState(() {});
+    });
+  }
 
   _login() async {
     String userName = _userNameControl.text;
@@ -36,7 +46,7 @@ class _MinePageState extends State<MinePage> {
       //SP配置文件更新登录状态
       AppStatus.setLogin().then((_) {
         //通知页面登录成功
-        MyEventBus.eventBus.fire(new LoginRegisterSuccess());
+        MyEventBus.eventBus.fire(new LoginRegisterLogoutSuccess());
         setState(() {});
       });
     } else {
@@ -47,28 +57,28 @@ class _MinePageState extends State<MinePage> {
   @override
   Widget build(BuildContext context) {
     bool isLogin = AppStatus.getBool(Constants.Login);
-    print("isLoginaaaa = $isLogin");
+    print("登录状态 isLogin = $isLogin");
     if (isLogin) {
       return Center(
         child: Column(
           children: <Widget>[
             Padding(
               padding: EdgeInsets.all(20),
-              child:RichText(
-              text: new TextSpan(
-                text: '已经登录成功了',
-                style: TextStyle(
+              child: RichText(
+                text: new TextSpan(
+                  text: '已经登录成功了',
+                  style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 20,
-                    ),
-                children: <TextSpan>[
-                  new TextSpan(
+                  ),
+                  children: <TextSpan>[
+                    new TextSpan(
                       text: '😎😜😬',
                       style: new TextStyle(color: Colors.blueAccent),
-                      ),
-                ],
+                    ),
+                  ],
+                ),
               ),
-            ),
             ),
             CachedNetworkImage(
               imageUrl:

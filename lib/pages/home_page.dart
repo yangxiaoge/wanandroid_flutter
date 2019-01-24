@@ -34,25 +34,26 @@ class _HomePageState extends State<HomePage> {
   //广告集合
   List banners = new List();
 
-  //获取文章列表
-  Future _getHomeArticleList() async {
+  // 获取文章列表
+   Future _getHomeArticleList() async {
     if (_pageIndex == 0 && listData.length != 0) {
       // 先滚动到顶部
-      Future.delayed(Duration(milliseconds: 600)).then((_) {
+       Future.delayed(Duration(milliseconds: 600)).then((_) {
         _refreshController.scrollTo(0);
       });
     }
 
     var url = WanApi.Home_Article_List + "$_pageIndex/json";
-
-    HttpUtil.dioGet2(url, (data) {
+    //todo dio请求有缓存问题，注销后cookie似乎还有效
+    HttpUtil.getHttp(url, (data) {
       if (data != null) {
-        Map<String, dynamic> datas = data['data'];
-        List _getDatas = datas['datas'];
+        Map<String, dynamic> datas = data;
+        var _getDatas = datas['datas'];
         totalLength = datas['total'];
 
-        print("首页列表----->: " + _getDatas.toString());
-        
+        //print("首页列表 ----->:" + _getDatas.toString());
+        //ToastUtil.showToast("获取数据成功");
+
         if (this.mounted) {
           setState(() {
             if (_pageIndex == 0) {
@@ -68,10 +69,10 @@ class _HomePageState extends State<HomePage> {
         }
       }
     }, errorCallback: (errorMsg) {
-      ToastUtil.showToast("获取首页列表出错，$errorMsg");
+      _isLoading = false;
+      ToastUtil.showToast(" 获取文章列表出错，$errorMsg");
     });
   }
-
   //获取广告
   _getBanners() async {
     var url = WanApi.Banner;
@@ -126,8 +127,8 @@ class _HomePageState extends State<HomePage> {
       }
     });
     //登录注册成功事件监听
-    MyEventBus.eventBus.on<LoginRegisterSuccess>().listen((event) {
-      print("收到eventBus登录注册成功事件");
+    MyEventBus.eventBus.on<LoginRegisterLogoutSuccess>().listen((event) {
+      print("收到eventBus登录注册注销成功事件");
       _refresh(true);
     });
   }

@@ -3,6 +3,7 @@ import '../constant/component_index.dart';
 
 import '../pages/drawer_setting_page.dart';
 import '../pages/drawer_about_page.dart';
+import '../pages/weather_page.dart';
 
 //Drawer 抽屉
 class CustDrawer extends StatefulWidget {
@@ -25,6 +26,7 @@ class _CustDrawerState extends State<CustDrawer> {
   void initState() {
     super.initState();
     //_pageInfo.add(PageInfo(Ids.titleCollection, Icons.collections, CollectionPage()));
+    _pageInfo.add(PageInfo(Ids.titleWeather, Icons.cloud, WeatherPage('南京')));
     _pageInfo.add(PageInfo(Ids.titleSetting, Icons.settings, SettingPage()));
     _pageInfo.add(PageInfo(Ids.titleAbout, Icons.info, AboutPage()));
     _pageInfo.add(PageInfo(Ids.titleShare, Icons.share, null));
@@ -62,7 +64,14 @@ class _CustDrawerState extends State<CustDrawer> {
                       NavigatorUtil.pushPage(context, pageInfo.page,
                           pageName: pageInfo.titleId);
                     } else if (pageInfo.titleId == Ids.titleSignOut) {
-                      ToastUtil.showToast("注销");
+                      Scaffold.of(context).openEndDrawer(); //可以先关闭抽屉
+                      ToastUtil.showToast(Ids.titleSignOut);
+                      //注销清除所有数据
+                      AppStatus.clearSP().then((boolean) {
+                        //通知页面注销成功
+                        MyEventBus.eventBus
+                            .fire(new LoginRegisterLogoutSuccess());
+                      });
                     } else if (pageInfo.titleId == Ids.titleShare) {
                       Share.share(Ids.shareTxt);
                     }

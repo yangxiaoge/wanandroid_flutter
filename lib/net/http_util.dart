@@ -27,6 +27,8 @@ class HttpUtil {
     // url组合
     url = WanApi.BaseUrl + url;
     print("dio:URL=" + url);
+    print(
+        "AppStatus.getString(Constants.Login) = ${AppStatus.getBool(Constants.Login)}");
     var response = await dio.get(url,
         data: params,
         options: Options(
@@ -36,7 +38,7 @@ class HttpUtil {
             contentType: ContentType.json,
             responseType: ResponseType.JSON));
     //todo 可以进一步判断错误码等等（此处默认返回数据）
-    //print("------------->response = $response");
+    print("------------->response = ${response.request.headers}");
     callback(response.data);
   }
 
@@ -104,8 +106,7 @@ class HttpUtil {
     print("params.toString() = " + params.toString());
 
     //获取cookie
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String cookieSTR = prefs.getString(Constants.Cookie);
+    String cookieSTR = AppStatus.getString(Constants.Cookie);
     Map<String, String> headerMap = Map();
     headerMap[Constants.Cookie] = cookieSTR;
     print("--------cookieSTR = $cookieSTR");

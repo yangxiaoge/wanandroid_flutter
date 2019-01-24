@@ -30,6 +30,16 @@ class _AboutPageState extends State<AboutPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                Center(
+                  child: CircleAvatar(
+                    backgroundImage:
+                        CachedNetworkImageProvider(Constants.AVATAR_URL),
+                    radius: 35.0,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                ),
                 Text(Ids.introduction,
                     style: Theme.of(context).textTheme.title),
                 Padding(
@@ -39,6 +49,33 @@ class _AboutPageState extends State<AboutPage> {
                 Text(Ids.gankDesc, style: Theme.of(context).textTheme.body1),
                 Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 10),
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 4.0),
+                        child: Text(
+                          Ids.personalWebSite,
+                          style: linkTitleStyle,
+                        ),
+                      ),
+                      RichText(
+                          text: TextSpan(children: <TextSpan>[
+                        TextSpan(
+                            style: Theme.of(context).textTheme.body1.copyWith(
+                                color: Theme.of(context).accentColor,
+                                fontSize: 15,
+                                decoration: TextDecoration.underline),
+                            text: "https://yangxiaoge.github.io",
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                launch('https://yangxiaoge.github.io');
+                              })
+                      ]))
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
                   child: Row(
                     children: <Widget>[
                       Padding(
@@ -72,7 +109,7 @@ class _AboutPageState extends State<AboutPage> {
                       Padding(
                         padding: const EdgeInsets.only(right: 4.0),
                         child: Text(
-                          Ids.officialWebSite,
+                          Ids.apiWebSite,
                           style: linkTitleStyle,
                         ),
                       ),
@@ -91,7 +128,8 @@ class _AboutPageState extends State<AboutPage> {
                                 text: "http://www.wanandroid.com/",
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    launch('http://www.wanandroid.com/');
+                                    launch(
+                                        'http://www.wanandroid.com/blog/show/2');
                                   })
                           ])),
                           RichText(
@@ -188,7 +226,8 @@ class _AboutPageState extends State<AboutPage> {
                       ]))
                     ],
                   ),
-                ),Padding(
+                ),
+                Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Row(
                     children: <Widget>[
@@ -279,6 +318,7 @@ class _AboutPageState extends State<AboutPage> {
                     'https://github.com/peng8350/flutter_pulltorefresh',
                     linkTitleStyle,
                     linkTextStyle),
+                Text("未完待续~~~"),
               ],
             ),
           ),

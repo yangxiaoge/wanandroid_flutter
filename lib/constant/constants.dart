@@ -11,6 +11,7 @@ class AppColors {
   static const Color BackgroundColor = Color(0xffebebeb);
   static const Color AppBarColor = Color(0xFFE5463B); //0xFFE5463B,网易云音乐红
   static const Color TabIconNormal = Color(0xff999999);
+  static const Color DividerColor = Color(0xffeeeeee);
   static const Color TabIconActive = Color(0xff46c11b);
   static const Color AppBarPopupMenuColor = Color(0xffffffff);
   static const Color DIVIDER = Color(0xffe5e5e5);
@@ -80,12 +81,6 @@ class AppStatus {
     sp.setBool(Constants.Login, true);
   }
 
-  //清楚所有SP
-  static Future clearSP() async {
-    SharedPreferences spf = await SharedPreferences.getInstance();
-    spf.clear();
-  }
-
   static Future saveSP(String key, value) async {
     SharedPreferences spf = await SharedPreferences.getInstance();
     spf.setString(key, value);
@@ -139,5 +134,10 @@ class AppStatus {
   static bool getBool(String key) {
     //不存在会返回null，因此需要与true比较
     return true == SpUtil.getBool(key);
+  }
+
+  ///清除所有SP
+  static Future<bool> clearSP() {
+    return SpUtil.clear();
   }
 }

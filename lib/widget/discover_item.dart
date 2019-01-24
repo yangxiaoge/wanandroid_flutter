@@ -52,14 +52,14 @@ class DiscoverItem extends StatelessWidget {
                       style: TextStyles.listContent,
                     ),
                   ),
-                  SizedBox(width: Dimens.gap_dp5),
+                  SizedBox(height: Dimens.gap_dp10),
                   new Row(
                     children: <Widget>[
                       new Text(
                         author,
                         style: TextStyles.listExtra,
                       ),
-                      SizedBox(height: Dimens.gap_dp10),
+                      SizedBox(width: Dimens.gap_dp10),
                       new Text(
                         niceDate,
                         style: TextStyles.listExtra,

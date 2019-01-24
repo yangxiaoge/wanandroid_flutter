@@ -36,7 +36,7 @@ dependencies:
   url_launcher: ^4.0.3
   # 上拉加载和下拉刷新的组件
   pull_to_refresh: ^1.1.6
-  # Dart 常用工具类库 https://github.com/Sky24n/common_utils
+  # 常用工具类库 https://github.com/Sky24n/common_utils
   common_utils: ^1.0.9
   # # flustars(Flutter 常用工具类库)
   # flustars:
@@ -86,7 +86,6 @@ flutter:
 
   assets:
    - assets/images/zz.png
-   - assets/images/gank.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

@@ -13,6 +13,7 @@
 库 | 功能
 -------- | ---
 **http**|**网络框架**
+**dio**|**flutterchina - 网络框架**
 **shared_preferences**|**本地数据缓存**
 **fluttertoast**|**toast**
 **iconfont**|**字库图标**
@@ -22,10 +23,18 @@
 **photo_view**|**图片预览**
 **flutter_swiper**|**广告**
 **event_bus**|**EventBus事件**
+**flukit**|**flutterchina - flukit**
+**plugins**|**flutterchina - plugins**
+**common_utils**|**常用工具包**
+
 
 ## todo 
 - [x] 首页
-- [ ] 发现
+- [x] 发现
 - [x] 妹子
-- [ ] 我的
-- [ ] 登录
+- [x] 我的
+- [x] 登录
+- [x] 侧滑
+- [ ] 搜索
+- [ ] 多语言
+- [ ] 主题
