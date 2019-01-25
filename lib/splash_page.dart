@@ -56,7 +56,7 @@ class _SplashPageState extends State<SplashPage> {
                   radius: 35.0,
                   child: Image.asset(
                     'android/app/src/main/res/mipmap-xhdpi/zz.png',
-                    width: 100,
+                    // width: 100,
                   ),
                 ),
               ),

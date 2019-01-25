@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import "package:pull_to_refresh/pull_to_refresh.dart";
 
-import './item_detail_page.dart';
 import '../constant/constants.dart';
 import '../eventbus/login_register_success_event.dart';
 import '../eventbus/tab_page_refresh_event.dart';
@@ -35,10 +34,10 @@ class _HomePageState extends State<HomePage> {
   List banners = new List();
 
   // 获取文章列表
-   Future _getHomeArticleList() async {
+  Future _getHomeArticleList() async {
     if (_pageIndex == 0 && listData.length != 0) {
       // 先滚动到顶部
-       Future.delayed(Duration(milliseconds: 600)).then((_) {
+      Future.delayed(Duration(milliseconds: 600)).then((_) {
         _refreshController.scrollTo(0);
       });
     }
@@ -73,6 +72,7 @@ class _HomePageState extends State<HomePage> {
       ToastUtil.showToast(" 获取文章列表出错，$errorMsg");
     });
   }
+
   //获取广告
   _getBanners() async {
     var url = WanApi.Banner;

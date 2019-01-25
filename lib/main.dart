@@ -5,6 +5,7 @@ import 'splash_page.dart';
 import 'home_screen.dart';
 import 'constant/constants.dart';
 import './util/sp_util.dart';
+import './util/toast_util.dart';
 
 void main() {
   runApp(MyApp());
@@ -48,6 +49,8 @@ class _MyAppState extends State<MyApp> {
     await SpUtil.getInstance().then((_) {
       print("SP初始化完成");
     });
+    //解决 Instance member 'showToast' can't be accessed using static access. [static access to_instance_member
+    await ToastUtil.getInstance();
     if (!mounted) return;
   }
 

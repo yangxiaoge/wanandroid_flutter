@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import '../constant/constants.dart' show Constants, AppColors;
+import '../constant/constants.dart' show Constants;
 import '../util/toast_util.dart';
 
 enum PopMenuItems { GROUP_CHAT, ADD_FRIEND, QR_SCAN, PAYMENT, HELP }
 
 class PopUpMenu extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final statsBarPlusAppbarHeight =
@@ -58,8 +57,7 @@ _buildPopupMunuItem(int iconName, String title) {
           size: 22.0,
           color: Colors.black),
       Container(width: 12.0),
-      Text(title,
-          style: TextStyle(color: Colors.black)),
+      Text(title, style: TextStyle(color: Colors.black)),
     ],
   );
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
 import '../eventbus/login_register_success_event.dart'
     show LoginRegisterLogoutSuccess;
