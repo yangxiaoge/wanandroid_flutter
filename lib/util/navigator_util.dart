@@ -24,7 +24,7 @@ class NavigatorUtil {
     } else {
       Navigator.push(
           context,
-          new CupertinoPageRoute<void>(
+          new MaterialPageRoute<void>(
               builder: (ctx) => ItemDetailPage(
                   title: title,
                   titleId: titleId,

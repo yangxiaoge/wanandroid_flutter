@@ -50,12 +50,14 @@ dependencies:
   #     url: git://github.com/flutterchina/flukit.git
   #     path: package_src/
   
+  # flutter_webview_plugin
+  flutter_webview_plugin: ^0.3.0+2
   # flutter_plugins(里面有众多插件可以引用，如下 webview_flutter，share等)
-  webview_flutter: #（https://github.com/yangxiaoge/plugins/  packages/webview_flutter/ ,packages下有很多的库，需要指定才能用）
-    git:
-      url: git://github.com/yangxiaoge/plugins.git
-      ref: newDev
-      path: packages/webview_flutter/
+  # webview_flutter: #（https://github.com/yangxiaoge/plugins/  packages/webview_flutter/ ,packages下有很多的库，需要指定才能用）
+  #   git:
+  #     url: git://github.com/yangxiaoge/plugins.git
+  #     ref: newDev
+  #     path: packages/webview_flutter/
   # 分享（调用系统分享的 Flutter 组件，支持分享文本，图片和文件）
   share: #（https://github.com/yangxiaoge/plugins/  packages/webview_flutter/ ,packages下有很多的库，需要指定才能用）
     git:

@@ -21,7 +21,8 @@ class ItemDetailPage extends StatefulWidget {
 }
 
 class _ItemDetailPageState extends State<ItemDetailPage> {
-  WebViewController _webViewController;
+  FlutterWebviewPlugin flutterWebViewPlugin = new FlutterWebviewPlugin();
+  bool isLoad = true;
   bool _isShowFloatBtn = false;
   bool isCollected = false;
 
@@ -29,6 +30,17 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
   void initState() {
     super.initState();
     isCollected = widget.isCollected;
+    flutterWebViewPlugin.onStateChanged.listen((state) {
+      if (state.type == WebViewState.finishLoad) {
+        setState(() {
+          isLoad = false;
+        });
+      } else if (state.type == WebViewState.startLoad) {
+        setState(() {
+          isLoad = true;
+        });
+      }
+    });
   }
 
   @override
@@ -59,40 +71,36 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
             },
           )
         ],
+        bottom: new PreferredSize(
+            preferredSize: const Size.fromHeight(1.0),
+            child: isLoad
+                ? new LinearProgressIndicator(
+                  backgroundColor: Colors.transparent,
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(Colors.blueAccent),
+                  )
+                : new Divider(
+                    height: 1.0,
+                    color: Theme.of(context).primaryColor,
+                  )),
       ),
-      body: WebView(
-        onWebViewCreated: (WebViewController webViewController) {
-          _webViewController = webViewController;
-          _webViewController.addListener(() {
-            int _scrollY = _webViewController.scrollY.toInt();
-            if (_scrollY < 480 && _isShowFloatBtn) {
-              _isShowFloatBtn = false;
-              setState(() {});
-            } else if (_scrollY > 480 && !_isShowFloatBtn) {
-              _isShowFloatBtn = true;
-              setState(() {});
-            }
-          });
-        },
-        initialUrl: widget.url,
-        javascriptMode: JavascriptMode.unrestricted,
+      body: WebviewScaffold(
+        url: widget.url,
+        withZoom: false,
+        withLocalStorage: true,
+        withJavascript: true,
       ),
       floatingActionButton: _buildFloatingActionButton(),
     );
   }
 
   Widget _buildFloatingActionButton() {
-    if (_webViewController == null || _webViewController.scrollY < 480) {
-      return null;
-    }
     return new FloatingActionButton(
         heroTag: widget.title,
         backgroundColor: Theme.of(context).primaryColor,
         child: Icon(
           Icons.keyboard_arrow_up,
         ),
-        onPressed: () {
-          _webViewController.scrollTop();
-        });
+        onPressed: () {});
   }
 }

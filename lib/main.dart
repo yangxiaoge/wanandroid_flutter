@@ -5,7 +5,7 @@ import 'splash_page.dart';
 import 'home_screen.dart';
 import 'constant/constants.dart';
 import './util/sp_util.dart';
-import './util/toast_util.dart';
+// import './util/toast_util.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,22 +14,6 @@ void main() {
     SystemUiOverlayStyle systemUiOverlayStyle =
         SystemUiOverlayStyle(statusBarColor: Colors.transparent);
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
-    /**
-         const SystemUiOverlayStyle({
-         /// 底部状态栏和app内主题颜色 (Android O 8.0 及以上)
-          this.systemNavigationBarColor,
-          /// 底部虚拟按键和内容中间展示的Divider颜色  (Android P 9.0 及以上)
-          this.systemNavigationBarDividerColor,
-          /// 底部虚拟按键展示的主题  (light/dark)  (Android O 8.0 及以上)
-          this.systemNavigationBarIconBrightness,
-          /// 状态栏颜色  (Android M 6.0 及以上)
-          this.statusBarColor,
-          /// 只针对iOS 顶部状态栏颜色配置
-          this.statusBarBrightness,
-          /// 状态栏主题   (dark/light)  (Android M 6.0 及以上)
-          this.statusBarIconBrightness,
-        });
-       */
   }
 }
 
@@ -49,8 +33,6 @@ class _MyAppState extends State<MyApp> {
     await SpUtil.getInstance().then((_) {
       print("SP初始化完成");
     });
-    //解决 Instance member 'showToast' can't be accessed using static access. [static access to_instance_member
-    await ToastUtil.getInstance();
     if (!mounted) return;
   }
 
