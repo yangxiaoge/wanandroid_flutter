@@ -5,9 +5,10 @@ import 'splash_page.dart';
 import 'home_screen.dart';
 import 'constant/constants.dart';
 import './util/sp_util.dart';
-// import './util/toast_util.dart';
 
 void main() {
+  setCustomErrorPage();
+
   runApp(MyApp());
 
   if (Platform.isAndroid) {
@@ -15,6 +16,14 @@ void main() {
         SystemUiOverlayStyle(statusBarColor: Colors.transparent);
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
+}
+
+///自定义错误页面
+void setCustomErrorPage(){
+  ErrorWidget.builder = (flutterErrorDetails){
+      debugPrint(flutterErrorDetails.toString());
+      return Scaffold(body: Center(child: Text('Flutter 走神了😹')),);
+  };
 }
 
 class MyApp extends StatefulWidget {
@@ -40,7 +49,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: Constants.APPNAME,
-      debugShowCheckedModeBanner: false, // 去除右上角 Debug 标签
+      ///debugShowCheckedModeBanner: false, // 去除右上角 Debug 标签
       theme: ThemeData.light().copyWith(
           accentColor: AppColors.AppBarColor,
           primaryColor: AppColors.AppBarColor,

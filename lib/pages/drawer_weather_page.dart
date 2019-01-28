@@ -27,9 +27,11 @@ class _WeatherState extends State<WeatherPage> {
 
   void _getWeather() async {
     WeatherData data = await _fetchWeather();
-    setState(() {
-      weather = data;
-    });
+    if (!mounted) {
+      setState(() {
+        weather = data;
+      });
+    }
   }
 
   Future<WeatherData> _fetchWeather() async {
@@ -56,14 +58,10 @@ class _WeatherState extends State<WeatherPage> {
           CachedNetworkImage(
             imageUrl: Constants.WEATHER_bg,
             fit: BoxFit.fitHeight,
-            placeholder: Image.asset(
-              "assets/images/weather_bg.jpg",
-              fit: BoxFit.fitHeight,
-            ),
-            errorWidget: Image.asset(
-              "assets/images/weather_bg.jpg",
-              fit: BoxFit.fitHeight,
-            ),
+            placeholder: ImageUtil.getImage(Constants.WEATHER_bg_assetPath,
+                fit: BoxFit.fitHeight),
+            errorWidget: ImageUtil.getImage(Constants.WEATHER_bg_assetPath,
+                fit: BoxFit.fitHeight),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,

@@ -24,6 +24,7 @@ class NavigatorUtil {
     } else {
       Navigator.push(
           context,
+          // WebviewScaffold 侧滑退出有bug，因此换成MaterialPageRoute
           new MaterialPageRoute<void>(
               builder: (ctx) => ItemDetailPage(
                   title: title,

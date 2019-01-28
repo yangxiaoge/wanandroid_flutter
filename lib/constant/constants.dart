@@ -50,15 +50,19 @@ class TextStyles {
 class Constants {
   // 应用名称
   static const APPNAME = "Mumuxi";
+  //应用icon路径
+  static const Icon_PATH = "android/app/src/main/res/mipmap-xhdpi/zz.png";
   //阿里巴巴字体图标库
   static const IconFontFamily = "aliIconFont";
   //WorkSansMedium字体
   static const WorkSansMedium = "WorkSansMedium";
   // static const AVATAR_URL = "https://avatars3.githubusercontent.com/u/12471093?v=4";
-  static const AVATAR_URL =
-      "http://im6.leaderhero.com/emotion/6572/388108213/d787ee8089.gif";
-  static const WEATHER_bg =
-      "https://github.com/yangxiaoge/PersonResources/blob/master/app_res/pic1.jpg?raw=true";
+  //drawer头像
+  static const AVATAR_URL = Icon_PATH;
+  //天气网络背景图片
+  static const WEATHER_bg = "https://github.com/yangxiaoge/PersonResources/blob/master/app_res/pic1.jpg?raw=true";
+  //天气默认背景
+  static const WEATHER_bg_assetPath = "assets/images/weather_bg.jpg";
   //SharedPreferences对应Key
   static const String Login = "login";
   static const String Cookie = "cookie";

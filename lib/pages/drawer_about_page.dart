@@ -33,8 +33,7 @@ class _AboutPageState extends State<AboutPage> {
                 Center(
                   child: CircleAvatar(
                     backgroundImage:
-                        // NetworkImage(Constants.AVATAR_URL),
-                        CachedNetworkImageProvider(Constants.AVATAR_URL),
+                        ImageUtil.getImageProvider(Constants.AVATAR_URL),
                     radius: 35.0,
                   ),
                 ),

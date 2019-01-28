@@ -54,10 +54,7 @@ class _SplashPageState extends State<SplashPage> {
                 padding: const EdgeInsets.only(bottom: 150.0),
                 child: CircleAvatar(
                   radius: 35.0,
-                  child: Image.asset(
-                    'android/app/src/main/res/mipmap-xhdpi/zz.png',
-                    // width: 100,
-                  ),
+                  child: ImageUtil.getImage(Constants.Icon_PATH),
                 ),
               ),
             ),

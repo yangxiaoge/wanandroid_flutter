@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import '../constant/component_index.dart';
 
 class GirlView extends StatefulWidget {
@@ -36,6 +37,9 @@ class _GirlViewState extends State<GirlView> {
         },
         child: PhotoView(
           imageProvider: CachedNetworkImageProvider(widget.url),
+          loadingChild: Center(
+            child: CupertinoActivityIndicator(),
+          ),
         ),
       )),
     );

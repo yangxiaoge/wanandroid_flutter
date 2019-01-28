@@ -112,8 +112,8 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: CircleAvatar(
-            radius: 36,
-            backgroundImage: CachedNetworkImageProvider(Constants.AVATAR_URL),
+            radius: 35.0,
+            backgroundImage: ImageUtil.getImageProvider(Constants.AVATAR_URL),
             // child: CachedNetworkImage(imageUrl: Constants.AVATAR_URL),
           ),
           alignment: Alignment.centerLeft,

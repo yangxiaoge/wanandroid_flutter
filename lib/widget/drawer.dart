@@ -37,7 +37,7 @@ class _CustDrawerState extends State<CustDrawer> {
     accountName: Text('Bruce Yang'),
     accountEmail: Text('yang.jianan0926@gmail.com'),
     currentAccountPicture: CircleAvatar(
-      backgroundImage: CachedNetworkImageProvider(Constants.AVATAR_URL),
+      backgroundImage: ImageUtil.getImageProvider(Constants.AVATAR_URL),
       radius: 35.0,
     ),
   );

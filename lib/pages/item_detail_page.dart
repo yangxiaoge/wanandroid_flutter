@@ -23,8 +23,14 @@ class ItemDetailPage extends StatefulWidget {
 class _ItemDetailPageState extends State<ItemDetailPage> {
   FlutterWebviewPlugin flutterWebViewPlugin = new FlutterWebviewPlugin();
   bool isLoad = true;
-  bool _isShowFloatBtn = false;
+  //bool _isShowFloatBtn = false;
   bool isCollected = false;
+
+  @override
+  void dispose() {
+    flutterWebViewPlugin.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -75,20 +81,26 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
             preferredSize: const Size.fromHeight(1.0),
             child: isLoad
                 ? new LinearProgressIndicator(
-                  backgroundColor: Colors.transparent,
+                    backgroundColor: Colors.transparent,
                     valueColor:
                         AlwaysStoppedAnimation<Color>(Colors.blueAccent),
                   )
                 : new Divider(
-                    height: 1.0,
+                    height: 0.0,
                     color: Theme.of(context).primaryColor,
                   )),
       ),
       body: WebviewScaffold(
+        hidden: true,
         url: widget.url,
-        withZoom: false,
+        withZoom: true,
         withLocalStorage: true,
         withJavascript: true,
+        initialChild: Container(
+          child: const Center(
+            child: CupertinoActivityIndicator(),
+          ),
+        ),
       ),
       floatingActionButton: _buildFloatingActionButton(),
     );
