@@ -27,19 +27,18 @@ class _WeatherState extends State<WeatherPage> {
 
   void _getWeather() async {
     WeatherData data = await _fetchWeather();
-    if (!mounted) {
-      setState(() {
-        weather = data;
-      });
-    }
+    setState(() {
+      weather = data;
+    });
   }
 
   Future<WeatherData> _fetchWeather() async {
     final response = await http.get(
-        'https://free-api.heweather.com/s6/weather/now?location=' +
+        'https://free-api.heweather.com/v5/weather?city=' +
             this.cityName +
             '&key=f7da3083a7bf45b7800704d128bd6900');
     if (response.statusCode == 200) {
+      print("-------response.body-------- = ${response.body}");
       return WeatherData.fromJson(json.decode(response.body));
     } else {
       return WeatherData.empty();
@@ -81,7 +80,7 @@ class _WeatherState extends State<WeatherPage> {
               ),
               Container(
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 100.0),
+                margin: EdgeInsets.only(top: 80.0),
                 child: Column(
                   children: <Widget>[
                     Text(weather?.tmp,
@@ -90,6 +89,10 @@ class _WeatherState extends State<WeatherPage> {
                         style: TextStyle(color: Colors.white, fontSize: 45.0)),
                     Text(
                       weather?.hum,
+                      style: TextStyle(color: Colors.white, fontSize: 30.0),
+                    ),
+                    Text(
+                      weather?.pm25,
                       style: TextStyle(color: Colors.white, fontSize: 30.0),
                     )
                   ],
