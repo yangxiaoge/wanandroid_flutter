@@ -1,18 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
-import "package:pull_to_refresh/pull_to_refresh.dart";
-
-import '../constant/constants.dart';
-import '../eventbus/login_register_success_event.dart';
-import '../eventbus/tab_page_refresh_event.dart';
-import '../net/api_service.dart' show WanApi;
-import '../net/http_util.dart' show HttpUtil;
-import '../util/toast_util.dart' show ToastUtil;
-import '../widget/indicator_factory.dart';
-import '../util/navigator_util.dart';
-// import '../constant/component_index.dart';
+import '../constant/component_index.dart';
 
 //首页
 class HomePage extends StatefulWidget {
@@ -60,7 +48,7 @@ class _HomePageState extends State<HomePage> {
             }
             listData.addAll(_getDatas);
             if (listData.length >= totalLength) {
-              ToastUtil.showToast("到底啦~");
+              ToastUtil.showToast(IntlUtil.getString(context, Ids.noMore));
             }
             _pageIndex++;
             _isLoading = false;
@@ -124,6 +112,8 @@ class _HomePageState extends State<HomePage> {
       print("收到eventBus当前tabIndex = ${event.tabIndex}");
       if (event.tabIndex == NavTabItems.HOME.index) {
         _refresh(true);
+        //双击时也刷新广告
+        _getBanners();
       }
     });
     //登录注册成功事件监听
@@ -198,7 +188,9 @@ class _HomePageState extends State<HomePage> {
       String errorMsg = response['errorMsg'];
       print("data = $data,errorCode = $errorCode,errorMsg = $errorMsg");
       if (errorCode >= 0) {
-        ToastUtil.showToast(!itemData['collect'] ? "收藏成功" : "取消收藏");
+        ToastUtil.showToast(!itemData['collect']
+            ? IntlUtil.getString(context, Ids.collectSuccess)
+            : IntlUtil.getString(context, Ids.cancelCollect));
         setState(() {
           itemData['collect'] = !itemData['collect'];
         });
@@ -206,7 +198,7 @@ class _HomePageState extends State<HomePage> {
         ToastUtil.showToast("$errorMsg");
       }
     } else {
-      ToastUtil.showToast("未登录");
+      ToastUtil.showToast(IntlUtil.getString(context, Ids.notLogin));
     }
   }
 
@@ -254,28 +246,6 @@ class _HomePageState extends State<HomePage> {
             _go2ItemDetail(banners[i]['url'], banners[i]['title']);
           },
         ),
-
-        //   Swiper(
-        //   indicatorAlignment: AlignmentDirectional.topEnd,
-        //   circular: true,
-        //   interval: const Duration(seconds: 5),
-        //   // indicator: NumberSwiperIndicator(),
-        //   children: banners.map((banner) {
-        //     return new InkWell(
-        //       onTap: () {
-        //         LogUtil.e("Banner: " + banner.toString());
-        //         NavigatorUtil.pushWeb(context,
-        //             title: banner['title'], url: banner['url']);
-        //       },
-        //       child: new CachedNetworkImage(
-        //         fit: BoxFit.fill,
-        //         imageUrl: banner['url'],
-        //         placeholder: CupertinoActivityIndicator(),
-        //         errorWidget: new Icon(Icons.error),
-        //       ),
-        //     );
-        //   }).toList(),
-        // ),
         height: 180,
       );
     } else {
@@ -317,17 +287,9 @@ class _HomePageState extends State<HomePage> {
               color: isCollected ? Colors.red : null,
             ),
             onTap: () {
-              //ToastUtil.showToast('别摸我~');
               _likeClick(itemData);
             },
           )
-          // InkWell(
-          //   child: Icon(
-          //     isCollected ? Icons.favorite : Icons.favorite_border,
-          //     color: isCollected ? Colors.red : null,
-          //   ),
-          //   onTap: () {},
-          // )
         ],
       );
 

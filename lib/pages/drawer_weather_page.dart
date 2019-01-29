@@ -26,10 +26,22 @@ class _WeatherState extends State<WeatherPage> {
   }
 
   void _getWeather() async {
+    _loadLoacleCache();
     WeatherData data = await _fetchWeather();
     setState(() {
       weather = data;
     });
+  }
+
+  ///上次缓存的天气数据
+  void _loadLoacleCache() {
+    WeatherData cachedWeather = AppStatus.getLastCacheWeather();
+    if (cachedWeather != null) {
+      print("加载缓存的天气数据");
+      setState(() {
+        weather = cachedWeather;
+      });
+    }
   }
 
   Future<WeatherData> _fetchWeather() async {
@@ -38,8 +50,11 @@ class _WeatherState extends State<WeatherPage> {
             this.cityName +
             '&key=f7da3083a7bf45b7800704d128bd6900');
     if (response.statusCode == 200) {
-      print("-------response.body-------- = ${response.body}");
-      return WeatherData.fromJson(json.decode(response.body));
+      print("-------weather-------- = ${response.body}");
+      WeatherData weather = WeatherData.fromJson(json.decode(response.body));
+      //缓存本次天气数据
+      AppStatus.putObject(Constants.WeatherCache, weather);
+      return weather;
     } else {
       return WeatherData.empty();
     }

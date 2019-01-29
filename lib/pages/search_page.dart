@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../util/toast_util.dart';
+import '../constant/component_index.dart';
+
 class SearchPage extends StatefulWidget {
   final String searchWord;
   SearchPage(this.searchWord);
@@ -46,7 +47,9 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('搜索页'),),
+      appBar: AppBar(
+        title: Text(IntlUtil.getString(context, Ids.search)),
+      ),
       body: Container(
         child: Text(widget.searchWord ?? "搜索词"),
       ),

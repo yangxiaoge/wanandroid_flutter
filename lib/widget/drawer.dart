@@ -25,7 +25,6 @@ class _CustDrawerState extends State<CustDrawer> {
   @override
   void initState() {
     super.initState();
-    //_pageInfo.add(PageInfo(Ids.titleCollection, Icons.collections, CollectionPage()));
     _pageInfo.add(PageInfo(Ids.titleWeather, Icons.cloud, WeatherPage('南京')));
     _pageInfo.add(PageInfo(Ids.titleSetting, Icons.settings, SettingPage()));
     _pageInfo.add(PageInfo(Ids.titleAbout, Icons.info, AboutPage()));
@@ -34,10 +33,17 @@ class _CustDrawerState extends State<CustDrawer> {
   }
 
   final Widget userHeader = UserAccountsDrawerHeader(
-    accountName: Text('Bruce Yang'),
-    accountEmail: Text('yang.jianan0926@gmail.com'),
+    decoration: BoxDecoration(
+      image: DecorationImage(
+        fit: BoxFit.cover, //居中剪裁
+        // image: ImageUtil.getImageProvider(Constants.WEATHER_bg),
+        image: ImageUtil.getImageProvider(Constants.WEATHER_bg_assetPath),
+      ),
+    ),
+    accountName: Text(Constants.accountName),
+    accountEmail: Text(Constants.accountEmail),
     currentAccountPicture: CircleAvatar(
-      backgroundImage: ImageUtil.getImageProvider(Constants.AVATAR_URL),
+      backgroundImage: ImageUtil.getImageProvider(Constants.Icon_PATH),
       radius: 35.0,
     ),
   );
@@ -54,18 +60,21 @@ class _CustDrawerState extends State<CustDrawer> {
               itemCount: _pageInfo.length,
               itemBuilder: (BuildContext context, int index) {
                 PageInfo pageInfo = _pageInfo[index];
+                print("----titleID啊啊" + pageInfo.titleId);
                 return new ListTile(
                   leading: new Icon(pageInfo.iconData),
-                  title: new Text(pageInfo.titleId),
+                  title:
+                      new Text(IntlUtil.getString(context, pageInfo.titleId)),
                   onTap: () {
+                    Scaffold.of(context).openEndDrawer(); //可以先关闭抽屉
+
                     if (pageInfo.titleId != Ids.titleSignOut &&
                         pageInfo.titleId != Ids.titleShare) {
-                      //Scaffold.of(context).openEndDrawer();//可以先关闭抽屉
                       NavigatorUtil.pushPage(context, pageInfo.page,
                           pageName: pageInfo.titleId);
                     } else if (pageInfo.titleId == Ids.titleSignOut) {
-                      Scaffold.of(context).openEndDrawer(); //可以先关闭抽屉
-                      ToastUtil.showToast(Ids.titleSignOut);
+                      ToastUtil.showToast(
+                          IntlUtil.getString(context, Ids.titleSignOut));
                       //注销清除所有数据
                       AppStatus.clearSP().then((boolean) {
                         //通知页面注销成功

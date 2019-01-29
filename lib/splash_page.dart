@@ -9,10 +9,20 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   TimerUtil _timerUtil;
+
+  ///倒计时3秒
   int _count = 3;
 
-  void _go2Main() {
-    NavigatorUtil.pushPageReplacementNamed(context, HomeScreen.ROUTER_NAME);
+  @override
+  void initState() {
+    super.initState();
+    _initSplash();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_timerUtil != null) _timerUtil.cancel();
   }
 
   void _initSplash() {
@@ -30,16 +40,8 @@ class _SplashPageState extends State<SplashPage> {
     _timerUtil.startCountDown();
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _initSplash();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    if (_timerUtil != null) _timerUtil.cancel();
+  void _go2Main() {
+    NavigatorUtil.pushPageReplacementNamed(context, HomeScreen.ROUTER_NAME);
   }
 
   @override
@@ -47,15 +49,24 @@ class _SplashPageState extends State<SplashPage> {
     return Scaffold(
       body: Container(
         child: Stack(
+          fit: StackFit.expand,
           children: <Widget>[
-            Align(
-              alignment: FractionalOffset.center,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 150.0),
-                child: CircleAvatar(
-                  radius: 35.0,
-                  child: ImageUtil.getImage(Constants.Icon_PATH),
-                ),
+            Padding(
+              padding: EdgeInsets.only(top: 150),
+              child: Column(
+                children: <Widget>[
+                  CircleAvatar(
+                    radius: 35.0,
+                    backgroundImage:
+                        ImageUtil.getImageProvider(Constants.Icon_PATH),
+                  ),
+                  SizedBox(height: 20.0,),
+                  Text(IntlUtil.getString(context, Ids.welcome)+"😊",
+                      style: TextStyle(
+                          color: AppColors.AppBarColor,
+                          fontSize: 25.0,
+                          fontFamily: Constants.WorkSansMedium)),
+                ],
               ),
             ),
             Align(
@@ -81,7 +92,7 @@ class _SplashPageState extends State<SplashPage> {
                   child: new Container(
                       padding: EdgeInsets.all(12.0),
                       child: new Text(
-                        '跳过 $_count',
+                        '${IntlUtil.getString(context, Ids.skip)} $_count',
                         style:
                             new TextStyle(fontSize: 14.0, color: Colors.white),
                       ),

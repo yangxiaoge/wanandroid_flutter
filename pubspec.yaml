@@ -15,7 +15,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_localizations:
+    sdk: flutter
+  # Flutter 国际化
+  fluintl: ^0.1.2
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
@@ -38,12 +41,9 @@ dependencies:
   pull_to_refresh: ^1.1.6
   # 常用工具类库 https://github.com/Sky24n/common_utils
   common_utils: ^1.0.9
-  # # flustars(Flutter 常用工具类库)
-  # flustars:
-  #   git:
-  #     url: git://github.com/yangxiaoge/flustars.git
-  #     #path: /
- 
+  # rxdart
+  rxdart: ^0.18.1
+
   # flutterchina flukit
   # flukit:
   #   git:

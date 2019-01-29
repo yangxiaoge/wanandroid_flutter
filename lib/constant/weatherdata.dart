@@ -16,6 +16,31 @@ class WeatherData {
     );
   }
 
+  WeatherData.fromLacalJson(Map<String, dynamic> json)
+      : cond = json['cond'],
+        tmp = json['tmp'] + "°",
+        hum = "湿度  " + json['hum'] + "%",
+        pm25 = "PM2.5  " + json['pm25'];
+
+  Map<String, dynamic> toJson() => {
+        'cond': cond,
+        'tmp': tmp,
+        'hum': hum,
+        'pm25': pm25,
+      };
+
+
+  //存储到SP时用到toString()
+  @override
+  String toString() {
+    StringBuffer sb = new StringBuffer('{');
+    sb.write("\"cond\":\"$cond\"");
+    sb.write(",\"tmp\":\"$tmp\"");
+    sb.write(",\"pm25\":\"$pm25\"");
+    sb.write('}');
+    return sb.toString();
+  }
+
   factory WeatherData.empty() {
     return WeatherData(
       cond: "",

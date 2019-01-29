@@ -20,7 +20,7 @@ class _AboutPageState extends State<AboutPage> {
     TextStyle linkTitleStyle = Theme.of(context).textTheme.body1;
     return Scaffold(
       appBar: AppBar(
-        title: Text(Ids.titleAbout),
+        title: Text(IntlUtil.getString(context, Ids.titleAbout)),
         centerTitle: true,
       ),
       body: ListView(
@@ -33,20 +33,21 @@ class _AboutPageState extends State<AboutPage> {
                 Center(
                   child: CircleAvatar(
                     backgroundImage:
-                        ImageUtil.getImageProvider(Constants.AVATAR_URL),
+                        ImageUtil.getImageProvider(Constants.Icon_PATH),
                     radius: 35.0,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                 ),
-                Text(Ids.introduction,
+                Text(IntlUtil.getString(context, Ids.introduction),
                     style: Theme.of(context).textTheme.title),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Divider(height: 0.0),
                 ),
-                Text(Ids.gankDesc, style: Theme.of(context).textTheme.body1),
+                Text(IntlUtil.getString(context, Ids.mumuxiDesc),
+                    style: Theme.of(context).textTheme.body1),
                 Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 10),
                   child: Row(
@@ -54,7 +55,7 @@ class _AboutPageState extends State<AboutPage> {
                       Padding(
                         padding: const EdgeInsets.only(right: 4.0),
                         child: Text(
-                          Ids.personalWebSite,
+                          IntlUtil.getString(context, Ids.personalWebSite),
                           style: linkTitleStyle,
                         ),
                       ),
@@ -81,7 +82,7 @@ class _AboutPageState extends State<AboutPage> {
                       Padding(
                         padding: const EdgeInsets.only(right: 4.0),
                         child: Text(
-                          Ids.sourceCode,
+                          IntlUtil.getString(context, Ids.sourceCode),
                           style: linkTitleStyle,
                         ),
                       ),
@@ -109,7 +110,7 @@ class _AboutPageState extends State<AboutPage> {
                       Padding(
                         padding: const EdgeInsets.only(right: 4.0),
                         child: Text(
-                          Ids.apiWebSite,
+                          IntlUtil.getString(context, Ids.apiWebSite),
                           style: linkTitleStyle,
                         ),
                       ),
@@ -155,7 +156,7 @@ class _AboutPageState extends State<AboutPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0),
-                  child: Text(Ids.developer,
+                  child: Text(IntlUtil.getString(context, Ids.developer),
                       style: Theme.of(context).textTheme.title),
                 ),
                 Padding(
@@ -194,7 +195,7 @@ class _AboutPageState extends State<AboutPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0),
-                  child: Text(Ids.referenceProject,
+                  child: Text(IntlUtil.getString(context, Ids.referenceProject),
                       style: Theme.of(context).textTheme.title),
                 ),
                 Padding(
@@ -255,7 +256,8 @@ class _AboutPageState extends State<AboutPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0),
-                  child: Text(Ids.openSourceLibrary,
+                  child: Text(
+                      IntlUtil.getString(context, Ids.openSourceLibrary),
                       style: Theme.of(context).textTheme.title),
                 ),
                 Padding(

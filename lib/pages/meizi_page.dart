@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import '../net/api_service.dart' show GankIO;
-import '../net/http_util.dart' show HttpUtil;
-import '../util/toast_util.dart' show ToastUtil;
 import './zoom_image.dart';
-import '../constant/constants.dart' show MyEventBus;
-import '../eventbus/tab_page_refresh_event.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import '../util/navigator_util.dart';
-import '../constant/constants.dart';
-// import '../constant/component_index.dart';
+import '../constant/component_index.dart';
 
 class MeiZiPage extends StatefulWidget {
   _MeiZiPageState createState() => _MeiZiPageState();
@@ -56,7 +48,7 @@ class _MeiZiPageState extends State<MeiZiPage> {
       if (maxScroll == pixels) {
         //上拉刷新做处理
         print('load more ...');
-        ToastUtil.showToast("加载更多...");
+        ToastUtil.showToast(IntlUtil.getString(context, Ids.loadingMore));
         _getMeiZi();
       }
     });

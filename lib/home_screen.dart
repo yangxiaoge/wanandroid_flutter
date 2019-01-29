@@ -23,20 +23,38 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // 当前 tab 索引
+  /// 当前 tab 索引
   int _currentIndex = 0;
-  // tab标题
-  var tabTitles = ["首页", "发现", "福利", "我的"];
-  // 底部导航 item 集合
+
+  /// tab标题
+  var tabTitles;
+
+  /// 底部导航 item 集合
   List<BottomNavigationBarItem> _navigationItemViews;
-  //上次点击时间
+
+  /// 上次点击时间
   int lastClickTime = 0;
   Map<int, int> tabClickTime = new Map<int, int>();
 
   @override
   void initState() {
     super.initState();
+  }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _initBottomItemList(context);
+  }
+
+  /// 初始化底部
+  _initBottomItemList(BuildContext context) {
+    tabTitles = [
+      IntlUtil.getString(context, Ids.titleHome),
+      IntlUtil.getString(context, Ids.titleDiscover),
+      IntlUtil.getString(context, Ids.titleWelfare),
+      IntlUtil.getString(context, Ids.titleMine),
+    ];
     // 底部导航 item 初始化
     _navigationItemViews = <BottomNavigationBarItem>[
       new BottomNavigationBarItem(
@@ -60,7 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: AppColors.AppBarColor,
       ),
     ];
-
     tabTitles.forEach((title) {
       tabClickTime[tabTitles.indexOf(title)] = 0;
     });
@@ -68,6 +85,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // _initBottomItemList(context);
+
     final _body = IndexedStack(
       index: _currentIndex,
       children: <Widget>[
@@ -113,11 +132,11 @@ class _HomeScreenState extends State<HomeScreen> {
         leading: IconButton(
           icon: CircleAvatar(
             radius: 35.0,
-            backgroundImage: ImageUtil.getImageProvider(Constants.AVATAR_URL),
+            backgroundImage: ImageUtil.getImageProvider(Constants.Icon_PATH),
             // child: CachedNetworkImage(imageUrl: Constants.AVATAR_URL),
           ),
           alignment: Alignment.centerLeft,
-          tooltip: '抽屉',
+          tooltip: IntlUtil.getString(context, Ids.drawer),
           onPressed: () {
             _scaffoldKey.currentState.openDrawer();
           },
@@ -130,11 +149,12 @@ class _HomeScreenState extends State<HomeScreen> {
           Offstage(
             offstage: _currentIndex == 3, //Mine界面不显示
             child: IconButton(
-              tooltip: '搜索',
+              tooltip: IntlUtil.getString(context, Ids.search),
               icon: Icon(Icons.search),
               onPressed: () {
-                ToastUtil.showToast('搜索');
-                NavigatorUtil.pushPage(context, SearchPage("你好啊搜索页"),
+                ToastUtil.showToast(IntlUtil.getString(context, Ids.search));
+                NavigatorUtil.pushPage(context,
+                    SearchPage("你好啊${IntlUtil.getString(context, Ids.search)}"),
                     pageName: "SearchPage");
               },
             ),

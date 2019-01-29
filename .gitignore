@@ -31,10 +31,15 @@ build/
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
+**/android/.settings
+**/android/app/.settings
 **/android/captures/
 **/android/gradlew
 **/android/gradlew.bat
 **/android/local.properties
+**/android/.project
+**/android/app/.project
+**/android/app/.classpath
 **/android/**/GeneratedPluginRegistrant.java
 
 # iOS/XCode related

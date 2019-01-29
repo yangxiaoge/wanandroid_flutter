@@ -3,6 +3,9 @@ import 'package:event_bus/event_bus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../util/sp_util.dart';
+import 'package:common_utils/common_utils.dart';
+import 'language_model.dart';
+import 'weatherdata.dart';
 
 ///首页，发现，福利，我的
 enum NavTabItems { HOME, DISCOVER, WELFARE, MINE }
@@ -48,6 +51,9 @@ class TextStyles {
 }
 
 class Constants {
+  static const String accountName = "Bruce Yang";
+  static const String accountEmail = "yang.jianan0926@gmail.com";
+
   // 应用名称
   static const APPNAME = "Mumuxi";
   //应用icon路径
@@ -57,15 +63,20 @@ class Constants {
   //WorkSansMedium字体
   static const WorkSansMedium = "WorkSansMedium";
   // static const AVATAR_URL = "https://avatars3.githubusercontent.com/u/12471093?v=4";
-  //drawer头像
-  static const AVATAR_URL = Icon_PATH;
   //天气网络背景图片
-  static const WEATHER_bg = "https://github.com/yangxiaoge/PersonResources/blob/master/app_res/pic1.jpg?raw=true";
+  static const WEATHER_bg =
+      "https://github.com/yangxiaoge/PersonResources/blob/master/app_res/pic1.jpg?raw=true";
   //天气默认背景
   static const WEATHER_bg_assetPath = "assets/images/weather_bg.jpg";
+
   //SharedPreferences对应Key
   static const String Login = "login";
   static const String Cookie = "cookie";
+  static const String Language = "language";
+  static const String WeatherCache = "weatherCache";
+
+  //通知 main.dart 中_initListener 的 bloc 刷新全局状态的标识
+  static const int NOTIFY_SYS_UPDATE = 1;
 }
 
 //EventBus对象
@@ -132,6 +143,24 @@ class AppStatus {
         SpUtil.putString(key, value == null ? "" : json.encode(value));
         break;
     }
+  }
+
+  ///获取当前当前语言sp
+  static LanguageModel getLanguageModel() {
+    String _saveLanguage = SpUtil.getString(Constants.Language);
+    if (ObjectUtil.isNotEmpty(_saveLanguage)) {
+      Map userMap = json.decode(_saveLanguage);
+      return LanguageModel.fromJson(userMap);
+    }
+    return null;
+  }
+
+  static WeatherData getLastCacheWeather() {
+    String _lastWeather = SpUtil.getString(Constants.WeatherCache);
+    if (ObjectUtil.isNotEmpty(_lastWeather)) {
+      return WeatherData.fromLacalJson(json.decode(_lastWeather));
+    }
+    return null;
   }
 
   static String getString(String key) {

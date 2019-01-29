@@ -26,7 +26,7 @@ class _MinePageState extends State<MinePage> {
     String userName = _userNameControl.text;
     String pwd = _passwordControl.text;
     if (userName.isEmpty || pwd.isEmpty) {
-      ToastUtil.showToast("账号密码不能为空");
+      ToastUtil.showToast(IntlUtil.getString(context, Ids.userOrPwdNull));
       return;
     }
 
@@ -100,19 +100,15 @@ class _MinePageState extends State<MinePage> {
           padding: EdgeInsets.all(20),
           children: <Widget>[
             TextField(
-              decoration: InputDecoration(labelText: "用户名"),
+              decoration: InputDecoration(
+                  labelText: IntlUtil.getString(context, Ids.userName)),
               controller: _userNameControl,
-              // onChanged: (text) {
-              //   print("UserName = $text");
-              // },
             ),
             TextField(
-              decoration: InputDecoration(labelText: "密码"),
+              decoration: InputDecoration(
+                  labelText: IntlUtil.getString(context, Ids.pwd)),
               controller: _passwordControl,
               obscureText: true, //加密
-              // onChanged: (text) {
-              //   print("PassWord = $text");
-              // },
             ),
             SizedBox(
               height: 20,
@@ -121,7 +117,7 @@ class _MinePageState extends State<MinePage> {
               padding: EdgeInsets.only(left: 50, right: 50),
               child: RaisedButton(
                 child: Text(
-                  "登录",
+                  IntlUtil.getString(context, Ids.login),
                   style: TextStyle(color: Colors.white),
                 ),
                 color: Theme.of(context).primaryColor,

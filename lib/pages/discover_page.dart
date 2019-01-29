@@ -41,7 +41,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
           }
           projects.addAll(_getDatas);
           if (projects.length >= totalLength) {
-            ToastUtil.showToast("到底啦~");
+            ToastUtil.showToast(IntlUtil.getString(context, Ids.noMore));
           }
           _pageIndex++;
           _isLoading = false;
@@ -81,7 +81,6 @@ class _DiscoverPageState extends State<DiscoverPage> {
     _refreshController = new RefreshController();
     _disCoverListProject();
 
-    
     //注册eventbus 双击tab事件监听
     MyEventBus.eventBus.on<NotifyPageRefresh>().listen((event) {
       print("收到eventBus当前tabIndex = ${event.tabIndex}");

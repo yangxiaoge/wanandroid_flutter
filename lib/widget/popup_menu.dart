@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../constant/constants.dart' show Constants;
-import '../util/toast_util.dart';
+import '../constant/component_index.dart';
 
 enum PopMenuItems { GROUP_CHAT, ADD_FRIEND, QR_SCAN, PAYMENT, HELP }
 
@@ -36,7 +35,7 @@ class PopUpMenu extends StatelessWidget {
         ];
       },
       icon: Icon(Icons.more_vert),
-      tooltip: '更多',
+      tooltip: IntlUtil.getString(context, Ids.more),
       onSelected: (action) {
         print('点击了 $action');
         ToastUtil.showToast("点击了 $action");
