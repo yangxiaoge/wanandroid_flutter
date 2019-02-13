@@ -77,6 +77,8 @@ class Constants {
 
   //通知 main.dart 中_initListener 的 bloc 刷新全局状态的标识
   static const int NOTIFY_SYS_UPDATE = 1;
+  // 闪屏页的上下文
+  static BuildContext mContext;
 }
 
 //EventBus对象

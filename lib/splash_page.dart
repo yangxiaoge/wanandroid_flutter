@@ -13,16 +13,37 @@ class _SplashPageState extends State<SplashPage> {
   ///倒计时3秒
   int _count = 3;
 
+  bool permissionGranted = false;
+
   @override
   void initState() {
     super.initState();
+    Constants.mContext = context;
     _initSplash();
+    _doPermissionTask();
   }
 
   @override
   void dispose() {
     super.dispose();
     if (_timerUtil != null) _timerUtil.cancel();
+  }
+
+  _doPermissionTask() async {
+    permissionGranted = await PermissionUtil.deal([
+      PermissionGroup.storage,
+      PermissionGroup.location,
+      PermissionGroup.phone
+    ]);
+    if (permissionGranted) {
+      if (_count == 0) {
+        if (this.mounted) {
+          _go2Main();
+        } else {
+          LogUtil.v("闪屏页面已经销毁");
+        }
+      }
+    }
   }
 
   void _initSplash() {
@@ -41,6 +62,8 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void _go2Main() {
+    // 暂时不判断权限是否不足，可以直接进入主页（目前项目不需要申请危险权限，后续可能要用到）
+    if (!permissionGranted) return;
     NavigatorUtil.pushPageReplacementNamed(context, HomeScreen.ROUTER_NAME);
   }
 
@@ -60,8 +83,10 @@ class _SplashPageState extends State<SplashPage> {
                     backgroundImage:
                         ImageUtil.getImageProvider(Constants.Icon_PATH),
                   ),
-                  SizedBox(height: 20.0,),
-                  Text(IntlUtil.getString(context, Ids.welcome)+"😊",
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Text(IntlUtil.getString(context, Ids.welcome) + "😊",
                       style: TextStyle(
                           color: AppColors.AppBarColor,
                           fontSize: 25.0,
@@ -97,7 +122,7 @@ class _SplashPageState extends State<SplashPage> {
                             new TextStyle(fontSize: 14.0, color: Colors.white),
                       ),
                       decoration: new BoxDecoration(
-                          color: Color(0x66000000),
+                          color: Colors.black45,
                           borderRadius: BorderRadius.all(Radius.circular(4.0)),
                           border: new Border.all(
                               width: 0.33, color: AppColors.DIVIDER))),

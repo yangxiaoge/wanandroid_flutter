@@ -1,6 +1,6 @@
 //组件统一导包
 
-export 'dart:convert';
+// export 'dart:convert'; // permission_handler中已经导入了
 
 //三方
 export 'package:common_utils/common_utils.dart';
@@ -13,6 +13,7 @@ export 'package:photo_view/photo_view.dart';
 export 'package:share/share.dart';
 export 'package:fluintl/fluintl.dart';
 export 'package:flutter_swiper/flutter_swiper.dart';
+export 'package:permission_handler/permission_handler.dart';
 
 //应用内
 export '../widget/indicator_factory.dart';
@@ -28,6 +29,7 @@ export '../util/sp_util.dart';
 export '../util/toast_util.dart';
 export '../util/navigator_util.dart';
 export '../util/img_util.dart';
+export '../util/permisson_util.dart';
 
 export '../res/strings.dart'; //语言包
 

@@ -43,6 +43,8 @@ dependencies:
   common_utils: ^1.0.9
   # rxdart
   rxdart: ^0.18.1
+  # 动态权限
+  permission_handler: ^2.1.2
 
   # flutterchina flukit
   # flukit:
