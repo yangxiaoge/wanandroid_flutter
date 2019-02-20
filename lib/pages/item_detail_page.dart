@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../util/navigator_util.dart';
+
 import '../constant/component_index.dart';
+import '../util/navigator_util.dart';
 
 //webview页面（item详情页）
 class ItemDetailPage extends StatefulWidget {
@@ -9,6 +10,7 @@ class ItemDetailPage extends StatefulWidget {
   final String title;
   final int titleId;
   final bool isCollected;
+
   ItemDetailPage(
       {Key key,
       @required this.url,
@@ -22,6 +24,7 @@ class ItemDetailPage extends StatefulWidget {
 
 class _ItemDetailPageState extends State<ItemDetailPage> {
   FlutterWebviewPlugin flutterWebViewPlugin = new FlutterWebviewPlugin();
+  //  flutterWebViewPlugin.reload(); //重新加载网页
   bool isLoad = true;
   //bool _isShowFloatBtn = false;
   bool isCollected = false;
@@ -111,8 +114,10 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
         heroTag: widget.title,
         backgroundColor: Theme.of(context).primaryColor,
         child: Icon(
-          Icons.keyboard_arrow_up,
+          Icons.close,
         ),
-        onPressed: () {});
+        onPressed: () {
+          Navigator.of(context).pop(true);
+        });
   }
 }
