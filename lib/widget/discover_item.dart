@@ -93,7 +93,7 @@ class DiscoverItem extends StatelessWidget {
               color: Colors.white,
               border: new Border(
                   bottom:
-                      new BorderSide(width: 0.33, color: AppColors.DIVIDER)))),
+                      new BorderSide(width: 0.33, color: AppColors.dividerColor)))),
     );
   }
 }

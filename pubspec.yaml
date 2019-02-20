@@ -17,11 +17,11 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  # Flutter 国际化
-  fluintl: ^0.1.2
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  # Flutter 国际化
+  fluintl: ^0.1.2
   # 吐司
   fluttertoast: ^2.2.7
   # http 网络框架
@@ -36,7 +36,6 @@ dependencies:
   cached_network_image: ^0.5.1
   # 查看图片 
   photo_view: ^0.1.2
-  url_launcher: ^4.0.3
   # 上拉加载和下拉刷新的组件
   pull_to_refresh: ^1.1.6
   # 常用工具类库 https://github.com/Sky24n/common_utils
@@ -46,27 +45,20 @@ dependencies:
   # 动态权限
   permission_handler: ^2.1.2
 
-  # flutterchina flukit
-  # flukit:
-  #   git:
-  #     url: git://github.com/flutterchina/flukit.git
-  #     path: package_src/
-  
   # flutter_webview_plugin
   flutter_webview_plugin: ^0.3.0+2
-  # flutter_plugins(里面有众多插件可以引用，如下 webview_flutter，share等)
-  # webview_flutter: #（https://github.com/yangxiaoge/plugins/  packages/webview_flutter/ ,packages下有很多的库，需要指定才能用）
-  #   git:
-  #     url: git://github.com/yangxiaoge/plugins.git
-  #     ref: newDev
-  #     path: packages/webview_flutter/
-  # 分享（调用系统分享的 Flutter 组件，支持分享文本，图片和文件）
+
+  # 分享（调用系统分享的 Flutter 组件，支持分享文本，图片和文件）ddd
   share: #（https://github.com/yangxiaoge/plugins/  packages/webview_flutter/ ,packages下有很多的库，需要指定才能用）
     git:
       url: git://github.com/yangxiaoge/plugins.git
       ref: newDev
       path: packages/share/
- 
+  url_launcher:
+    git:
+      url: git://github.com/flutter/plugins.git
+      ref: master
+      path: packages/url_launcher/
  
 dev_dependencies:
   flutter_test:

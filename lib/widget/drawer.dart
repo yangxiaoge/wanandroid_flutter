@@ -37,13 +37,13 @@ class _CustDrawerState extends State<CustDrawer> {
       image: DecorationImage(
         fit: BoxFit.cover, //居中剪裁
         // image: ImageUtil.getImageProvider(Constants.WEATHER_bg),
-        image: ImageUtil.getImageProvider(Constants.WEATHER_bg_assetPath),
+        image: ImageUtil.getImageProvider(Constants.weatherBgAssetPath),
       ),
     ),
     accountName: Text(Constants.accountName),
     accountEmail: Text(Constants.accountEmail),
     currentAccountPicture: CircleAvatar(
-      backgroundImage: ImageUtil.getImageProvider(Constants.Icon_PATH),
+      backgroundImage: ImageUtil.getImageProvider(Constants.iconPath),
       radius: 35.0,
     ),
   );

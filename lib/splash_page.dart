@@ -81,16 +81,16 @@ class _SplashPageState extends State<SplashPage> {
                   CircleAvatar(
                     radius: 35.0,
                     backgroundImage:
-                        ImageUtil.getImageProvider(Constants.Icon_PATH),
+                        ImageUtil.getImageProvider(Constants.iconPath),
                   ),
                   SizedBox(
                     height: 20.0,
                   ),
                   Text(IntlUtil.getString(context, Ids.welcome) + "😊",
                       style: TextStyle(
-                          color: AppColors.AppBarColor,
+                          color: AppColors.appColor,
                           fontSize: 25.0,
-                          fontFamily: Constants.WorkSansMedium)),
+                          fontFamily: Constants.workSansMedium)),
                 ],
               ),
             ),
@@ -102,7 +102,7 @@ class _SplashPageState extends State<SplashPage> {
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.0,
-                        fontFamily: Constants.WorkSansMedium)),
+                        fontFamily: Constants.workSansMedium)),
               ),
             ),
             Offstage(
@@ -125,7 +125,7 @@ class _SplashPageState extends State<SplashPage> {
                           color: Colors.black45,
                           borderRadius: BorderRadius.all(Radius.circular(4.0)),
                           border: new Border.all(
-                              width: 0.33, color: AppColors.DIVIDER))),
+                              width: 0.33, color: AppColors.dividerColor))),
                 ),
               ),
             ),

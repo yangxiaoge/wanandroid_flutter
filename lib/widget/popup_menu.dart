@@ -51,7 +51,7 @@ _buildPopupMunuItem(int iconName, String title) {
       Icon(
           IconData(
             iconName,
-            fontFamily: Constants.IconFontFamily,
+            fontFamily: Constants.iconFontFamily,
           ),
           size: 22.0,
           color: Colors.black),

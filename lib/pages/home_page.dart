@@ -169,7 +169,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _likeClick(var itemData) async {
-    bool login = AppStatus.getBool(Constants.Login);
+    bool login = AppStatus.getBool(Constants.loginSp);
     print("--------------login = $login");
     if (login) {
       //已登录

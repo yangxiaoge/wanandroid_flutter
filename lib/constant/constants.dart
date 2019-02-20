@@ -11,13 +11,12 @@ import 'weatherdata.dart';
 enum NavTabItems { HOME, DISCOVER, WELFARE, MINE }
 
 class AppColors {
-  static const Color BackgroundColor = Color(0xffebebeb);
-  static const Color AppBarColor = Color(0xFFE5463B); //0xFFE5463B,网易云音乐红
-  static const Color TabIconNormal = Color(0xff999999);
-  static const Color DividerColor = Color(0xffeeeeee);
-  static const Color TabIconActive = Color(0xff46c11b);
-  static const Color AppBarPopupMenuColor = Color(0xffffffff);
-  static const Color DIVIDER = Color(0xffe5e5e5);
+  static const Color backgroundColor = Color(0xffebebeb);
+  static const Color appColor = Color(0xFFE5463B); //0xFFE5463B,网易云音乐红
+  static const Color tabIconNormal = Color(0xff999999);
+  static const Color dividerColor = Color(0xffeeeeee);
+  static const Color tabIconActive = Color(0xff46c11b);
+  static const Color popMenuColor = Color(0xffffffff);
 }
 
 class Dimens {
@@ -37,7 +36,7 @@ class Dimens {
 class TextStyles {
   static TextStyle listTitle = TextStyle(
     fontSize: Dimens.font_sp16,
-    color: AppColors.AppBarColor,
+    color: AppColors.appColor,
     fontWeight: FontWeight.bold,
   );
   static TextStyle listContent = TextStyle(
@@ -55,28 +54,28 @@ class Constants {
   static const String accountEmail = "yang.jianan0926@gmail.com";
 
   // 应用名称
-  static const APPNAME = "Mumuxi";
+  static const appName = "Mumuxi";
   //应用icon路径
-  static const Icon_PATH = "android/app/src/main/res/mipmap-xhdpi/zz.png";
+  static const iconPath = "android/app/src/main/res/mipmap-xhdpi/zz.png";
   //阿里巴巴字体图标库
-  static const IconFontFamily = "aliIconFont";
+  static const iconFontFamily = "aliIconFont";
   //WorkSansMedium字体
-  static const WorkSansMedium = "WorkSansMedium";
+  static const workSansMedium = "WorkSansMedium";
   // static const AVATAR_URL = "https://avatars3.githubusercontent.com/u/12471093?v=4";
   //天气网络背景图片
-  static const WEATHER_bg =
+  static const weatherBackground =
       "https://github.com/yangxiaoge/PersonResources/blob/master/app_res/pic1.jpg?raw=true";
   //天气默认背景
-  static const WEATHER_bg_assetPath = "assets/images/weather_bg.jpg";
+  static const weatherBgAssetPath = "assets/images/weather_bg.jpg";
 
   //SharedPreferences对应Key
-  static const String Login = "login";
-  static const String Cookie = "cookie";
-  static const String Language = "language";
-  static const String WeatherCache = "weatherCache";
+  static const String loginSp = "login";
+  static const String cookieSp = "cookie";
+  static const String languageSp = "language";
+  static const String weatherCacheSp = "weatherCache";
 
   //通知 main.dart 中_initListener 的 bloc 刷新全局状态的标识
-  static const int NOTIFY_SYS_UPDATE = 1;
+  static const int notifySysUpdate = 1;
   // 闪屏页的上下文
   static BuildContext mContext;
 }
@@ -92,13 +91,13 @@ class AppStatus {
   //登录状态
   static Future<bool> isLogin() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
-    bool b = sp.getBool(Constants.Login);
+    bool b = sp.getBool(Constants.loginSp);
     return true == b;
   }
 
   static Future setLogin() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
-    sp.setBool(Constants.Login, true);
+    sp.setBool(Constants.loginSp, true);
   }
 
   static Future saveSP(String key, value) async {
@@ -149,7 +148,7 @@ class AppStatus {
 
   ///获取当前当前语言sp
   static LanguageModel getLanguageModel() {
-    String _saveLanguage = SpUtil.getString(Constants.Language);
+    String _saveLanguage = SpUtil.getString(Constants.languageSp);
     if (ObjectUtil.isNotEmpty(_saveLanguage)) {
       Map userMap = json.decode(_saveLanguage);
       return LanguageModel.fromJson(userMap);
@@ -158,7 +157,7 @@ class AppStatus {
   }
 
   static WeatherData getLastCacheWeather() {
-    String _lastWeather = SpUtil.getString(Constants.WeatherCache);
+    String _lastWeather = SpUtil.getString(Constants.weatherCacheSp);
     if (ObjectUtil.isNotEmpty(_lastWeather)) {
       return WeatherData.fromLacalJson(json.decode(_lastWeather));
     }

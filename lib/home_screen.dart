@@ -1,17 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'constant/constants.dart' show AppColors, MyEventBus;
-import 'util/toast_util.dart' show ToastUtil;
-import 'eventbus/tab_page_refresh_event.dart';
+import 'package:flutter/material.dart';
 
-import 'widget/drawer.dart';
-import 'pages/home_page.dart';
+import './constant/component_index.dart';
 import 'pages/discover_page.dart';
+import 'pages/home_page.dart';
 import 'pages/meizi_page.dart';
 import 'pages/mine_page.dart';
 import 'pages/search_page.dart';
-import './widget/popup_menu.dart';
-import './constant/component_index.dart';
+import 'widget/drawer.dart';
+import 'widget/popup_menu.dart';
 
 // 主页面（4个tab的父页面）
 class HomeScreen extends StatefulWidget {
@@ -60,22 +57,22 @@ class _HomeScreenState extends State<HomeScreen> {
       new BottomNavigationBarItem(
         icon: const Icon(Icons.home),
         title: new Text(tabTitles[0]),
-        backgroundColor: AppColors.AppBarColor,
+        backgroundColor: AppColors.appColor,
       ),
       new BottomNavigationBarItem(
         icon: const Icon(Icons.widgets),
         title: new Text(tabTitles[1]),
-        backgroundColor: AppColors.AppBarColor,
+        backgroundColor: AppColors.appColor,
       ),
       new BottomNavigationBarItem(
         icon: const Icon(Icons.face),
         title: new Text(tabTitles[2]),
-        backgroundColor: AppColors.AppBarColor,
+        backgroundColor: AppColors.appColor,
       ),
       new BottomNavigationBarItem(
         icon: const Icon(Icons.person),
         title: new Text(tabTitles[3]),
-        backgroundColor: AppColors.AppBarColor,
+        backgroundColor: AppColors.appColor,
       ),
     ];
     tabTitles.forEach((title) {
@@ -125,56 +122,90 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       },
     );
-
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: CircleAvatar(
-            radius: 35.0,
-            backgroundImage: ImageUtil.getImageProvider(Constants.Icon_PATH),
-            // child: CachedNetworkImage(imageUrl: Constants.AVATAR_URL),
-          ),
-          alignment: Alignment.centerLeft,
-          tooltip: IntlUtil.getString(context, Ids.drawer),
-          onPressed: () {
-            _scaffoldKey.currentState.openDrawer();
-          },
-        ),
-
-        title: Text(tabTitles[_currentIndex]),
-        centerTitle: true,
-        elevation: 0, // toolbar 去除阴影效果
-        actions: <Widget>[
-          Offstage(
-            offstage: _currentIndex == 3, //Mine界面不显示
-            child: IconButton(
-              tooltip: IntlUtil.getString(context, Ids.search),
-              icon: Icon(Icons.search),
+    return WillPopScope(
+        child: Scaffold(
+          key: _scaffoldKey,
+          appBar: AppBar(
+            leading: IconButton(
+              icon: CircleAvatar(
+                radius: 35.0,
+                backgroundImage:
+                    ImageUtil.getImageProvider(Constants.iconPath),
+                // child: CachedNetworkImage(imageUrl: Constants.AVATAR_URL),
+              ),
+              alignment: Alignment.centerLeft,
+              tooltip: IntlUtil.getString(context, Ids.drawer),
               onPressed: () {
-                ToastUtil.showToast(IntlUtil.getString(context, Ids.search));
-                NavigatorUtil.pushPage(context,
-                    SearchPage("你好啊${IntlUtil.getString(context, Ids.search)}"),
-                    pageName: "SearchPage");
+                _scaffoldKey.currentState.openDrawer();
               },
             ),
+
+            title: Text(tabTitles[_currentIndex]),
+            centerTitle: true,
+            elevation: 0,
+            // toolbar 去除阴影效果
+            actions: <Widget>[
+              Offstage(
+                offstage: _currentIndex == 3, //Mine界面不显示
+                child: IconButton(
+                  tooltip: IntlUtil.getString(context, Ids.search),
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    ToastUtil.showToast(
+                        IntlUtil.getString(context, Ids.search));
+                    NavigatorUtil.pushPage(
+                        context,
+                        SearchPage(
+                            "你好啊${IntlUtil.getString(context, Ids.search)}"),
+                        pageName: "SearchPage");
+                  },
+                ),
+              ),
+              // 首页显示更多按钮（Offstage可见性控件，offstage默认为 true，也就是不显示，当为 flase 的时候，会显示该控件）
+              Offstage(
+                offstage: _currentIndex != 0,
+                child: PopUpMenu(),
+              ),
+              Offstage(
+                offstage: _currentIndex == 0,
+                child: SizedBox(
+                  width: 5,
+                ),
+              ),
+            ],
           ),
-          // 首页显示更多按钮（Offstage可见性控件，offstage默认为 true，也就是不显示，当为 flase 的时候，会显示该控件）
-          Offstage(
-            offstage: _currentIndex != 0,
-            child: PopUpMenu(),
-          ),
-          Offstage(
-            offstage: _currentIndex == 0,
-            child: SizedBox(
-              width: 5,
-            ),
-          ),
-        ],
-      ),
-      drawer: CustDrawer(), //侧滑抽屉
-      body: _body,
-      bottomNavigationBar: bottomNavigationBar,
-    );
+          drawer: CustDrawer(),
+          //侧滑抽屉
+          body: _body,
+          bottomNavigationBar: bottomNavigationBar,
+        ),
+        onWillPop: _onWillPop);
+  }
+
+  ///返回键退出应用拦截
+  Future<bool> _onWillPop() {
+    return showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text('提示'),
+                  content: Text('确定退出应用吗？'),
+                  actions: <Widget>[
+                    FlatButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: Text(
+                        IntlUtil.getString(context, Ids.wait),
+                        style: TextStyle(color: Theme.of(context).primaryColor),
+                      ),
+                    ),
+                    FlatButton(
+                      onPressed: () => Navigator.of(context).pop(true),
+                      child: Text(
+                        IntlUtil.getString(context, Ids.exit),
+                        style: TextStyle(color: Theme.of(context).primaryColor),
+                      ),
+                    )
+                  ],
+                )) ??
+        false;
   }
 }

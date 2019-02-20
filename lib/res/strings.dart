@@ -8,7 +8,7 @@ class Ids {
   static String errorWidgetMsg = "Flutter has gone wrong😹";
   static String more = 'more';
   static String noMore = "in the end~";
-  
+
   //splash
   static String skip = "Skip";
   static String welcome = "Welcome";
@@ -28,16 +28,22 @@ class Ids {
   static String titleShare = 'title_share';
   static String titleSignOut = 'title_signout';
 
+  //home_screen
+  static String exit = 'Exit';
+  static String wait = 'Wait a while';
+
   //home_page
   static String collectSuccess = "Successful collection";
   static String cancelCollect = "Cancel collection";
   static String notLogin = "Please log in first";
+
   //meizi_page
   static String loadingMore = "load more...";
+
   //mine_page
   static String userOrPwdNull = "Account or password cannot be empty";
-  static String userName = "UserName";  
-  static String pwd = "Password";  
+  static String userName = "UserName";
+  static String pwd = "Password";
   static String login = "Login";
   static String register = "Register";
 
@@ -89,6 +95,8 @@ Map<String, Map<String, String>> localizedSimpleValues = {
     Ids.titleWeather: 'Weather',
     Ids.titleShare: 'Share',
     Ids.titleSignOut: 'Sign Out',
+    Ids.exit: 'Exit',
+    Ids.wait: 'Wait a while',
     Ids.collectSuccess: 'Successful collection',
     Ids.cancelCollect: 'Cancel collection',
     Ids.notLogin: 'Please log in first',
@@ -102,9 +110,11 @@ Map<String, Map<String, String>> localizedSimpleValues = {
     Ids.titleLanguage: 'Language',
     Ids.titleTheme: 'Theme',
     Ids.languageAuto: 'Auto',
-    Ids.shareTxt: 'I found a good app, you can learn technical documentation, and there are also beautiful pictures for you to enjoy😋: https://github.com/yangxiaoge/wanandroid_flutter',
+    Ids
+        .shareTxt: 'I found a good app, you can learn technical documentation, and there are also beautiful pictures for you to enjoy😋: https://github.com/yangxiaoge/wanandroid_flutter',
     Ids.introduction: 'Introduction',
-    Ids.mumuxiDesc: 'ZZ Play Android, is a Material-style Flutter application, including login, search, collection, discovery, multi-language, theme switching and other functions. \n\n There are sisters waiting for you, just order a Star, thank you for your support!',
+    Ids
+        .mumuxiDesc: 'ZZ Play Android, is a Material-style Flutter application, including login, search, collection, discovery, multi-language, theme switching and other functions. \n\n There are sisters waiting for you, just order a Star, thank you for your support!',
     Ids.sourceCode: 'Source code:',
     Ids.developer: 'Developer:',
     Ids.personalWebSite: 'Developer Site:',
@@ -115,7 +125,7 @@ Map<String, Map<String, String>> localizedSimpleValues = {
   'zh': {
     Ids.errorWidgetMsg: "Flutter 走神了😹",
     Ids.more: '更多',
-    Ids.noMore:'到底啦~',
+    Ids.noMore: '到底啦~',
     Ids.skip: "跳过",
     Ids.welcome: "欢迎",
     Ids.titleHome: '主页',
@@ -129,6 +139,8 @@ Map<String, Map<String, String>> localizedSimpleValues = {
     Ids.titleWeather: '天气',
     Ids.titleShare: '分享',
     Ids.titleSignOut: '注销',
+    Ids.exit: '退出',
+    Ids.wait: '再等一会',
     Ids.collectSuccess: '收藏成功',
     Ids.cancelCollect: '取消收藏',
     Ids.notLogin: '请先登录',
@@ -142,9 +154,11 @@ Map<String, Map<String, String>> localizedSimpleValues = {
     Ids.titleLanguage: '多语言',
     Ids.titleTheme: '主題',
     Ids.languageAuto: '跟随系统',
-    Ids.shareTxt: '发现了一款不错的应用，可以学习技术文档，同时还有赏心悦目的美图供欣赏😋：https://github.com/yangxiaoge/wanandroid_flutter',
+    Ids
+        .shareTxt: '发现了一款不错的应用，可以学习技术文档，同时还有赏心悦目的美图供欣赏😋：https://github.com/yangxiaoge/wanandroid_flutter',
     Ids.introduction: '简介',
-    Ids.mumuxiDesc: 'ZZ玩Android，是一款Material风格的Flutter应用，包含登录，搜索，收藏，发现，多语言，主题切换等功能。\n\n此外还有妹子等你哦，顺手点个Star，感谢支持！',
+    Ids
+        .mumuxiDesc: 'ZZ玩Android，是一款Material风格的Flutter应用，包含登录，搜索，收藏，发现，多语言，主题切换等功能。\n\n此外还有妹子等你哦，顺手点个Star，感谢支持！',
     Ids.sourceCode: '项目源码:',
     Ids.developer: '开发者:',
     Ids.personalWebSite: '个人主页:',
@@ -174,6 +188,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.titleWeather: 'Weather',
       Ids.titleShare: 'Share',
       Ids.titleSignOut: 'Sign Out',
+      Ids.exit: 'Exit',
+      Ids.wait: 'Wait a while',
       Ids.collectSuccess: 'Successful collection',
       Ids.cancelCollect: 'Cancel collection',
       Ids.notLogin: 'Please log in first',
@@ -189,9 +205,11 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.languageAuto: 'Auto',
       Ids.save: 'Save',
       Ids.titleTheme: 'Theme',
-      Ids.shareTxt: 'I found a good app, you can learn technical documentation, and there are also beautiful pictures for you to enjoy😋: https://github.com/yangxiaoge/wanandroid_flutter',
+      Ids
+          .shareTxt: 'I found a good app, you can learn technical documentation, and there are also beautiful pictures for you to enjoy😋: https://github.com/yangxiaoge/wanandroid_flutter',
       Ids.introduction: 'Introduction',
-      Ids.mumuxiDesc: 'ZZ Play Android, is a Material-style Flutter application, including login, search, collection, discovery, multi-language, theme switching and other functions. \n\n There are sisters waiting for you, just order a Star, thank you for your support!',
+      Ids
+          .mumuxiDesc: 'ZZ Play Android, is a Material-style Flutter application, including login, search, collection, discovery, multi-language, theme switching and other functions. \n\n There are sisters waiting for you, just order a Star, thank you for your support!',
       Ids.sourceCode: 'Source code:',
       Ids.developer: 'Developer:',
       Ids.personalWebSite: 'Developer Site:',
@@ -204,7 +222,7 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
     'CN': {
       Ids.errorWidgetMsg: "Flutter 走神了😹",
       Ids.more: '更多',
-      Ids.noMore:'到底啦~',
+      Ids.noMore: '到底啦~',
       Ids.skip: "跳过",
       Ids.welcome: "欢迎",
       Ids.titleHome: '主页',
@@ -218,6 +236,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.titleWeather: '天气',
       Ids.titleShare: '分享',
       Ids.titleSignOut: '注销',
+      Ids.exit: '退出',
+      Ids.wait: '再等一会',
       Ids.collectSuccess: '收藏成功',
       Ids.cancelCollect: '取消收藏',
       Ids.notLogin: '请先登录',
@@ -237,9 +257,11 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.languageEN: 'English',
       Ids.save: '保存',
       Ids.titleTheme: '主题',
-      Ids.shareTxt: '发现了一款不错的应用，可以学习技术文档，同时还有赏心悦目的美图供欣赏😋：https://github.com/yangxiaoge/wanandroid_flutter',
+      Ids
+          .shareTxt: '发现了一款不错的应用，可以学习技术文档，同时还有赏心悦目的美图供欣赏😋：https://github.com/yangxiaoge/wanandroid_flutter',
       Ids.introduction: '简介',
-      Ids.mumuxiDesc: 'ZZ玩Android，是一款Material风格的Flutter应用，包含登录，搜索，收藏，发现，多语言，主题切换等功能。\n\n此外还有妹子等你哦，顺手点个Star，感谢支持！',
+      Ids
+          .mumuxiDesc: 'ZZ玩Android，是一款Material风格的Flutter应用，包含登录，搜索，收藏，发现，多语言，主题切换等功能。\n\n此外还有妹子等你哦，顺手点个Star，感谢支持！',
       Ids.sourceCode: '项目源码:',
       Ids.developer: '开发者:',
       Ids.personalWebSite: '个人主页:',
@@ -250,7 +272,7 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
     'HK': {
       Ids.errorWidgetMsg: "Flutter 走神了😹",
       Ids.more: '更多',
-      Ids.noMore:'到底啦~',
+      Ids.noMore: '到底啦~',
       Ids.skip: "跳過",
       Ids.welcome: "歡迎",
       Ids.titleHome: '主頁',
@@ -264,6 +286,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.titleWeather: '天氣',
       Ids.titleShare: '分享',
       Ids.titleSignOut: '註銷',
+      Ids.exit: '退出',
+      Ids.wait: '再等一會',
       Ids.collectSuccess: '收藏成功',
       Ids.cancelCollect: '取消收藏',
       Ids.notLogin: '請先登錄',
@@ -272,16 +296,18 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.userName: '用戶名',
       Ids.pwd: '密碼',
       Ids.login: '登錄',
-      Ids.register: '註冊', 
+      Ids.register: '註冊',
       Ids.search: '搜索',
       Ids.titleLanguage: '語言',
       Ids.titleTheme: '主題',
       Ids.languageAuto: '與系統同步',
       Ids.save: '儲存',
       Ids.titleTheme: '主題',
-      Ids.shareTxt: '發現了一款不錯的應用，可以學習技術文檔，同時還有賞心悅目的美圖供欣賞😋：https://github.com/yangxiaoge/wanandroid_flutter',
+      Ids
+          .shareTxt: '發現了一款不錯的應用，可以學習技術文檔，同時還有賞心悅目的美圖供欣賞😋：https://github.com/yangxiaoge/wanandroid_flutter',
       Ids.introduction: '簡介',
-      Ids.mumuxiDesc: 'ZZ玩Android，是一款Material風格的Flutter應用，包含登錄，搜索，收藏，發現，多語言，主題切換等功能。\n\n此外還有妹子等你哦，順手點個Star，感謝支持！',
+      Ids
+          .mumuxiDesc: 'ZZ玩Android，是一款Material風格的Flutter應用，包含登錄，搜索，收藏，發現，多語言，主題切換等功能。\n\n此外還有妹子等你哦，順手點個Star，感謝支持！',
       Ids.sourceCode: '項目源碼:',
       Ids.developer: '开发者:',
       Ids.personalWebSite: '個人主頁:',
@@ -292,7 +318,7 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
     'TW': {
       Ids.errorWidgetMsg: "Flutter 走神了😹",
       Ids.more: '更多',
-      Ids.noMore:'到底啦~',
+      Ids.noMore: '到底啦~',
       Ids.skip: "跳過",
       Ids.welcome: "歡迎",
       Ids.titleHome: '主頁',
@@ -306,6 +332,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.titleWeather: '天氣',
       Ids.titleShare: '分享',
       Ids.titleSignOut: '註銷',
+      Ids.exit: '退出',
+      Ids.wait: '再等一會',
       Ids.collectSuccess: '收藏成功',
       Ids.cancelCollect: '取消收藏',
       Ids.notLogin: '請先登錄',
@@ -314,16 +342,18 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.userName: '用戶名',
       Ids.pwd: '密碼',
       Ids.login: '登錄',
-      Ids.register: '註冊', 
+      Ids.register: '註冊',
       Ids.search: '搜索',
       Ids.titleLanguage: '語言',
       Ids.titleTheme: '主題',
       Ids.languageAuto: '與系統同步',
       Ids.save: '儲存',
       Ids.titleTheme: '主題',
-      Ids.shareTxt: '發現了一款不錯的應用，可以學習技術文檔，同時還有賞心悅目的美圖供欣賞😋：https://github.com/yangxiaoge/wanandroid_flutter',
+      Ids
+          .shareTxt: '發現了一款不錯的應用，可以學習技術文檔，同時還有賞心悅目的美圖供欣賞😋：https://github.com/yangxiaoge/wanandroid_flutter',
       Ids.introduction: '簡介',
-      Ids.mumuxiDesc: 'ZZ玩Android，是一款Material風格的Flutter應用，包含登錄，搜索，收藏，發現，多語言，主題切換等功能。\n\n此外還有妹子等你哦，順手點個Star，感謝支持！',
+      Ids
+          .mumuxiDesc: 'ZZ玩Android，是一款Material風格的Flutter應用，包含登錄，搜索，收藏，發現，多語言，主題切換等功能。\n\n此外還有妹子等你哦，順手點個Star，感謝支持！',
       Ids.sourceCode: '項目源碼:',
       Ids.developer: '开发者:',
       Ids.personalWebSite: '個人主頁:',

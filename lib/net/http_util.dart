@@ -27,13 +27,13 @@ class HttpUtil {
     url = WanApi.BaseUrl + url;
     print("dio:URL=" + url);
     print(
-        "AppStatus.getString(Constants.Login) = ${AppStatus.getBool(Constants.Login)}");
+        "AppStatus.getString(Constants.Login) = ${AppStatus.getBool(Constants.loginSp)}");
     var response = await dio.get(url,
         data: params,
         options: Options(
             connectTimeout: 5000,
             receiveTimeout: 100000,
-            headers: {Constants.Cookie: AppStatus.getString(Constants.Cookie)},
+            headers: {Constants.cookieSp: AppStatus.getString(Constants.cookieSp)},
             contentType: ContentType.json,
             responseType: ResponseType.JSON));
     //todo 可以进一步判断错误码等等（此处默认返回数据）
@@ -60,7 +60,7 @@ class HttpUtil {
             connectTimeout: 5000,
             receiveTimeout: 100000,
             // 5s
-            headers: {Constants.Cookie: AppStatus.getString(Constants.Cookie)},
+            headers: {Constants.cookieSp: AppStatus.getString(Constants.cookieSp)},
             contentType: ContentType.json,
             // Transform the response data to a String encoded with UTF8.
             // The default value is [ResponseType.JSON].
@@ -75,7 +75,7 @@ class HttpUtil {
     //登录后会在 cookie 中返回账号密码，只要在客户端做 cookie 持久化存储即可自动登录验证。
     if (url.contains(WanApi.LOGIN)) {
       AppStatus.putObject(
-          Constants.Cookie, response.headers['set-cookie'].toString());
+          Constants.cookieSp, response.headers['set-cookie'].toString());
     }
 
     return response.data;
@@ -105,9 +105,9 @@ class HttpUtil {
     print("params.toString() = " + params.toString());
 
     //获取cookie
-    String cookieSTR = AppStatus.getString(Constants.Cookie);
+    String cookieSTR = AppStatus.getString(Constants.cookieSp);
     Map<String, String> headerMap = Map();
-    headerMap[Constants.Cookie] = cookieSTR;
+    headerMap[Constants.cookieSp] = cookieSTR;
     print("--------cookieSTR = $cookieSTR");
 
     var response = await http.get(url, headers: headerMap);

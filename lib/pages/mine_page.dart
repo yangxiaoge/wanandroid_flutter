@@ -55,7 +55,7 @@ class _MinePageState extends State<MinePage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isLogin = AppStatus.getBool(Constants.Login);
+    bool isLogin = AppStatus.getBool(Constants.loginSp);
     print("登录状态 isLogin = $isLogin");
     if (isLogin) {
       return Center(

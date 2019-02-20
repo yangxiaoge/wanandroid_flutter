@@ -53,7 +53,7 @@ class _WeatherState extends State<WeatherPage> {
       print("-------weather-------- = ${response.body}");
       WeatherData weather = WeatherData.fromJson(json.decode(response.body));
       //缓存本次天气数据
-      AppStatus.putObject(Constants.WeatherCache, weather);
+      AppStatus.putObject(Constants.weatherCacheSp, weather);
       return weather;
     } else {
       return WeatherData.empty();
@@ -70,11 +70,11 @@ class _WeatherState extends State<WeatherPage> {
         fit: StackFit.expand,
         children: <Widget>[
           CachedNetworkImage(
-            imageUrl: Constants.WEATHER_bg,
+            imageUrl: Constants.weatherBackground,
             fit: BoxFit.fitHeight,
-            placeholder: ImageUtil.getImage(Constants.WEATHER_bg_assetPath,
+            placeholder: ImageUtil.getImage(Constants.weatherBgAssetPath,
                 fit: BoxFit.fitHeight),
-            errorWidget: ImageUtil.getImage(Constants.WEATHER_bg_assetPath,
+            errorWidget: ImageUtil.getImage(Constants.weatherBgAssetPath,
                 fit: BoxFit.fitHeight),
           ),
           Column(

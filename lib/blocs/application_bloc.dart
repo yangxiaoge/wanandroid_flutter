@@ -1,7 +1,10 @@
-import 'bloc_provider.dart';
 import 'package:rxdart/rxdart.dart';
 
+import 'bloc_provider.dart';
+
+///RxDart原理 https://juejin.im/post/5bcea438e51d4536c65d2232
 class ApplicationBloc implements BlocBase {
+  ///缓存最新一次事件的广播流控制器：BehaviorSubject
   BehaviorSubject<int> _appEvent = BehaviorSubject<int>();
 
   Sink<int> get _appEventSink => _appEvent.sink;
@@ -28,6 +31,7 @@ class ApplicationBloc implements BlocBase {
     return null;
   }
 
+  ///add 到 Observable（可观察者）之后，listen（监听者）就能收到
   void sendAppEvent(int type) {
     _appEventSink.add(type);
   }

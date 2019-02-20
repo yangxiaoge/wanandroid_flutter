@@ -62,6 +62,7 @@ class _MyAppState extends State<MyApp> {
   void _initListener() {
     final ApplicationBloc bloc = BlocProvider.of<ApplicationBloc>(context);
     bloc.appEventStream.listen((value) {
+      print("Stream listen:value = $value");
       _getLocale();
     });
   }
@@ -86,14 +87,14 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: Constants.APPNAME,
+      title: Constants.appName,
 
       locale: _locale,
       theme: ThemeData.light().copyWith(
-          accentColor: AppColors.AppBarColor,
-          primaryColor: AppColors.AppBarColor,
-          cardColor: AppColors.AppBarPopupMenuColor, //影响popupmenu,等其他控件颜色
-          dividerColor: AppColors.DividerColor,
+          accentColor: AppColors.appColor,
+          primaryColor: AppColors.appColor,
+          cardColor: AppColors.popMenuColor, //影响popupmenu,等其他控件颜色
+          dividerColor: AppColors.dividerColor,
           indicatorColor: Colors.white,
           platform: TargetPlatform.android),
       localizationsDelegates: [
