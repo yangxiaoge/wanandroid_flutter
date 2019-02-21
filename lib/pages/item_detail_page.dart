@@ -8,7 +8,7 @@ import '../util/navigator_util.dart';
 class ItemDetailPage extends StatefulWidget {
   final String url;
   final String title;
-  final int titleId;
+  final String titleId;
   final bool isCollected;
 
   ItemDetailPage(
@@ -86,7 +86,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 ? new LinearProgressIndicator(
                     backgroundColor: Colors.transparent,
                     valueColor:
-                        AlwaysStoppedAnimation<Color>(Colors.blueAccent),
+                        AlwaysStoppedAnimation<Color>(Colors.black54),
                   )
                 : new Divider(
                     height: 0.0,

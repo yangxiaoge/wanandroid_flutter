@@ -38,7 +38,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.yang.bruce.mumuxi" //应用宝版本包名com.yang.bruce.mumuxi ， 酷安版包名com.yangbruce.coolapk.mumuxi
+        applicationId "com.bruceyang.coolapk.mumuxi" //应用宝版本包名com.yang.bruce.mumuxi ， 酷安版包名com.bruceyang.coolapk.mumuxi
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1026

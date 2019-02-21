@@ -151,8 +151,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   tooltip: IntlUtil.getString(context, Ids.search),
                   icon: Icon(Icons.search),
                   onPressed: () {
-                    ToastUtil.showToast(
-                        IntlUtil.getString(context, Ids.search));
                     NavigatorUtil.pushPage(
                         context,
                         SearchPage(

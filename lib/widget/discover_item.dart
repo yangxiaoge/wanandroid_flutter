@@ -24,7 +24,7 @@ class DiscoverItem extends StatelessWidget {
     return new InkWell(
       onTap: () {
         NavigatorUtil.pushWeb(context,
-            title: title, url: link, titleId: titleId);
+            title: title, url: link, titleId: titleId.toString());
       },
       child: new Container(
           height: 160.0,

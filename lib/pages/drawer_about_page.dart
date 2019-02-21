@@ -154,6 +154,36 @@ class _AboutPageState extends State<AboutPage> {
                     ],
                   ),
                 ),
+
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 4.0),
+                        child: Text(
+                          '代码开发规范',
+                          style: linkTitleStyle,
+                        ),
+                      ),
+                      RichText(
+                          text: TextSpan(children: <TextSpan>[
+                            TextSpan(
+                                style: Theme.of(context).textTheme.body1.copyWith(
+                                    color: Theme.of(context).accentColor,
+                                    fontSize: 15,
+                                    decoration: TextDecoration.underline),
+                                text: "github.com/alibaba/flutter-go",
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    launch(
+                                        'https://github.com/alibaba/flutter-go/blob/develop/Flutter_Go%20%E4%BB%A3%E7%A0%81%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.md');
+                                  })
+                          ]))
+                    ],
+                  ),
+                ),
+
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: Text(IntlUtil.getString(context, Ids.developer),

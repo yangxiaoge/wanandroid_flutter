@@ -68,6 +68,8 @@ class Constants {
   //天气默认背景
   static const weatherBgAssetPath = "assets/images/weather_bg.jpg";
 
+  static const githubFlutterTrending = "https://github.com/trending/dart";
+
   //SharedPreferences对应Key
   static const String loginSp = "login";
   static const String cookieSp = "cookie";

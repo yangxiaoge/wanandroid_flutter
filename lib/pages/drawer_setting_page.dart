@@ -12,7 +12,7 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(IntlUtil.getString(context, Ids.titleAbout)),
+        title: Text(IntlUtil.getString(context, Ids.titleSetting)),
         // centerTitle: true,
       ),
       body: ListView(

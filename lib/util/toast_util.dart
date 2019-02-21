@@ -14,7 +14,7 @@ class ToastUtil {
       gravity: gravity ?? ToastGravity.CENTER,
       timeInSecForIos: timeInSecForIos ?? 1,
       backgroundColor: backgroundColor ?? null,
-      textColor: textColor ?? null,
+      textColor: textColor ?? Colors.white,
     );
   }
 }

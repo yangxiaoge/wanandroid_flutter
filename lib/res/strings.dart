@@ -24,6 +24,7 @@ class Ids {
   static String titleCollection = 'title_collection';
   static String titleSetting = 'title_setting';
   static String titleAbout = 'title_about';
+  static String titleGithubTrending = 'title_github_trending';
   static String titleWeather = 'title_weather';
   static String titleShare = 'title_share';
   static String titleSignOut = 'title_signout';
@@ -92,6 +93,7 @@ Map<String, Map<String, String>> localizedSimpleValues = {
     Ids.titleCollection: 'Collection',
     Ids.titleSetting: 'Setting',
     Ids.titleAbout: 'About',
+    Ids.titleGithubTrending: 'Github Trending',
     Ids.titleWeather: 'Weather',
     Ids.titleShare: 'Share',
     Ids.titleSignOut: 'Sign Out',
@@ -136,6 +138,7 @@ Map<String, Map<String, String>> localizedSimpleValues = {
     Ids.titleCollection: '收藏',
     Ids.titleSetting: '设置',
     Ids.titleAbout: '关于',
+    Ids.titleGithubTrending: '趋势',
     Ids.titleWeather: '天气',
     Ids.titleShare: '分享',
     Ids.titleSignOut: '注销',
@@ -185,6 +188,7 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.titleCollection: 'Collection',
       Ids.titleSetting: 'Setting',
       Ids.titleAbout: 'About',
+      Ids.titleGithubTrending: 'Github Trending',
       Ids.titleWeather: 'Weather',
       Ids.titleShare: 'Share',
       Ids.titleSignOut: 'Sign Out',
@@ -233,6 +237,7 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.titleCollection: '收藏',
       Ids.titleSetting: '设置',
       Ids.titleAbout: '关于',
+      Ids.titleGithubTrending: '趋势',
       Ids.titleWeather: '天气',
       Ids.titleShare: '分享',
       Ids.titleSignOut: '注销',
@@ -283,6 +288,7 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.titleCollection: '收藏',
       Ids.titleSetting: '設置',
       Ids.titleAbout: '關於',
+      Ids.titleGithubTrending: '趨勢',
       Ids.titleWeather: '天氣',
       Ids.titleShare: '分享',
       Ids.titleSignOut: '註銷',
@@ -329,6 +335,7 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.titleCollection: '收藏',
       Ids.titleSetting: '設置',
       Ids.titleAbout: '關於',
+      Ids.titleGithubTrending: '趨勢',
       Ids.titleWeather: '天氣',
       Ids.titleShare: '分享',
       Ids.titleSignOut: '註銷',

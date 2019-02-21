@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+
 import '../constant/component_index.dart';
 import '../pages/item_detail_page.dart';
 
@@ -17,10 +18,13 @@ class NavigatorUtil {
   }
 
   static void pushWeb(BuildContext context,
-      {String title, int titleId, String url, bool isCollected: false}) {
+      {@required String title,
+      @required String url,
+      String titleId,
+      bool isCollected: false}) {
     if (context == null || ObjectUtil.isEmpty(url)) return;
     if (url.endsWith(".apk")) {
-      launchInBrowser(url, title: title ?? titleId);
+      launchInBrowser(url, title: title);
     } else {
       Navigator.push(
           context,
@@ -28,7 +32,7 @@ class NavigatorUtil {
           new MaterialPageRoute<void>(
               builder: (ctx) => ItemDetailPage(
                   title: title,
-                  titleId: titleId,
+                  titleId: titleId ?? title,
                   url: url,
                   isCollected: isCollected)));
     }

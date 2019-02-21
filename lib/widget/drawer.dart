@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../constant/component_index.dart';
 
-import '../pages/drawer_setting_page.dart';
+import '../constant/component_index.dart';
 import '../pages/drawer_about_page.dart';
+import '../pages/drawer_setting_page.dart';
 import '../pages/drawer_weather_page.dart';
 
 //Drawer 抽屉
@@ -13,6 +13,7 @@ class CustDrawer extends StatefulWidget {
 //item对象
 class PageInfo {
   PageInfo(this.titleId, this.iconData, this.page, [this.withScaffold = true]);
+
   String titleId;
   IconData iconData;
   Widget page;
@@ -20,11 +21,12 @@ class PageInfo {
 }
 
 class _CustDrawerState extends State<CustDrawer> {
-  List<PageInfo> _pageInfo = new List();
+  List<PageInfo> _pageInfo = List();
 
   @override
   void initState() {
     super.initState();
+    _pageInfo.add(PageInfo(Ids.titleGithubTrending, Icons.trending_up, null));
     _pageInfo.add(PageInfo(Ids.titleWeather, Icons.cloud, WeatherPage('南京')));
     _pageInfo.add(PageInfo(Ids.titleSetting, Icons.settings, SettingPage()));
     _pageInfo.add(PageInfo(Ids.titleAbout, Icons.info, AboutPage()));
@@ -55,31 +57,34 @@ class _CustDrawerState extends State<CustDrawer> {
       children: <Widget>[
         userHeader,
         Expanded(
-          child: new ListView.builder(
-              padding: const EdgeInsets.all(0.0),
+          child: ListView.builder(
+              padding: EdgeInsets.all(0.0),
               itemCount: _pageInfo.length,
               itemBuilder: (BuildContext context, int index) {
                 PageInfo pageInfo = _pageInfo[index];
-                print("----titleID啊啊" + pageInfo.titleId);
-                return new ListTile(
-                  leading: new Icon(pageInfo.iconData),
-                  title:
-                      new Text(IntlUtil.getString(context, pageInfo.titleId)),
+                return ListTile(
+                  leading: Icon(pageInfo.iconData),
+                  title: Text(IntlUtil.getString(context, pageInfo.titleId)),
                   onTap: () {
+                    print("----titleId = " + pageInfo.titleId);
                     Scaffold.of(context).openEndDrawer(); //可以先关闭抽屉
-
-                    if (pageInfo.titleId != Ids.titleSignOut &&
-                        pageInfo.titleId != Ids.titleShare) {
+                    if (pageInfo.titleId == Ids.titleWeather ||
+                        pageInfo.titleId == Ids.titleSetting ||
+                        pageInfo.titleId == Ids.titleAbout) {
                       NavigatorUtil.pushPage(context, pageInfo.page,
                           pageName: pageInfo.titleId);
+                    } else if (pageInfo.titleId == Ids.titleGithubTrending) {
+                      NavigatorUtil.pushWeb(context,
+                          title: IntlUtil.getString(
+                              context, Ids.titleGithubTrending),
+                          url: Constants.githubFlutterTrending);
                     } else if (pageInfo.titleId == Ids.titleSignOut) {
                       ToastUtil.showToast(
                           IntlUtil.getString(context, Ids.titleSignOut));
                       //注销清除所有数据
                       AppStatus.clearSP().then((boolean) {
                         //通知页面注销成功
-                        MyEventBus.eventBus
-                            .fire(new LoginRegisterLogoutSuccess());
+                        MyEventBus.eventBus.fire(LoginRegisterLogoutSuccess());
                       });
                     } else if (pageInfo.titleId == Ids.titleShare) {
                       Share.share(Ids.shareTxt);

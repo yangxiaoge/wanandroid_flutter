@@ -165,7 +165,7 @@ class _HomePageState extends State<HomePage> {
   _go2ItemDetail(String url, String title,
       {int titleId, bool isCollected: false}) {
     NavigatorUtil.pushWeb(context,
-        title: title, url: url, titleId: titleId, isCollected: isCollected);
+        title: title, url: url, titleId: titleId.toString(), isCollected: isCollected);
   }
 
   _likeClick(var itemData) async {
