@@ -44,7 +44,6 @@ dependencies:
   rxdart: ^0.18.1
   # 动态权限
   permission_handler: ^2.1.2
-
   # flutter_webview_plugin
   flutter_webview_plugin: ^0.3.0+2
 
@@ -59,7 +58,7 @@ dependencies:
       url: git://github.com/flutter/plugins.git
       ref: master
       path: packages/url_launcher/
- 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -83,8 +82,8 @@ flutter:
 
   assets:
   #  - assets/images/zz.png
-   - android/app/src/main/res/mipmap-xhdpi/zz.png
-   - assets/images/weather_bg.jpg
+  - android/app/src/main/res/mipmap-xhdpi/zz.png
+  - assets/images/weather_bg.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
@@ -111,13 +110,13 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages
-  
-# https://www.iconfont.cn/manage/index?manage_type=myprojects&projectId=979981
-  fonts:
-    - family: aliIconFont
-      fonts:
-        - asset: assets/fonts/iconfont.ttf
 
-    - family: WorkSansMedium
-      fonts:
-        - asset: assets/fonts/WorkSans-Medium.ttf
+  # https://www.iconfont.cn/manage/index?manage_type=myprojects&projectId=979981
+  fonts:
+  - family: aliIconFont
+    fonts:
+    - asset: assets/fonts/iconfont.ttf
+
+  - family: WorkSansMedium
+    fonts:
+    - asset: assets/fonts/WorkSans-Medium.ttf

@@ -23,9 +23,10 @@
 **photo_view**|**图片预览**
 **flutter_swiper**|**广告**
 **event_bus**|**EventBus事件**
-**flukit**|**flutterchina - flukit**
-**plugins**|**flutterchina - plugins**
+**plugins**|**flutterchina - plugins包含多个库**
 **common_utils**|**常用工具包**
+**rxdart**|**rxdart**
+**permission_handler**|**动态权限**
 
 
 ## todo 
@@ -35,6 +36,6 @@
 - [x] 我的
 - [x] 登录
 - [x] 侧滑
-- [ ] 搜索
-- [ ] 多语言
+- [x] 搜索
+- [x] 多语言
 - [ ] 主题

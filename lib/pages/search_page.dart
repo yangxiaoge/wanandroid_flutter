@@ -1,7 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../constant/component_index.dart';
-import '../widget/refresh_scaffold.dart';
+import '../util/span_util.dart';
 
 class SearchPage extends StatefulWidget {
   final String searchWord;
@@ -18,6 +19,9 @@ class _SearchPageState extends State<SearchPage> {
   // 显示搜索出来的文章列表
   bool _showSearchList = false;
 
+  // 列表加载中
+  bool _isLoadingList = false;
+
   // 当前页码
   int _pageIndex = 0;
 
@@ -31,6 +35,8 @@ class _SearchPageState extends State<SearchPage> {
   List<Widget> hotKeyChips = List();
 
   TextEditingController _searchControl = TextEditingController();
+
+  RefreshController _refreshController = new RefreshController();
 
   @override
   void initState() {
@@ -57,6 +63,7 @@ class _SearchPageState extends State<SearchPage> {
               onSubmitted: (String search) async {
                 //此处也可以不查询
                 _search = search;
+                _pageIndex = 0;
                 _queryWord();
               },
             )),
@@ -65,6 +72,7 @@ class _SearchPageState extends State<SearchPage> {
               icon: Icon(Icons.search),
               onPressed: () {
                 _search = _searchControl.text;
+                _pageIndex = 0;
                 _queryWord();
               }),
           IconButton(
@@ -73,11 +81,23 @@ class _SearchPageState extends State<SearchPage> {
                 _searchControl.clear();
                 setState(() {
                   _showSearchList = false;
+                  _isLoadingList = false;
                 });
               })
         ],
       ),
-      body:   hotKeyListView(),
+      body: Stack(
+        children: <Widget>[
+          Offstage(
+            offstage: _showSearchList,
+            child: hotKeyListView(),
+          ),
+          Offstage(
+            offstage: !_showSearchList,
+            child: refreshScaffold(),
+          ),
+        ],
+      ),
     );
   }
 
@@ -101,91 +121,112 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  /*Widget refreshScaffold() {
-    return RefreshScaffold(
-      //labelId: title ?? IntlUtil.getString(context, titleId),
-      isLoading: _showSearchList,
-      controller: _controller,
-      enablePullUp: false,
-      onRefresh: () {
-        print("供热放入搜索11111------------");
-      },
-      itemCount: listData.length,
-      itemBuilder: (BuildContext context, int index) {
-        var itemData = listData[index];
-        bool isCollected = itemData['collect'];
-        Row line1 = new Row(
-          children: <Widget>[
-            Text('作者：'),
-            Expanded(
-              child: Text(
-                itemData['author'],
-                style: new TextStyle(color: Theme.of(context).primaryColor),
-              ),
+  Widget refreshScaffold() {
+    return Stack(
+      children: <Widget>[
+        //内容区
+        Offstage(
+          offstage: _isLoadingList,
+          child: SmartRefresher(
+            enablePullDown: true,
+            //下拉
+            enablePullUp: true,
+            //上拉
+            controller: _refreshController,
+            onRefresh: _refresh,
+            onOffsetChange: null,
+            headerBuilder: buildDefaultHeader,
+            footerBuilder: buildDefaultFooter,
+            footerConfig: RefreshConfig(),
+            child: ListView.builder(
+              itemCount: listData.length,
+              itemBuilder: (context, index) => buildListItem(index),
+              // controller: _controller,
             ),
-            Text(itemData['niceDate'])
-          ],
-        );
-
-        Align line2 = Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            itemData['title'],
           ),
-        );
+        ),
 
-        Row line3 = new Row(
-          children: <Widget>[
-            Expanded(
-              child: Text(
-                itemData['chapterName'],
-                style: new TextStyle(color: Theme.of(context).primaryColor),
-              ),
-            ),
-            GestureDetector(
-              child: Icon(
-                isCollected ? Icons.favorite : Icons.favorite_border,
-                color: isCollected ? Colors.red : null,
-              ),
-              onTap: () {
-                _likeClick(itemData);
-              },
-            )
-          ],
-        );
-
-        return Card(
-          child: InkWell(
-            child: Column(
-              children: <Widget>[
-                new Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: line1,
-                ),
-                new Padding(
-                  padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
-                  child: line2,
-                ),
-                new Padding(
-                  padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
-                  child: line3,
-                ),
-              ],
-            ),
-            onTap: () {
-              _go2ItemDetail(itemData['link'], itemData['title'],
-                  titleId: itemData['id'], isCollected: itemData['collect']);
-            },
-          ),
-          color: Colors.white,
-          elevation: 3,
-        );
-      },
+        //loading动画
+        Offstage(
+          offstage: listData.length > 0,
+          child: Center(child: CupertinoActivityIndicator()),
+        )
+      ],
     );
-  }*/
+  }
+
+  Widget buildListItem(int index) {
+    var itemData = listData[index];
+    bool isCollected = itemData['collect'];
+    Row line1 = new Row(
+      children: <Widget>[
+        Text('作者：'),
+        Expanded(
+          child: Text(
+            itemData['author'],
+            style: new TextStyle(color: Theme.of(context).primaryColor),
+          ),
+        ),
+        Text(itemData['niceDate'])
+      ],
+    );
+
+    Align line2 = Align(
+      alignment: Alignment.centerLeft,
+      child: Text.rich(SpanUtil.getTextSpan(itemData['title'], _search)),
+    );
+
+    Row line3 = new Row(
+      children: <Widget>[
+        Expanded(
+          child: Text(
+            itemData['chapterName'],
+            style: new TextStyle(color: Theme.of(context).primaryColor),
+          ),
+        ),
+        GestureDetector(
+          child: Icon(
+            isCollected ? Icons.favorite : Icons.favorite_border,
+            color: isCollected ? Colors.red : null,
+          ),
+          onTap: () {
+            _likeClick(itemData);
+          },
+        )
+      ],
+    );
+
+    return Card(
+      child: InkWell(
+        child: Column(
+          children: <Widget>[
+            new Padding(
+              padding: EdgeInsets.all(10.0),
+              child: line1,
+            ),
+            new Padding(
+              padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
+              child: line2,
+            ),
+            new Padding(
+              padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
+              child: line3,
+            ),
+          ],
+        ),
+        onTap: () {
+          _go2ItemDetail(itemData['link'],
+              SpanUtil.getTextSpanStr(itemData['title'], _search),
+              titleId: itemData['id'], isCollected: itemData['collect']);
+        },
+      ),
+      color: Colors.white,
+      elevation: 3,
+    );
+  }
 
   /// 获取热词
-  void _getHotKey() {
+  Future _getHotKey() async {
     HttpUtil.dioGet2(WanApi.HotKey, (response) {
       var data = response['data'];
       print("hotkey----->: " + data.toString());
@@ -202,6 +243,7 @@ class _SearchPageState extends State<SearchPage> {
               onPressed: () {
                 _search = itemChip['name'];
                 _searchControl.text = _search;
+                _pageIndex = 0;
                 _queryWord();
               },
             );
@@ -214,9 +256,10 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   /// 搜索关键词
-  void _queryWord() async {
+  Future _queryWord() async {
     setState(() {
       _showSearchList = true;
+      _isLoadingList = true;
     });
 
     print("_search = $_search");
@@ -244,9 +287,19 @@ class _SearchPageState extends State<SearchPage> {
     totalLength = data["total"];
     print("datas = $_listData");
     print("totalLength = $totalLength");
-    setState(() {
-      listData = _listData;
-    });
+    if (this.mounted) {
+      setState(() {
+        if (_pageIndex == 0) {
+          listData.clear();
+        }
+        listData.addAll(_listData);
+        if (listData.length >= totalLength) {
+          ToastUtil.showToast(IntlUtil.getString(context, Ids.noMore));
+        }
+        _pageIndex++;
+        _isLoadingList = false;
+      });
+    }
     //_pageIndex++;
   }
 
@@ -285,8 +338,33 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   _go2ItemDetail(String url, String title,
-      {String titleId, bool isCollected: false}) {
+      {int titleId, bool isCollected: false}) {
     NavigatorUtil.pushWeb(context,
-        title: title, url: url, titleId: titleId, isCollected: isCollected);
+        title: title,
+        url: url,
+        titleId: titleId.toString(),
+        isCollected: isCollected);
+  }
+
+  //下拉刷新
+  void _refresh(bool up) {
+    print("---------------------search 上啊啊啊up = $up");
+    _isLoadingList = false;
+    if (up) {
+      _pageIndex = 0;
+      _queryWord().then((_) {
+        Future.delayed(Duration(seconds: 3)).then((_) {
+          _refreshController.sendBack(true, RefreshStatus.completed);
+        });
+      });
+    } else {
+      _queryWord().then((_) {
+        Future.delayed(Duration(seconds: 3)).then((_) {
+          print("_refreshController.scrollController.offset = " +
+              _refreshController.scrollController.offset.toString());
+          _refreshController.sendBack(false, RefreshStatus.idle);
+        });
+      });
+    }
   }
 }

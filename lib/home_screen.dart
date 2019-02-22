@@ -129,8 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
             leading: IconButton(
               icon: CircleAvatar(
                 radius: 35.0,
-                backgroundImage:
-                    ImageUtil.getImageProvider(Constants.iconPath),
+                backgroundImage: ImageUtil.getImageProvider(Constants.iconPath),
                 // child: CachedNetworkImage(imageUrl: Constants.AVATAR_URL),
               ),
               alignment: Alignment.centerLeft,
@@ -185,8 +184,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return showDialog(
             context: context,
             builder: (context) => AlertDialog(
-                  title: Text('提示'),
-                  content: Text('确定退出应用吗？'),
+                  title: Text(IntlUtil.getString(context, Ids.notice)),
+                  content: Text(IntlUtil.getString(context, Ids.noticeMsg)),
                   actions: <Widget>[
                     FlatButton(
                       onPressed: () => Navigator.of(context).pop(false),

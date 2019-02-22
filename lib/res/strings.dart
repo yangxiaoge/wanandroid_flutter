@@ -30,6 +30,8 @@ class Ids {
   static String titleSignOut = 'title_signout';
 
   //home_screen
+  static String notice = 'Notice';
+  static String noticeMsg  = 'Are you sure to quit the app?';
   static String exit = 'Exit';
   static String wait = 'Wait a while';
 
@@ -97,6 +99,8 @@ Map<String, Map<String, String>> localizedSimpleValues = {
     Ids.titleWeather: 'Weather',
     Ids.titleShare: 'Share',
     Ids.titleSignOut: 'Sign Out',
+    Ids.notice: 'Notice',
+    Ids.noticeMsg: 'Are you sure to quit the app?',
     Ids.exit: 'Exit',
     Ids.wait: 'Wait a while',
     Ids.collectSuccess: 'Successful collection',
@@ -142,6 +146,8 @@ Map<String, Map<String, String>> localizedSimpleValues = {
     Ids.titleWeather: '天气',
     Ids.titleShare: '分享',
     Ids.titleSignOut: '注销',
+    Ids.notice: '提示',
+    Ids.noticeMsg: '确定退出应用吗？',
     Ids.exit: '退出',
     Ids.wait: '再等一会',
     Ids.collectSuccess: '收藏成功',
@@ -192,6 +198,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.titleWeather: 'Weather',
       Ids.titleShare: 'Share',
       Ids.titleSignOut: 'Sign Out',
+      Ids.notice: 'Notice',
+      Ids.noticeMsg: 'Are you sure to quit the app?',
       Ids.exit: 'Exit',
       Ids.wait: 'Wait a while',
       Ids.collectSuccess: 'Successful collection',
@@ -241,6 +249,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.titleWeather: '天气',
       Ids.titleShare: '分享',
       Ids.titleSignOut: '注销',
+      Ids.notice: '提示',
+      Ids.noticeMsg: '确定退出应用吗？',
       Ids.exit: '退出',
       Ids.wait: '再等一会',
       Ids.collectSuccess: '收藏成功',
@@ -292,6 +302,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.titleWeather: '天氣',
       Ids.titleShare: '分享',
       Ids.titleSignOut: '註銷',
+      Ids.notice: '提示',
+      Ids.noticeMsg: '確定退出應用嗎？',
       Ids.exit: '退出',
       Ids.wait: '再等一會',
       Ids.collectSuccess: '收藏成功',
@@ -339,6 +351,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.titleWeather: '天氣',
       Ids.titleShare: '分享',
       Ids.titleSignOut: '註銷',
+      Ids.notice: '提示',
+      Ids.noticeMsg: '確定退出應用嗎？',
       Ids.exit: '退出',
       Ids.wait: '再等一會',
       Ids.collectSuccess: '收藏成功',
