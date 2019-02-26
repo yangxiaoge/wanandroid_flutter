@@ -287,6 +287,7 @@ class _SearchPageState extends State<SearchPage> {
     totalLength = data["total"];
     print("datas = $_listData");
     print("totalLength = $totalLength");
+    //print("this.mounted = "+ this.mounted.toString());
     if (this.mounted) {
       setState(() {
         if (_pageIndex == 0) {

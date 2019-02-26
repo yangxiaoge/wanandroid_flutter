@@ -10,6 +10,12 @@ import './constant/language_model.dart';
 void main() {
   setCustomErrorPage();
 
+  //竖屏
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
+
   runApp(BlocProvider<ApplicationBloc>(
     bloc: ApplicationBloc(),
     child: BlocProvider(child: MyApp(), bloc: null),

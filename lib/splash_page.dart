@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
+
 import './constant/component_index.dart';
+import 'home_screen.dart';
 
 //闪屏页
 class SplashPage extends StatefulWidget {
   _SplashPageState createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   TimerUtil _timerUtil;
 
   ///倒计时3秒
@@ -15,18 +16,34 @@ class _SplashPageState extends State<SplashPage> {
 
   bool permissionGranted = false;
 
+  Animation<double> animation;
+  AnimationController controller;
+
   @override
   void initState() {
     super.initState();
     Constants.mContext = context;
     _initSplash();
     _doPermissionTask();
+
+    controller =
+        AnimationController(vsync: this, duration: Duration(seconds: 3));
+    //图片宽高从0变到300
+    animation = Tween(begin: 0.0, end: 300.0).animate(controller)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    //启动动画(正向执行)
+    controller.forward();
   }
 
   @override
   void dispose() {
-    super.dispose();
+    //路由销毁时需要释放动画资源
+    controller.dispose();
     if (_timerUtil != null) _timerUtil.cancel();
+    super.dispose();
   }
 
   _doPermissionTask() async {
@@ -75,13 +92,17 @@ class _SplashPageState extends State<SplashPage> {
           fit: StackFit.expand,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(top: 150),
+              padding: EdgeInsets.only(top: 130),
               child: Column(
                 children: <Widget>[
-                  CircleAvatar(
-                    radius: 35.0,
-                    backgroundImage:
-                        ImageUtil.getImageProvider(Constants.iconPath),
+                  Container(
+                    child: CircleAvatar(
+                      radius: 35.0,
+                      backgroundImage:
+                          ImageUtil.getImageProvider(Constants.iconPath),
+                    ),
+                    width: animation.value,
+                    height: animation.value,
                   ),
                   SizedBox(
                     height: 20.0,
@@ -122,7 +143,7 @@ class _SplashPageState extends State<SplashPage> {
                             new TextStyle(fontSize: 14.0, color: Colors.white),
                       ),
                       decoration: new BoxDecoration(
-                          color: Colors.black45,
+                          color: Colors.black26,
                           borderRadius: BorderRadius.all(Radius.circular(4.0)),
                           border: new Border.all(
                               width: 0.33, color: AppColors.dividerColor))),
