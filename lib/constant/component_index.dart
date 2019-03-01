@@ -30,6 +30,7 @@ export '../util/toast_util.dart';
 export '../util/navigator_util.dart';
 export '../util/img_util.dart';
 export '../util/permisson_util.dart';
+export '../util/span_util.dart';
 
 export '../res/strings.dart'; //语言包
 

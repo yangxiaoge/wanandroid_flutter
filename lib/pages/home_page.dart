@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../constant/component_index.dart';
 
 //首页
@@ -10,14 +11,19 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // 当前页码
   int _pageIndex = 0;
+
   // 文章列表集合
   List listData = new List();
+
   //数据总长度
   int totalLength = 0;
+
   //刷新
   RefreshController _refreshController;
+
   //加载中
   bool _isLoading = true;
+
   //广告集合
   List banners = new List();
 
@@ -137,8 +143,10 @@ class _HomePageState extends State<HomePage> {
         Offstage(
           offstage: _isLoading ? true : false,
           child: SmartRefresher(
-            enablePullDown: true, //下拉
-            enablePullUp: true, //上拉
+            enablePullDown: true,
+            //下拉
+            enablePullUp: true,
+            //上拉
             controller: _refreshController,
             onRefresh: _refresh,
             onOffsetChange: null,
@@ -165,7 +173,10 @@ class _HomePageState extends State<HomePage> {
   _go2ItemDetail(String url, String title,
       {int titleId, bool isCollected: false}) {
     NavigatorUtil.pushWeb(context,
-        title: title, url: url, titleId: titleId.toString(), isCollected: isCollected);
+        title: title,
+        url: url,
+        titleId: titleId.toString(),
+        isCollected: isCollected);
   }
 
   _likeClick(var itemData) async {
@@ -265,11 +276,10 @@ class _HomePageState extends State<HomePage> {
           Text(itemData['niceDate'])
         ],
       );
-
       Align line2 = Align(
         alignment: Alignment.centerLeft,
         child: Text(
-          itemData['title'],
+          SpanUtil.htmlCharacterEntityEscape(itemData['title']),
         ),
       );
 
@@ -312,7 +322,7 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           onTap: () {
-            _go2ItemDetail(itemData['link'], itemData['title'],
+            _go2ItemDetail(itemData['link'], SpanUtil.htmlCharacterEntityEscape(itemData['title']),
                 titleId: itemData['id'], isCollected: itemData['collect']);
           },
         ),

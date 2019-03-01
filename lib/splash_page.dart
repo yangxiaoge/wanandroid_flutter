@@ -109,7 +109,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                   ),
                   Text(IntlUtil.getString(context, Ids.welcome) + "😊",
                       style: TextStyle(
-                          color: AppColors.appColor,
+                          color: Theme.of(context).primaryColor,
                           fontSize: 25.0,
                           fontFamily: Constants.workSansMedium)),
                 ],

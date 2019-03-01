@@ -74,8 +74,10 @@ class HttpUtil {
     //缓存cookie
     //登录后会在 cookie 中返回账号密码，只要在客户端做 cookie 持久化存储即可自动登录验证。
     if (url.contains(WanApi.LOGIN)) {
-      AppStatus.putObject(
+      AppStatus.putString(
           Constants.cookieSp, response.headers['set-cookie'].toString());
+      /*AppStatus.putObject(
+          Constants.cookieSp, response.headers['set-cookie'].toString());*/
     }
 
     return response.data;

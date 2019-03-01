@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import '../constant/component_index.dart';
 import '../pages/zoom_image.dart';
 
@@ -13,7 +14,7 @@ class DiscoverItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var title = model['title'];
+    var title = SpanUtil.htmlCharacterEntityEscape(model['title']);
     var titleId = model['id'];
     var link = model['link'];
     var desc = model['desc'];
@@ -39,7 +40,10 @@ class DiscoverItem extends StatelessWidget {
                     title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyles.listTitle,
+                    style: TextStyle(
+                      fontSize: Dimens.font_sp16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   SizedBox(height: Dimens.gap_dp10),
                   new Expanded(
@@ -49,7 +53,7 @@ class DiscoverItem extends StatelessWidget {
                       maxLines: 3,
                       softWrap: true,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyles.listContent,
+                      style: TextStyle(fontSize: 16),
                     ),
                   ),
                   SizedBox(height: Dimens.gap_dp10),
@@ -57,12 +61,13 @@ class DiscoverItem extends StatelessWidget {
                     children: <Widget>[
                       new Text(
                         author,
-                        style: TextStyles.listExtra,
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 12),
                       ),
                       SizedBox(width: Dimens.gap_dp10),
                       new Text(
                         niceDate,
-                        style: TextStyles.listExtra,
                       ),
                     ],
                   )
@@ -92,8 +97,8 @@ class DiscoverItem extends StatelessWidget {
           decoration: new BoxDecoration(
               color: Colors.white,
               border: new Border(
-                  bottom:
-                      new BorderSide(width: 0.33, color: AppColors.dividerColor)))),
+                  bottom: new BorderSide(
+                      width: 0.33, color: AppColors.dividerColor)))),
     );
   }
 }

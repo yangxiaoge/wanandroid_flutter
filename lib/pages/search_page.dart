@@ -173,7 +173,7 @@ class _SearchPageState extends State<SearchPage> {
 
     Align line2 = Align(
       alignment: Alignment.centerLeft,
-      child: Text.rich(SpanUtil.getTextSpan(itemData['title'], _search)),
+      child: Text.rich(SpanUtil.getTextSpan(context, itemData['title'], _search)),
     );
 
     Row line3 = new Row(

@@ -4,9 +4,9 @@
 
 ## 应用截图
 
-| ![home](screen_shot/home3.jpg) | ![discovery](screen_shot/discovery.jpg) | ![detail.jpg](screen_shot/detail.jpg) | ![meizi3](screen_shot/meizi3.jpg) | ![meizi4](screen_shot/meizi2.jpg) | ![mine1](screen_shot/mine1.jpg) | ![mine2](screen_shot/mine2.jpg) |
+| ![home](screen_shot/home3.jpg) | ![discovery](screen_shot/discovery.jpg) | ![detail.jpg](screen_shot/detail.jpg) | ![meizi3](screen_shot/meizi3.jpg) | ![search](screen_shot/search.jpg) | ![mine1](screen_shot/mine1.jpg) | ![mine2](screen_shot/mine2.jpg) |
 | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
-| 首页 | 发现 | 详情 | 妹子 | 妹子| 我的 | 我的 |
+| 首页 | 发现 | 详情 | 妹子 | 搜索| 我的 | 我的 |
 
 ### 第三方框架
 

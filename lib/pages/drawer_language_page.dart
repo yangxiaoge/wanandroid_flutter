@@ -58,7 +58,7 @@ class _LanguagePageState extends State<LanguagePage> {
               width: 64.0,
               child: RaisedButton(
                 textColor: Colors.white,
-                color: AppColors.appColor,
+                color: Theme.of(context).primaryColor,
                 child: Text(
                   IntlUtil.getString(context, Ids.save),
                   style: TextStyle(fontSize: 12.0),
@@ -70,7 +70,8 @@ class _LanguagePageState extends State<LanguagePage> {
                       ObjectUtil.isEmpty(_currentLanguage.languageCode)
                           ? null
                           : _currentLanguage);
-                  bloc.sendAppEvent(Constants.notifySysUpdate);
+                  //通知刷新语言
+                  bloc.sendAppEvent(Constants.notifySysLanguageUpdate);
                   Navigator.pop(context);
                 },
               ),
@@ -93,7 +94,7 @@ class _LanguagePageState extends State<LanguagePage> {
               trailing: Radio(
                   value: true,
                   groupValue: model.isSelected == true,
-                  activeColor: AppColors.appColor,
+                  activeColor: Theme.of(context).primaryColor,
                   onChanged: (value) {
                     setState(() {
                       _currentLanguage = model;

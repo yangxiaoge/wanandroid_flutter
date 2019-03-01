@@ -57,22 +57,22 @@ class _HomeScreenState extends State<HomeScreen> {
       new BottomNavigationBarItem(
         icon: const Icon(Icons.home),
         title: new Text(tabTitles[0]),
-        backgroundColor: AppColors.appColor,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       new BottomNavigationBarItem(
         icon: const Icon(Icons.widgets),
         title: new Text(tabTitles[1]),
-        backgroundColor: AppColors.appColor,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       new BottomNavigationBarItem(
         icon: const Icon(Icons.face),
         title: new Text(tabTitles[2]),
-        backgroundColor: AppColors.appColor,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       new BottomNavigationBarItem(
         icon: const Icon(Icons.person),
         title: new Text(tabTitles[3]),
-        backgroundColor: AppColors.appColor,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
     ];
     tabTitles.forEach((title) {
