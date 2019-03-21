@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wanandroid_flutter/constant/constants.dart';
 
 class SpanUtil {
   static TextSpan getTextSpan(BuildContext context, String text, String key) {

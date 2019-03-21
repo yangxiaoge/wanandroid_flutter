@@ -25,12 +25,12 @@ apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 // def keyStore = file('D:\\Program Files\\Nutstore\\documents\\我的坚果云\\个人项目\\签名文件yangxiaoge\\yangxiaoge.jks')
-def keystorePropertiesFile = rootProject.file("D:\\AAA\\key.properties")
+def keystorePropertiesFile = rootProject.file("D:\\Software\\Nutstore\\Documents\\我的坚果云\\个人项目\\签名文件yangxiaoge\\key.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
 
     lintOptions {
         disable 'InvalidPackage'
@@ -40,7 +40,7 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.bruceyang.coolapk.mumuxi" //应用宝版本包名com.yang.bruce.mumuxi ， 酷安版包名com.bruceyang.coolapk.mumuxi
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1026
         versionName "3.3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -68,6 +68,8 @@ android {
     }
 }
 
+
+
 flutter {
     source '../..'
 }
@@ -80,4 +82,26 @@ dependencies {
     implementation 'com.facebook.stetho:stetho:1.5.0'
     // bugly
     implementation 'com.tencent.bugly:crashreport:latest.release'
+
+    configurations.all {
+    resolutionStrategy {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'androidx.core') {
+                details.useVersion "1.0.1"
+            }
+            if (details.requested.group == 'androidx.lifecycle') {
+                details.useVersion "2.0.0"
+            }
+            if (details.requested.group == 'androidx.versionedparcelable') {
+                details.useVersion "1.0.0"
+            }
+            if (details.requested.group == 'androidx.fragment') {
+                details.useVersion "1.0.0"
+            }
+            if (details.requested.group == 'androidx.appcompat') {
+                details.useVersion "1.0.1"
+            }
+        }
+    }
+}
 }

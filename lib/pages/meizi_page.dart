@@ -112,8 +112,10 @@ class _MeiZiPageState extends State<MeiZiPage> {
                           child: CachedNetworkImage(
                             imageUrl: meizi[index]['url'],
                             fit: BoxFit.fill,
-                            placeholder: CupertinoActivityIndicator(),
-                            errorWidget: Icon(Icons.error),
+                            placeholder: (context, url) =>
+                                CupertinoActivityIndicator(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
                           ),
                         ),
                         Positioned(

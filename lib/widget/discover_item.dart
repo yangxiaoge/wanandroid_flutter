@@ -83,8 +83,8 @@ class DiscoverItem extends StatelessWidget {
                     height: 128,
                     fit: BoxFit.fill,
                     imageUrl: envelopePic,
-                    placeholder: new CupertinoActivityIndicator(),
-                    errorWidget: new Icon(Icons.error),
+                    placeholder: (context, url) => CupertinoActivityIndicator(),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
                 ),
                 onTap: () {

@@ -10,7 +10,7 @@ description: 玩Android - Flutter版
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -20,32 +20,34 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
-  # Flutter 国际化
+  # Flutter 国际化: https://github.com/Sky24n/fluintl
   fluintl: ^0.1.2
-  # 吐司
-  fluttertoast: ^2.2.7
-  # http 网络框架
-  http: ^0.12.0
-  # dio 网络框架
-  dio: ^1.0.13
-  # eventbus
-  event_bus: ^1.0.1
-  # 广告banner
+  # 吐司: https://github.com/PonnamKarthik/FlutterToast
+  fluttertoast: ^3.0.1
+  # http 网络框架: https://github.com/dart-lang/http
+  http: ^0.12.0+1
+  # dio 网络框架: https://github.com/flutterchina/dio
+  dio: ^2.1.0
+  # eventbus: https://github.com/marcojakob/dart-event-bus
+  event_bus: ^1.0.3
+  # 广告banner: https://github.com/jzoom/flutter_swiper
   flutter_swiper: ^1.1.4
-  # 缓存image
-  cached_network_image: ^0.5.1
-  # 查看图片 
-  photo_view: ^0.1.2
-  # 上拉加载和下拉刷新的组件
+  # 缓存image: https://github.com/renefloor/flutter_cached_network_image
+  cached_network_image: ^0.7.0
+  # 查看图片: https://github.com/renancaraujo/photo_view
+  photo_view: ^0.2.2
+  # 上拉加载和下拉刷新的组件: https://github.com/peng8350/flutter_pulltorefresh
   pull_to_refresh: ^1.1.6
   # 常用工具类库 https://github.com/Sky24n/common_utils
-  common_utils: ^1.0.9
-  # rxdart
-  rxdart: ^0.18.1
-  # 动态权限
-  permission_handler: ^2.1.2
-  # flutter_webview_plugin
-  flutter_webview_plugin: ^0.3.0+2
+  common_utils: ^1.1.1
+  # rxdart: https://github.com/ReactiveX/rxdart
+  rxdart: ^0.21.0
+  # 动态权限: https://github.com/baseflowit/flutter-permission-handler
+  permission_handler: ^3.0.0
+  # flutter_webview_plugin: https://github.com/fluttercommunity/flutter_webview_plugin
+  flutter_webview_plugin: ^0.3.1
+  # shared_preferences: https://github.com/flutter/plugins/blob/master/packages/shared_preferences/README.md
+  shared_preferences: ^0.5.1+2
 
   # 分享（调用系统分享的 Flutter 组件，支持分享文本，图片和文件）ddd
   share: #（https://github.com/yangxiaoge/plugins/  packages/webview_flutter/ ,packages下有很多的库，需要指定才能用）

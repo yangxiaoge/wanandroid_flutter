@@ -1,7 +1,7 @@
 /// 玩Android api 接口页 ：http://www.wanandroid.com/blog/show/2
 class WanApi {
-  ///baseurl
-  static const String BaseUrl = "http://www.wanandroid.com/";
+  ///baseurl, 升级为https了！
+  static const String BaseUrl = "https://www.wanandroid.com/";
 
   ///公众号列表
   static const String WXAccounts = "wxarticle/chapters/json";

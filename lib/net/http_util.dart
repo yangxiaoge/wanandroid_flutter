@@ -14,7 +14,7 @@ class HttpUtil {
 
   // dio get网络请求,方式一（Future作为返回值）
   static Future dioGet1(String url, {Map<String, dynamic> params}) async {
-    var response = await dio.get(WanApi.BaseUrl + url, data: params);
+    var response = await dio.get(WanApi.BaseUrl + url, queryParameters: params);
     return response.data;
   }
 
@@ -29,13 +29,15 @@ class HttpUtil {
     print(
         "AppStatus.getString(Constants.Login) = ${AppStatus.getBool(Constants.loginSp)}");
     var response = await dio.get(url,
-        data: params,
+        queryParameters: params,
         options: Options(
             connectTimeout: 5000,
             receiveTimeout: 100000,
-            headers: {Constants.cookieSp: AppStatus.getString(Constants.cookieSp)},
+            headers: {
+              Constants.cookieSp: AppStatus.getString(Constants.cookieSp)
+            },
             contentType: ContentType.json,
-            responseType: ResponseType.JSON));
+            responseType: ResponseType.json));
     //todo 可以进一步判断错误码等等（此处默认返回数据）
     print("------------->response = ${response.request.headers}");
     callback(response.data);
@@ -53,31 +55,26 @@ class HttpUtil {
       // url + params
       url += sb.toString().substring(0, sb.toString().length - 1);
     }
-
+    print('--------------------------url = $url');
     var response = await dio.post(url,
         options: Options(
             //baseUrl: WanApi.BaseUrl,
             connectTimeout: 5000,
             receiveTimeout: 100000,
             // 5s
-            headers: {Constants.cookieSp: AppStatus.getString(Constants.cookieSp)},
+            headers: {
+              Constants.cookieSp: AppStatus.getString(Constants.cookieSp)??''
+            },
             contentType: ContentType.json,
-            // Transform the response data to a String encoded with UTF8.
-            // The default value is [ResponseType.JSON].
-            responseType: ResponseType.JSON));
+            responseType: ResponseType.json));
 
-    print("POST:request.headers = " + response.request.headers.toString());
-    //print("POST:URL=" + url);
-    //print("POST:response.headers = " + response.headers.toString());
-    //print('cookie = ${response.headers['set-cookie']}');
+    print("------------POST:request.headers = " + response.request.headers.toString());
 
     //缓存cookie
     //登录后会在 cookie 中返回账号密码，只要在客户端做 cookie 持久化存储即可自动登录验证。
     if (url.contains(WanApi.LOGIN)) {
       AppStatus.putString(
           Constants.cookieSp, response.headers['set-cookie'].toString());
-      /*AppStatus.putObject(
-          Constants.cookieSp, response.headers['set-cookie'].toString());*/
     }
 
     return response.data;
