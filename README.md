@@ -8,6 +8,9 @@
 | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
 | 首页 | 发现 | 详情 | 妹子 | 搜索| 我的 | 我的 |
 
+## 推荐一个动画库 [2dimensions](https://www.2dimensions.com/explore/popular/trending/all)
+![](https://user-gold-cdn.xitu.io/2019/7/2/16bb0a4c5743fc54?imageslim)
+
 ### 第三方框架
 
 库 | 功能
