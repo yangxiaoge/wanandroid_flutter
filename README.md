@@ -8,10 +8,13 @@
 | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
 | 首页 | 发现 | 详情 | 妹子 | 搜索| 我的 | 我的 |
 
+## 下载
+<a href="http://android.myapp.com/myapp/detail.htm?apkName=com.yang.bruce.mumuxi" target="_blank" alt="应用宝"><img src="http://ww4.sinaimg.cn/mw1024/c05ae6b6gw1f5pv5t3kwwj203w01jglf.jpg"/></a>
+
 ## 推荐一个动画库 [2dimensions](https://www.2dimensions.com/explore/popular/trending/all)
 ![](https://user-gold-cdn.xitu.io/2019/7/2/16bb0a4c5743fc54?imageslim)
 
-### 第三方框架
+## 第三方框架
 
 库 | 功能
 -------- | ---
