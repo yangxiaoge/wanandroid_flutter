@@ -14,6 +14,10 @@
 ## 推荐一个动画库 [2dimensions](https://www.2dimensions.com/explore/popular/trending/all)
 ![](https://user-gold-cdn.xitu.io/2019/7/2/16bb0a4c5743fc54?imageslim)
 
+## 感谢
+[Sky24n](https://github.com/Sky24n)
+[玩Android](https://www.wanandroid.com/)
+
 ## 第三方框架
 
 库 | 功能
